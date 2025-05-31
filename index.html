@@ -157,8 +157,8 @@
       height: 18px;
       transform: rotate(-45deg);
       opacity: 0.8;
-      animation: drop 5s linear infinite; /* duration set in JS */
-      background-color: #ff6fa5; /* default, JS will override */
+      animation: drop 5s linear infinite; /* duration overridden in JS */
+      background-color: #ff6fa5; /* default, JS overrides */
     }
     .heart::before,
     .heart::after {
@@ -352,8 +352,10 @@
       font-family: 'Quicksand', sans-serif;
       line-height: 1;
       text-align: center;
-      width: 94%;
-      left: 0;
+      /* Center the container horizontally */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
       padding: 20px;
       z-index: 3;
       top: 320px;
@@ -368,11 +370,11 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN
+       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN & TYPOGRAPHY UPDATE
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
-Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\
+Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\A\
 You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
 Love forever,\A Nook ♡";
       white-space: pre-wrap;
@@ -385,7 +387,9 @@ Love forever,\A Nook ♡";
       padding: 25px;
       border-radius: 12px;
       color: #6c3a4c;
-      margin-top: 20px;
+      margin: 20px auto 0; /* center and add top margin */
+      width: 100%;
+      box-sizing: border-box;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       animation: slideInUp 0.6s ease-out forwards;
       text-align: center;
@@ -455,14 +459,17 @@ Love forever,\A Nook ♡";
           260px 4px #fff0f3;
       }
       .valentines-day-card .text {
-        position: relative;
-        top: auto;
-        animation: none;
+        /* On mobile, adjust top to move text into view when center is different */
+        top: 280px;
+        width: 95%;
+        left: 50%;
+        transform: translateX(-50%);
       }
       .valentines-day-card.active .text::before {
-        position: relative;
-        top: auto;
-        display: block;
+        margin: 20px auto 0;
+        width: 100%;
+        left: auto;
+        transform: none;
       }
     }
 
@@ -484,6 +491,9 @@ Love forever,\A Nook ♡";
       .valentines-day-card.active {
         width: 98vw;
         height: auto;
+      }
+      .valentines-day-card .text {
+        top: 260px;
       }
       .valentines-day-card .text,
       .valentines-day-card.active .text::before {
@@ -623,7 +633,7 @@ Love forever,\A Nook ♡";
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="marquee-container">
     <div class="marquee">
-      🎈🎈🎈 Happy Birthday, Matt! 2nd, June 2025🎈🎈🎈
+      🎈🎈🎈 Happy Birthday, Matt! Happy Birthday, Matt! Happy Birthday, Matt! 🎈🎈🎈
     </div>
   </div>
 
@@ -655,8 +665,9 @@ Love forever,\A Nook ♡";
           <div class="right-side"></div>
         </div>
       </div>
-      <div class="text"><span>click the card to reveal &lt;3</span></div>
+      <div class="text"><span>Happy birthday my bby Matt &lt;3</span></div>
     </div>
+    <p class="hover">- click the card to reveal -</p>
   </div>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
