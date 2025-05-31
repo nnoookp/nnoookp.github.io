@@ -50,11 +50,10 @@
     }
     @keyframes fadeIn {
       from { opacity: 0; }
-      to { opacity: 1; }
+      to   { opacity: 1; }
     }
 
     h1 {
-      font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       font-size: 3em;
       color: #e75480;
@@ -84,7 +83,6 @@
       font-size: 1.1em;
       line-height: 1.7;
       color: #6c3a4c;
-      font-family: 'Quicksand', sans-serif;
     }
 
     .gallery {
@@ -116,7 +114,6 @@
       transform: scale(1.05);
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
     }
-
     .gallery figcaption {
       text-align: center;
       margin-top: 8px;
@@ -139,7 +136,6 @@
       border-radius: 20px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.1);
       width: 100%;
-      font-family: 'Quicksand', sans-serif;
     }
     .music h2 {
       font-weight: 600;
@@ -399,7 +395,6 @@
       position: absolute;
       color: #800f2f;
       font-size: 30px;
-      font-family: 'Quicksand', sans-serif;
       line-height: 1;
       text-align: center;
       width: 94%;
@@ -412,7 +407,6 @@
     }
     .hover {
       color: white;
-      font-family: 'Quicksand', sans-serif;
       text-align: center;
       margin-top: 10px;
     }
@@ -594,6 +588,31 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
+       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
+    ────────────────────────────────────────────────────────────────────────── */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      background: #ffb3c1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .marquee {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 12s linear infinite;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 1.4em;
+      color: #800f2f;
+    }
+    @keyframes scrollText {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
        8. THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
     ────────────────────────────────────────────────────────────────────────── */
     body.dark-mode {
@@ -613,8 +632,8 @@ Love forever,\A Nook ♡";
       border-color: #f0e6f6;
     }
     body.dark-mode .valentines-day-card .text::before {
-      background: #3e0030;
-      color: #f0e6f6;
+      background: #3e0030; /* dark plum behind the message */
+      color: #f0e6f6;      /* near-white text */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
     body.dark-mode .text {
@@ -651,7 +670,6 @@ Love forever,\A Nook ♡";
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1em;
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -659,6 +677,26 @@ Love forever,\A Nook ♡";
     body.dark-mode #themeToggle {
       background: #5e0068;
       color: #f0e6f6;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       COPY LINK BUTTON STYLES
+    ────────────────────────────────────────────────────────────────────────── */
+    #copyLink {
+      margin: 20px 0;
+      padding: 8px 16px;
+      background: #ff6fa5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+    }
+    #copyLink:hover,
+    #copyLink:focus {
+      background: #e75480;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -677,8 +715,8 @@ Love forever,\A Nook ♡";
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: none;
-      z-index: 100;
+      display: none;       /* hidden until scroll */
+      z-index: 1000;       /* ensure it sits on top */
       transition: background 0.2s;
     }
     #toTop:hover,
@@ -689,15 +727,16 @@ Love forever,\A Nook ♡";
 </head>
 <body>
   <!-- ──────────────────────────────────────────────────────────────────────────
-       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER (at the very top)
+       HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER (at the very top)
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="marquee-container">
     <div class="marquee">
+      🎈🎈🎈 Happy Birthday Matt! 2nd June 2025 🎈🎈🎈
     </div>
   </div>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
-       ─── VALENTINE’S‐DAY CARD (now at the top) with ARIA & tabindex ───────
+       VALENTINE’S‐DAY CARD (with ARIA & tabindex)
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="happy-valentines">
     <div
@@ -720,11 +759,10 @@ Love forever,\A Nook ♡";
     </div>
   </div>
 
+  <!-- Copy Link Button (for sharing) -->
+  <button id="copyLink">Copy Link</button>
 
-
-  <!-- ──────────────────────────────────────────────────────────────────────────
-       ─── BIRTHDAY SONG (moved just below the card) ───────────────────────────
-  ────────────────────────────────────────────────────────────────────────── -->
+  <!-- BIRTHDAY SONG (just below the card) -->
   <div class="music-container">
     <div class="music">
       <h2>Your Birthday Song 🎵</h2>
@@ -742,14 +780,10 @@ Love forever,\A Nook ♡";
   <!-- Return to Top Button (hidden until scroll) -->
   <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
 
-  <!-- ──────────────────────────────────────────────────────────────────────────
-       ─── PAGE CONTENT (gallery + floating hearts)
-       Wrapped in #pageContent so we can blur it when the card opens
-  ────────────────────────────────────────────────────────────────────────── -->
+  <!-- PAGE CONTENT (gallery + floating hearts)
+       Wrapped in #pageContent so we can blur it when the card opens -->
   <div id="pageContent">
-    <!-- ──────────────────────────────────────────────────────────────────────────
-         GALLERY: Thumbnails that open in a lightbox on click
-    ────────────────────────────────────────────────────────────────────────── -->
+    <!-- GALLERY: Thumbnails that open in a lightbox on click -->
     <div class="gallery">
       <figure>
         <img
@@ -772,11 +806,11 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.35 pm.png"
-          alt="Matt and his valentines Kori icecream"
+          alt="Matt and his valentines Kori"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Matt and his valentines Kori icecream</figcaption>
+        <figcaption>Matt and his valentines Kori – ice cream</figcaption>
       </figure>
       <figure>
         <img
