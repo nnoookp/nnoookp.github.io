@@ -26,148 +26,186 @@
       margin-bottom: 0.5em;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
-    /* ... your other styles remain the same ... */
-
+    .letter {
+      max-width: 700px;
+      background: #fff0f5;
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: #6c3a4c;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+      max-width: 1000px;
+      width: 100%;
+      animation: slideUp 1s ease-out;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      object-fit: cover;
+      height: 340px;
+      background: #e8e8e8;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+    .music {
+      margin-top: 50px;
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+      background: #ffffffaa;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+    .music h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: #d14f7b;
+    }
+    .music p {
+      font-size: 1em;
+      margin-bottom: 20px;
+      color: #7a4c61;
+    }
+    audio {
+      margin: 10px;
+      width: 100%;
+    }
+    .gif {
+      margin: 40px 0 10px;
+      text-align: center;
+    }
+    .gif img {
+      width: 220px;
+      border-radius: 12px;
+    }
     .valentines-day-card {
       position: relative;
-      width: 400px;
-      height: 300px;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
       background-color: #ff8fa3;
       overflow: hidden;
       border: 10px solid white;
       border-radius: 10px;
       box-shadow: 0 0 100px rgba(0,0,0,.4);
-      margin: 0 auto;
+      margin: 0 auto 30px;
       transition: all 0.6s ease-in-out;
-      cursor: pointer; /* to indicate clickable */
     }
-    /* Remove hover enlarge */
-    .valentines-day-card:hover {
-      width: 400px;
-      height: 300px;
-    }
-    .valentines-day-card:hover .clouds {
-      display: block;
-    }
-
-    /* Hidden message styles */
-    .text {
-      position: absolute;
-      color: #800f2f;
-      font-size: 30px;
-      font-family: 'Courier New', monospace;
-      line-height: 1;
-      text-align: center;
-      width: 94%;
-      left: 0;
-      padding: 20px;
-      z-index: 3;
-      top: 320px;
-      transition: .3s;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .text.expanded {
-      white-space: pre-wrap;
-      font-size: 22px;
-      background: #fff0f5;
-      padding: 20px;
-      border-radius: 12px;
-      color: #6c3a4c;
-      margin-top: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      height: auto;
-      overflow: visible;
-      cursor: default;
-      text-overflow: unset;
-    }
-
-    /* Hide the span when expanded */
-    .text.expanded span {
+    .clouds { display: none; }
+    .hearts .heartOne, .heartTwo, .heartThree, .heartFour, .heartFive {
       display: none;
     }
+    .text {
+      position: relative;
+      color: #800f2f;
+      font-size: 22px;
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+      text-align: center;
+      padding: 20px;
+      z-index: 3;
+      background: #fff0f5;
+      border-radius: 12px;
+      color: #6c3a4c;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .text.active::before {
+      content: "My dearest Matt,\A\AHappy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\AYou are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\ALove forever,\ANook ♡";
+      white-space: pre-wrap;
+      display: block;
+    }
+    .text span { display: inline; }
+    .text.active span { display: none; }
+    .hover { display: none; }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      .valentines-day-card {
-        width: 90vw;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2em;
+        padding: 0 10px;
+      }
+      .letter {
+        padding: 20px;
+        font-size: 1em;
+        margin: 15px 10px;
+      }
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .gallery img {
         height: auto;
-        min-height: 300px;
+        max-height: 300px;
       }
-      .text {
-        font-size: 18px;
-        top: auto;
-        position: relative;
+      .music {
+        padding: 20px;
+        margin: 20px 10px;
       }
-      .text.expanded {
-        font-size: 18px;
-        position: relative;
-        top: auto;
-        margin-top: 15px;
+      .music h2 {
+        font-size: 1.5em;
+      }
+      .gif img {
+        width: 160px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .letter {
+        font-size: 0.95em;
+      }
+      .music h2 {
+        font-size: 1.3em;
+      }
+      .gallery img {
+        max-height: 250px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="happy-valentines">
-    <div class="valentines-day-card" id="card">
-      <div class="clouds"></div>
-      <div class="hearts">
-        <div class="heartOne">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartTwo">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartThree">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFour">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFive">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-      </div>
-      <div class="text" id="text">
-        <span>Happy birthday my bby Matt &lt;3<br> Day!</span>
-      </div>
+  <div class="valentines-day-card">
+    <div class="text" onclick="this.classList.toggle('active')">
+      <span>Happy birthday my bby Matt &lt;3<br />Tap to read the message</span>
     </div>
-    <p class="hover">- click the text above -</p>
-
-    <!-- rest of your content (gallery, music, etc.) remains unchanged -->
   </div>
-
-  <script>
-    const text = document.getElementById('text');
-    const card = document.getElementById('card');
-
-    // Message to show on click
-    const message = `My dearest Matt,
-
-Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.
-
-You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.
-
-Love forever,
-Nook ♡`;
-
-    text.addEventListener('click', () => {
-      if (!text.classList.contains('expanded')) {
-        text.classList.add('expanded');
-        text.innerText = message;
-      } else {
-        // Optional: Collapse back if clicked again
-        text.classList.remove('expanded');
-        text.innerHTML = `<span>Happy birthday my bby Matt &lt;3<br> Day!</span>`;
-      }
-    });
-  </script>
+  <div class="gallery">
+    <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
+    <img src="Screenshot 2025-05-22 at 9.55.35 pm.png" alt="Memory 2" />
+    <img src="Screenshot 2025-05-22 at 9.56.35 pm.png" alt="Memory 3" />
+    <img src="Screenshot 2025-05-22 at 9.56.22 pm.png" alt="Memory 4" />
+    <img src="Screenshot 2025-05-22 at 9.56.12 pm.png" alt="Memory 5" />
+    <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
+  </div>
+  <div class="music">
+    <h2>Your Birthday Song 🎵</h2>
+    <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
+    <audio controls>
+      <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 </body>
 </html>
