@@ -10,7 +10,7 @@
   />
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       BASE STYLES (unchanged from your original file)
+       BASE STYLES (unchanged)
     ────────────────────────────────────────────────────────────────────────── */
     body {
       font-family: 'Quicksand', sans-serif;
@@ -210,8 +210,9 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
+
     /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S-DAY CARD STYLES (with “click-to-reveal” adjustments)
+       VALENTINE’S‐DAY CARD STYLES (click‐only version)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
@@ -227,16 +228,9 @@
       cursor: pointer; /* indicate it’s clickable */
     }
 
-    /* Keep the original hover-based “grow” effect for bigger screens */
-    .valentines-day-card:hover {
-      width: 800px;
-      height: 600px;
-    }
-    .valentines-day-card:hover .clouds {
-      display: none;
-    }
+    /* ── we have removed ALL “:hover” rules here ── */
 
-    /* NEW: when the card has class “active”, apply the same “grow” + hide clouds */
+    /* Instead, only the “.active” class causes expansion + hiding of clouds */
     .valentines-day-card.active {
       width: 800px;
       height: 600px;
@@ -254,11 +248,12 @@
       border-radius:50%;
       top:140px;
       left:-25px;
-      box-shadow:60px 20px #ffb3c1,
-                  130px 10px #ffb3c1,
-                  190px 20px #ffb3c1,
-                  260px -5px #ffb3c1,
-                  340px 20px #ffb3c1;
+      box-shadow:
+        60px 20px #ffb3c1,
+        130px 10px #ffb3c1,
+        190px 20px #ffb3c1,
+        260px -5px #ffb3c1,
+        340px 20px #ffb3c1;
     }
 
     .valentines-day-card:after {
@@ -270,12 +265,13 @@
       border-radius:50%;
       top:160px;
       left:-40px;
-      box-shadow: 50px 20px #ffccd5,
-                  120px 40px #ffccd5,
-                  200px 15px #ffccd5,
-                  260px 30px #ffccd5,
-                  330px 30px #ffccd5,
-                  380px 10px #ffccd5;
+      box-shadow:
+        50px 20px #ffccd5,
+        120px 40px #ffccd5,
+        200px 15px #ffccd5,
+        260px 30px #ffccd5,
+        330px 30px #ffccd5,
+        380px 10px #ffccd5;
     }
 
     .clouds {
@@ -287,12 +283,13 @@
       z-index:5;
       top:210px;
       left:-20px;
-      box-shadow: 55px 30px #fff0f3,
-                  125px 10px #fff0f3,
-                  175px 20px #fff0f3,
-                  250px 10px #fff0f3,
-                  320px 5px #fff0f3,
-                  380px 10px #fff0f3;
+      box-shadow:
+        55px 30px #fff0f3,
+        125px 10px #fff0f3,
+        175px 20px #fff0f3,
+        250px 10px #fff0f3,
+        320px 5px #fff0f3,
+        380px 10px #fff0f3;
     }
 
     .hearts {
@@ -414,10 +411,8 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       REPLACING “:hover” HIDDEN-MESSAGE RULES WITH “.active”
-       (so that clicking toggles the birthday message)
+       “.active”‐based hidden message (instead of hover)
     ────────────────────────────────────────────────────────────────────────── */
-    /* Remove hover-based content injection; instead apply to .active */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
 Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\A\
@@ -438,19 +433,17 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       MEDIA QUERIES FOR RESPONSIVENESS (CARD + TEXT on narrow screens)
+       RESPONSIVE ADJUSTMENTS FOR “.active” CARD ON SMALL SCREENS
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      /* Make the card scale fluidly (no fixed 800px/600px) */
       .valentines-day-card,
       .valentines-day-card.active {
         width: 90vw;
         height: auto;
       }
-      /* Also make the before/after “clouds” positioning adapt (they will move up) */
       .valentines-day-card:before,
       .valentines-day-card:after {
-        top: 120px; /* push circles slightly higher on narrower widths */
+        top: 120px;
         left: -20px;
         box-shadow:
           45px 15px #ffb3c1,
@@ -469,13 +462,11 @@ Love forever,\A Nook ♡";
           200px 8px #fff0f3,
           260px 4px #fff0f3;
       }
-      /* Position the text box relatively so it flows inside the card */
       .valentines-day-card .text {
         position: relative;
         top: auto;
         animation: none;
       }
-      /* Ensure the hidden message also flows in the normal document flow */
       .valentines-day-card.active .text::before {
         position: relative;
         top: auto;
@@ -489,7 +480,6 @@ Love forever,\A Nook ♡";
         width: 95vw;
         height: auto;
       }
-      /* Slightly reduce font-size inside the text area for very small screens */
       .valentines-day-card .text,
       .valentines-day-card.active .text::before {
         font-size: 18px;
@@ -502,8 +492,8 @@ Love forever,\A Nook ♡";
 </head>
 
 <body>
-  <!-- (kept everything else exactly the same up until the card) -->
-<!--
+  <!-- (everything up to the card remains exactly the same) -->
+  <!--
   <h1>Happy birthday my bby Matt &lt;3</h1>
 
   <div class="letter">
@@ -512,7 +502,8 @@ Love forever,\A Nook ♡";
     <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
     <p>Love forever,<br />Nook ♡</p>
   </div>
--->
+  -->
+
   <div class="happy-valentines">
     <div class="valentines-day-card" id="valentineCard">
       <div class="clouds"></div>
@@ -562,8 +553,8 @@ Love forever,\A Nook ♡";
 
     <div class="hearts" id="hearts"></div>
 
-    <!-- NEW: Script to toggle “active” class on click instead of hover -->
     <script>
+      // Only “.active” toggles the expansion and hidden message now
       document
         .getElementById('valentineCard')
         .addEventListener('click', function () {
