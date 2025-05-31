@@ -10,7 +10,7 @@
   />
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       BASE STYLES (unchanged)
+       BASE STYLES (fonts, body, gallery, music, etc.)
     ────────────────────────────────────────────────────────────────────────── */
     body {
       font-family: 'Quicksand', sans-serif;
@@ -140,6 +140,7 @@
       top: 0;
       left: 10px;
     }
+
     @keyframes drop {
       to {
         transform: translateY(100vh) rotate(-45deg);
@@ -156,168 +157,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       MOBILE‐SPECIFIC ADJUSTMENTS (max-width: 768px)
-       — make the card flex‐stacked, center the revealed text, avoid overlap
-    ────────────────────────────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2em;
-        padding: 0 10px;
-      }
-
-      .letter {
-        padding: 20px;
-        font-size: 1em;
-        margin: 15px 10px;
-      }
-
-      /* ─ Instagram‐style: 2 columns per row on mobile ─ */
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-      .gallery img {
-        height: auto;
-        max-height: 200px;
-      }
-
-      .music-container {
-        margin-top: 30px;
-      }
-
-      .music h2 {
-        font-size: 1.5em;
-      }
-
-      .gif img {
-        width: 160px;
-      }
-
-      audio {
-        width: 100%;
-      }
-
-      /* ── MAKE THE CARD USE FLEX LAYOUT ── */
-      .valentines-day-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 95vw;
-        height: 350px;               /* initial “hidden” height */
-        padding-top: 20px;           /* space at top so hearts/clouds aren’t cut */
-        box-sizing: border-box;
-      }
-      /* When clicked, let it grow vertically to fit the message */
-      .valentines-day-card.active {
-        height: auto;
-      }
-
-      /* CLOUD CIRCLES ADJUSTMENT */
-      .valentines-day-card:before,
-      .valentines-day-card:after {
-        top: 140px;
-        left: -20px;
-      }
-      .valentines-day-card:before {
-        box-shadow:
-          45px 15px #ffb3c1,
-          100px 8px #ffb3c1,
-          150px 15px #ffb3c1,
-          200px -4px #ffb3c1,
-          260px 15px #ffb3c1;
-      }
-      .valentines-day-card:after {
-        box-shadow:
-          45px 15px #ffccd5,
-          100px 8px #ffccd5,
-          150px 15px #ffccd5,
-          200px 8px #ffccd5,
-          260px 4px #ffccd5;
-      }
-
-      .clouds {
-        top: 180px;
-        left: -15px;
-        box-shadow:
-          45px 20px #fff0f3,
-          100px 8px #fff0f3,
-          150px 15px #fff0f3,
-          200px 8px #fff0f3,
-          260px 4px #fff0f3;
-      }
-
-      /* OVERRIDE .text TO NO LONGER BE absolute */
-      .valentines-day-card .text {
-        position: static;         /* remove absolute */
-        margin-top: 10px;         /* small gap below the hearts section */
-        width: 100%;
-        box-sizing: border-box;
-        animation: none;          /* no “up” animation on mobile */
-      }
-
-      /* REVEALED MESSAGE: inline-block, centered, with padding */
-      .valentines-day-card.active .text::before {
-        content: "My dearest Matt,\A\A\
-Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\A\
-You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
-Love forever,\A Nook ♡";
-        white-space: pre-wrap;
-        display: inline-block;          /* shrink‐to‐fit content */
-        max-width: 90%;                 /* leave a 5% margin on each side */
-        background: #fff0f5;
-        border-radius: 12px;
-        color: #6c3a4c;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        text-align: center;             /* center text horizontally */
-        font-size: 24px;                /* larger font on mobile */
-        line-height: 1.5;
-        padding: 30px;                  /* plenty of breathing room */
-        margin: 20px auto;              /* vertical gap + horizontal centering */
-        box-sizing: border-box;
-      }
-      .valentines-day-card.active .text span {
-        display: none;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      .letter {
-        font-size: 0.95em;
-      }
-
-      .music h2 {
-        font-size: 1.3em;
-      }
-
-      .gallery img {
-        max-height: 150px;
-      }
-
-      /* SHRINK THE CARD SLIGHTLY ON VERY SMALL PHONES */
-      .valentines-day-card {
-        width: 95vw;
-        height: 320px;
-      }
-      .valentines-day-card.active {
-        height: auto;
-      }
-
-      /* REVEALED TEXT ON VERY SMALL PHONES: slightly smaller */
-      .valentines-day-card.active .text::before {
-        font-size: 22px;
-        line-height: 1.4;
-        padding: 20px;
-      }
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S-DAY CARD STYLES (click-only, desktop/tablet >768px)
+       VALENTINE’S-DAY CARD (DESKTOP / TABLET > 768px)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
@@ -394,11 +234,10 @@ Love forever,\A Nook ♡";
         380px 10px #fff0f3;
     }
 
-    .hearts {
+    .hearts-inside { /* for the five hearts inside the card */
       position: absolute;
       z-index:2;
     }
-
     .heartOne {
       position: absolute;
       left:100px;
@@ -513,7 +352,7 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       “.active”-based hidden message (desktop/tablet >768px)
+       REVEALED MESSAGE (DESKTOP / TABLET > 768px)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
@@ -523,15 +362,15 @@ Love forever,\A Nook ♡";
       white-space: pre-wrap;
       display: block;
       width: 100%;
-      padding: 40px;             
+      padding: 40px;
       background: #fff0f5;
       border-radius: 12px;
       color: #6c3a4c;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
-      font-size: 26px;           
+      font-size: 26px;
       line-height: 1.4;
-      margin: 20px 0;            
+      margin: 20px 0;
       box-sizing: border-box;
     }
     .valentines-day-card.active .text span {
@@ -539,10 +378,10 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       IMAGE MODAL (Lightbox) STYLES
+       IMAGE MODAL (LIGHTBOX) STYLES
     ────────────────────────────────────────────────────────────────────────── */
     .image-modal {
-      display: none;             
+      display: none;
       position: fixed;
       z-index: 1000;
       left: 0;
@@ -570,25 +409,188 @@ Love forever,\A Nook ♡";
       cursor: pointer;
       user-select: none;
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       MOBILE‐SPECIFIC ADJUSTMENTS (max-width: 768px)
+       (2-column gallery, flex card, centered revealed text)
+    ────────────────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2em;
+        padding: 0 10px;
+      }
+
+      .letter {
+        padding: 20px;
+        font-size: 1em;
+        margin: 15px 10px;
+      }
+
+      /* Instagram‐style 2 columns */
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .gallery img {
+        height: auto;
+        max-height: 200px;
+      }
+
+      .music-container {
+        margin-top: 30px;
+      }
+
+      .music h2 {
+        font-size: 1.5em;
+      }
+
+      .gif img {
+        width: 160px;
+      }
+
+      audio {
+        width: 100%;
+      }
+
+      /* Use flex on the Valentine’s card, center children */
+      .valentines-day-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 95vw;
+        height: 350px;       /* initial “hidden box” */
+        padding-top: 20px;   /* so clouds/hearts aren’t cut off */
+        box-sizing: border-box;
+      }
+      .valentines-day-card.active {
+        height: auto;       /* expand for content */
+      }
+
+      /* Adjust cloud circles to remain visible */
+      .valentines-day-card:before,
+      .valentines-day-card:after {
+        top: 140px;
+        left: -20px;
+      }
+      .valentines-day-card:before {
+        box-shadow:
+          45px 15px #ffb3c1,
+          100px 8px #ffb3c1,
+          150px 15px #ffb3c1,
+          200px -4px #ffb3c1,
+          260px 15px #ffb3c1;
+      }
+      .valentines-day-card:after {
+        box-shadow:
+          45px 15px #ffccd5,
+          100px 8px #ffccd5,
+          150px 15px #ffccd5,
+          200px 8px #ffccd5,
+          260px 4px #ffccd5;
+      }
+
+      .clouds {
+        top: 180px;
+        left: -15px;
+        box-shadow:
+          45px 20px #fff0f3,
+          100px 8px #fff0f3,
+          150px 15px #fff0f3,
+          200px 8px #fff0f3,
+          260px 4px #fff0f3;
+      }
+
+      /* Make .text static (no absolute), so pseudo-element pushes card height */
+      .valentines-day-card .text {
+        position: static;
+        margin-top: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        animation: none;
+      }
+
+      /* Centered, inline-block revealed message */
+      .valentines-day-card.active .text::before {
+        content: "My dearest Matt,\A\A\
+Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\A\
+You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
+Love forever,\A Nook ♡";
+        white-space: pre-wrap;
+        display: inline-block;
+        max-width: 90%;
+        background: #fff0f5;
+        border-radius: 12px;
+        color: #6c3a4c;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: 24px;
+        line-height: 1.5;
+        padding: 30px;
+        margin: 20px auto;
+        box-sizing: border-box;
+      }
+      .valentines-day-card.active .text span {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8em;
+      }
+
+      .letter {
+        font-size: 0.95em;
+      }
+
+      .music h2 {
+        font-size: 1.3em;
+      }
+
+      .gallery img {
+        max-height: 150px;
+      }
+
+      /* Slightly shrink the card on very small phones */
+      .valentines-day-card {
+        width: 95vw;
+        height: 320px;
+      }
+      .valentines-day-card.active {
+        height: auto;
+      }
+
+      /* Smaller revealed text on tiny screens */
+      .valentines-day-card.active .text::before {
+        font-size: 22px;
+        line-height: 1.4;
+        padding: 20px;
+      }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
   </style>
 </head>
 <body>
-  <!-- (everything up to the card remains the same) -->
+  <!-- If you want to include the commented-out letter, it can go here -->
   <!--
   <h1>Happy birthday my bby Matt &lt;3</h1>
 
   <div class="letter">
     <p>My dearest Matt,</p>
-    <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share every look that says more than words.</p>
+    <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.</p>
     <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
     <p>Love forever,<br />Nook ♡</p>
   </div>
   -->
 
   <div class="happy-valentines">
+    <!-- ──────────────────────────────────────────────────────────────────────────
+         VALENTINE’S CARD: click to reveal
+    ────────────────────────────────────────────────────────────────────────── -->
     <div class="valentines-day-card" id="valentineCard">
       <div class="clouds"></div>
-      <div class="hearts">
+      <div class="hearts-inside">
         <div class="heartOne">
           <div class="left-side"></div>
           <div class="right-side"></div>
@@ -615,7 +617,7 @@ Love forever,\A Nook ♡";
     <p class="hover">- click the card to reveal -</p>
 
     <!-- ──────────────────────────────────────────────────────────────────────────
-         GALLERY: Thumbnails that open in a lightbox on click
+         GALLERY: Thumbnails open in lightbox on click
     ────────────────────────────────────────────────────────────────────────── -->
     <div class="gallery">
       <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
@@ -633,7 +635,7 @@ Love forever,\A Nook ♡";
     </div>
 
     <!-- ──────────────────────────────────────────────────────────────────────────
-         BIRTHDAY SONG (wrapped in .music-container for centering)
+         BIRTHDAY SONG (centered)
     ────────────────────────────────────────────────────────────────────────── -->
     <div class="music-container">
       <div class="music">
@@ -646,35 +648,56 @@ Love forever,\A Nook ♡";
       </div>
     </div>
 
+    <!-- Floating hearts container -->
     <div class="hearts" id="hearts"></div>
+  </div>
 
-    <!-- ──────────────────────────────────────────────────────────────────────────
-         SCRIPTS:
-           1) Toggle “active” class on the Valentine’s card
-           2) Create floating hearts
-           3) Lightbox logic for gallery images
-    ────────────────────────────────────────────────────────────────────────── -->
-    <script>
-      // 1) Valentine’s card: click to toggle hidden message + expand
-      document
-        .getElementById('valentineCard')
-        .addEventListener('click', function () {
-          this.classList.toggle('active');
-        });
+  <!-- ──────────────────────────────────────────────────────────────────────────
+       SCRIPTS: 1) Card‐reveal, 2) Floating hearts, 3) Lightbox
+  ────────────────────────────────────────────────────────────────────────── -->
+  <script>
+    // 1) Toggle “active” on the Valentine's card to reveal message
+    document
+      .getElementById('valentineCard')
+      .addEventListener('click', function () {
+        this.classList.toggle('active');
+      });
 
-      // 2) Floating hearts in the background
-      function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-        heart.style.opacity = (0.5 + Math.random() * 0.5);
-        document.getElementById('hearts').appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
+    // 2) Floating hearts in the background
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      heart.style.opacity = (0.5 + Math.random() * 0.5);
+      document.getElementById('hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
+
+    // 3) LIGHTBOX: click gallery images to open full-screen modal
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeBtn = document.querySelector('.close-btn');
+
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        modalImg.src = img.src;
+        modal.style.display = 'flex';
+      });
+    });
+
+    // Close modal on “×”
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    // Close modal if clicking outside the image
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
       }
-      setInterval(createHeart, 300);
-
-      // 3) LIGHTBOX: click a .gallery img to open full-screen modal
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImg');
-      const closeBtn
+    });
+  </script>
+</body>
+</html>
