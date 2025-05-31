@@ -194,17 +194,17 @@
         opacity: 0;
       }
     }
-    .heart {
+    .cake {
       position: absolute;
       width: 20px;
       height: 18px;
       transform: rotate(-45deg);
       opacity: 0.8;
-      animation: drop 5s linear infinite; /* duration set in JS */
+      animation: drop 5s linear infinite; /* duration set in JS *
       background-color: #ff6fa5; /* default, JS overrides */
     }
-    .heart::before,
-    .heart::after {
+    .cake::before,
+    .cake::after {
       content: "";
       position: absolute;
       width: 20px;
@@ -212,11 +212,11 @@
       background-color: inherit;
       border-radius: 50%;
     }
-    .heart::before {
+    .cake::before {
       top: -10px;
       left: 0;
     }
-    .heart::after {
+    .cake::after {
       top: 0;
       left: 10px;
     }
