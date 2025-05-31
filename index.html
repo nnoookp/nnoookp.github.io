@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Matt</title>
+  <!-- Google Fonts: Pacifico, Quicksand, Shadows Into Light -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&family=Shadows+Into+Light&display=swap"
     rel="stylesheet"
   />
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       BASE STYLES (unchanged)
+       BASE STYLES (mostly unchanged)
     ────────────────────────────────────────────────────────────────────────── */
     body {
       font-family: 'Quicksand', sans-serif;
@@ -103,25 +104,39 @@
       width: 220px;
       border-radius: 12px;
     }
-    .hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    /* Improved Heart Shape */
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       PAGE CONTENT BLUR (when the card is open)
+    ────────────────────────────────────────────────────────────────────────── */
+    #pageContent.blur {
+      filter: blur(4px);
+      transition: filter 0.3s ease;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       FLOATING HEARTS (background) – will be inside #pageContent
+    ────────────────────────────────────────────────────────────────────────── */
+    @keyframes drop {
+      to {
+        transform: translateY(100vh) rotate(-45deg);
+        opacity: 0;
+      }
+    }
     .heart {
       position: absolute;
       width: 20px;
       height: 18px;
-      background-color: #ff6fa5;
       transform: rotate(-45deg);
       opacity: 0.8;
-      animation: drop 5s linear infinite;
+      animation: drop 5s linear infinite; /* duration tweaked in JS */
     }
     .heart::before,
     .heart::after {
@@ -129,7 +144,7 @@
       position: absolute;
       width: 20px;
       height: 18px;
-      background-color: #ff6fa5;
+      background-color: inherit; /* will be set via JS */
       border-radius: 50%;
     }
     .heart::before {
@@ -141,97 +156,32 @@
       left: 10px;
     }
 
-    @keyframes drop {
-      to {
-        transform: translateY(100vh) rotate(-45deg);
-        opacity: 0;
-      }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2em;
-        padding: 0 10px;
-      }
-
-      .letter {
-        padding: 20px;
-        font-size: 1em;
-        margin: 15px 10px;
-      }
-
-      /* ── Instagram‐style: 2 columns per row on mobile ── */
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-      .gallery img {
-        height: auto;
-        max-height: 200px;
-      }
-
-      .music-container {
-        margin-top: 30px;
-      }
-
-      .music h2 {
-        font-size: 1.5em;
-      }
-
-      .gif img {
-        width: 160px;
-      }
-
-      audio {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      .letter {
-        font-size: 0.95em;
-      }
-
-      .music h2 {
-        font-size: 1.3em;
-      }
-
-      .gallery img {
-        max-height: 150px;
-      }
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
     /* ──────────────────────────────────────────────────────────────────────────
        VALENTINE’S‐DAY CARD STYLES (click‐only version)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
+      z-index: 10; /* stay on top when #pageContent is blurred */
       width: 400px;
       height: 300px;
-      background-color: #ff8fa3;
+      /* 1) Gradient background instead of flat pink */
+      background: linear-gradient(
+        135deg,
+        #ff8fa3 0%,
+        #ffc1cb 50%,
+        #ffe4eb 100%
+      );
       overflow: hidden;
       border: 10px solid white;
       border-radius: 10px;
-      box-shadow: 0 0 100px rgba(0,0,0,.4);
+      /* 4) Softer, layered box-shadow */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       margin: 0 auto;
-      transition: all 0.6s ease-in-out;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
       cursor: pointer;
+      /* 2) Pop-in animation on page load */
+      animation: popIn 0.8s ease-out;
     }
-
     .valentines-day-card.active {
       width: 800px;
       height: 600px;
@@ -239,7 +189,6 @@
     .valentines-day-card.active .clouds {
       display: none;
     }
-
     .valentines-day-card:before {
       content:"";
       position: absolute;
@@ -256,7 +205,6 @@
         260px -5px #ffb3c1,
         340px 20px #ffb3c1;
     }
-
     .valentines-day-card:after {
       content:"";
       position: absolute;
@@ -274,7 +222,6 @@
         330px 30px #ffccd5,
         380px 10px #ffccd5;
     }
-
     .clouds {
       position: absolute;
       width:100px;
@@ -292,43 +239,15 @@
         320px 5px #fff0f3,
         380px 10px #fff0f3;
     }
-
     .hearts {
       position: absolute;
       z-index:2;
     }
-
-    .heartOne {
-      position: absolute;
-      left:100px;
-      top:250px;
-      animation: up 4s linear forwards 1s;
-    }
-    .heartTwo {
-      position: absolute;
-      left:270px;
-      top:230px;
-      animation: up 5s linear forwards 1.8s;
-    }
-    .heartThree {
-      position: absolute;
-      left:85px;
-      top:415px;
-      animation: up 5s linear forwards 3s;
-    }
-    .heartFour {
-      position: absolute;
-      left:320px;
-      top:380px;
-      animation: upTwo 9s linear infinite 3.5s;
-    }
-    .heartFive {
-      position: absolute;
-      left:150px;
-      top:400px;
-      animation: upTwo 13s linear infinite 4.5s;
-    }
-
+    .heartOne { position: absolute; left:100px; top:250px; animation: up 4s linear forwards 1s; }
+    .heartTwo { position: absolute; left:270px; top:230px; animation: up 5s linear forwards 1.8s; }
+    .heartThree { position: absolute; left:85px; top:415px; animation: up 5s linear forwards 3s; }
+    .heartFour { position: absolute; left:320px; top:380px; animation: upTwo 9s linear infinite 3.5s; }
+    .heartFive { position: absolute; left:150px; top:400px; animation: upTwo 13s linear infinite 4.5s; }
     .right-side:before, .right-side:after {
       position: absolute;
       content:"";
@@ -350,7 +269,6 @@
       top:19px;
       left:-0.26px;
     }
-
     .left-side:before, .left-side:after {
       position: absolute;
       content:"";
@@ -372,38 +290,57 @@
       border-right: 15px solid #ff4d6d;
       top:19px;
     }
-
     @keyframes move {
       0%, 100% {transform: rotateY(0);}
       50% {transform: rotateY(-45deg);}
     }
-
     @keyframes up {
       0% {transform: translateY(0);}
       100% {transform: translateY(-200px);}
     }
-
     @keyframes upTwo {
       0% {transform: translateY(0);}
       100% {transform: translateY(-450px);}
     }
 
+    /* ──────────────────────────────────────────────────────────────────────────
+       POP‐IN ANIMATION FOR CARD ON LOAD
+    ────────────────────────────────────────────────────────────────────────── */
+    @keyframes popIn {
+      0%   { transform: scale(0.8); opacity: 0; }
+      60%  { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       SLIDE‐IN ANIMATION FOR HIDDEN TEXT
+    ────────────────────────────────────────────────────────────────────────── */
+    @keyframes slideInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .text {
       position: absolute;
       color: #800f2f;
-      font-size:30px;
-      font-family: 'Courier New', monospace;
-      line-height:1;
+      font-size: 30px;
+      font-family: 'Shadows Into Light', cursive;
+      line-height: 1;
       text-align: center;
-      width:94%;
-      left:0;
+      width: 94%;
+      left: 0;
       padding: 20px;
-      z-index:3;
-      top:320px;
+      z-index: 3;
+      top: 320px;
       animation: up 1s ease forwards;
-      transition: .2s;
+      transition: 0.2s;
     }
-
     .hover {
       color: white;
       font-family: 'Pacifico', cursive;
@@ -412,7 +349,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       “.active”‐based hidden message (instead of hover)
+       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN & TYPOGRAPHY UPDATE
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
@@ -421,26 +358,61 @@ You are the calm to my chaos, the melody to my lyrics, and the best part of ever
 Love forever,\A Nook ♡";
       white-space: pre-wrap;
       display: block;
-      font-size: 22px;
+      font-family: 'Shadows Into Light', cursive;
+      font-size: 20px;
+      line-height: 1.5;
       background: #fff0f5;
-      padding: 20px;
+      padding: 25px;
       border-radius: 12px;
       color: #6c3a4c;
       margin-top: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: slideInUp 0.6s ease-out forwards;
+      text-align: center;
     }
     .valentines-day-card.active .text span {
       display: none;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       RESPONSIVE ADJUSTMENTS FOR “.active” CARD ON SMALL SCREENS
+       RESPONSIVE ADJUSTMENTS FOR CARD ON MOBILE SCREENS
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2em;
+        padding: 0 10px;
+      }
+      .letter {
+        padding: 20px;
+        font-size: 1em;
+        margin: 15px 10px;
+      }
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .gallery img {
+        height: auto;
+        max-height: 200px;
+      }
+      .music-container {
+        margin-top: 30px;
+      }
+      .music h2 {
+        font-size: 1.5em;
+      }
+      .gif img {
+        width: 160px;
+      }
+      audio {
+        width: 100%;
+      }
+
+      /* Card width expanded, height auto to allow reveal */
       .valentines-day-card,
       .valentines-day-card.active {
-        width: 95vw;    /* was 90vw */
-        height: auto;   /* ensure the revealed text can expand */
+        width: 95vw;
+        height: auto;
       }
       .valentines-day-card:before,
       .valentines-day-card:after {
@@ -476,17 +448,31 @@ Love forever,\A Nook ♡";
     }
 
     @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .letter {
+        font-size: 0.95em;
+      }
+      .music h2 {
+        font-size: 1.3em;
+      }
+      .gallery img {
+        max-height: 150px;
+      }
+
+      /* Card width further expanded */
       .valentines-day-card,
       .valentines-day-card.active {
-        width: 98vw;   /* was 95vw */
-        height: auto;  /* ensure the revealed text can expand */
+        width: 98vw;
+        height: auto;
       }
       .valentines-day-card .text,
       .valentines-day-card.active .text::before {
         font-size: 18px;
       }
       .valentines-day-card.active .text::before {
-        padding: 15px;
+        padding: 18px;
       }
     }
 
@@ -525,35 +511,20 @@ Love forever,\A Nook ♡";
   </style>
 </head>
 <body>
-  <!-- (everything up to the card remains the same) -->
-  <div class="happy-valentines">
-    <div class="valentines-day-card" id="valentineCard">
-      <div class="clouds"></div>
-      <div class="hearts">
-        <div class="heartOne">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartTwo">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartThree">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFour">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFive">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-      </div>
-      <div class="text"><span>Happy birthday my bby Matt &lt;3</span></div>
+  <!-- Wrap everything except the card itself in #pageContent for the blur effect -->
+  <div id="pageContent">
+    <!-- Example heading (you can uncomment if desired) -->
+    <!-- <h1>Happy birthday my bby Matt &lt;3</h1> -->
+
+    <!-- Letter section (optional; uncomment to include) -->
+    <!--
+    <div class="letter">
+      <p>My dearest Matt,</p>
+      <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.</p>
+      <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
+      <p>Love forever,<br />Nook ♡</p>
     </div>
-    <p class="hover">- click the card to reveal -</p>
+    -->
 
     <!-- ──────────────────────────────────────────────────────────────────────────
          GALLERY: Thumbnails that open in a lightbox on click
@@ -587,60 +558,110 @@ Love forever,\A Nook ♡";
       </div>
     </div>
 
+    <!-- Floating hearts container (will be blurred when card opens) -->
     <div class="hearts" id="hearts"></div>
-
-    <!-- ──────────────────────────────────────────────────────────────────────────
-         SCRIPTS:
-           1) Toggle “active” class on the Valentine’s card
-           2) Create floating hearts
-           3) Lightbox logic for gallery images
-    ────────────────────────────────────────────────────────────────────────── -->
-    <script>
-      // 1) Valentine’s card: click to toggle hidden message + expand
-      document
-        .getElementById('valentineCard')
-        .addEventListener('click', function () {
-          this.classList.toggle('active');
-        });
-
-      // 2) Floating hearts in the background
-      function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-        heart.style.opacity = (0.5 + Math.random() * 0.5);
-        document.getElementById('hearts').appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }
-      setInterval(createHeart, 300);
-
-      // 3) LIGHTBOX: click a .gallery img to open full-screen modal
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImg');
-      const closeBtn = document.querySelector('.close-btn');
-
-      // When any thumbnail is clicked:
-      document.querySelectorAll('.gallery img').forEach(img => {
-        img.addEventListener('click', () => {
-          modalImg.src = img.src;
-          modal.style.display = 'flex';
-        });
-      });
-
-      // Close modal when clicking the “×”:
-      closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-
-      // Also close if user clicks anywhere outside the image:
-      modal.addEventListener('click', e => {
-        // If click is directly on the overlay (not the image), close
-        if (e.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
   </div>
+
+  <!-- ──────────────────────────────────────────────────────────────────────────
+       VALENTINE’S‐DAY CARD (click to reveal)
+  ────────────────────────────────────────────────────────────────────────── -->
+  <div class="happy-valentines">
+    <div class="valentines-day-card" id="valentineCard">
+      <div class="clouds"></div>
+      <div class="hearts">
+        <div class="heartOne">
+          <div class="left-side"></div>
+          <div class="right-side"></div>
+        </div>
+        <div class="heartTwo">
+          <div class="left-side"></div>
+          <div class="right-side"></div>
+        </div>
+        <div class="heartThree">
+          <div class="left-side"></div>
+          <div class="right-side"></div>
+        </div>
+        <div class="heartFour">
+          <div class="left-side"></div>
+          <div class="right-side"></div>
+        </div>
+        <div class="heartFive">
+          <div class="left-side"></div>
+          <div class="right-side"></div>
+        </div>
+      </div>
+      <div class="text"><span>Happy birthday my bby Matt &lt;3</span></div>
+    </div>
+    <p class="hover">- click the card to reveal -</p>
+  </div>
+
+  <!-- Load Canvas‐Confetti (for the burst on reveal) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <!-- ──────────────────────────────────────────────────────────────────────────
+       SCRIPTS:
+         1) Toggle “active” on the Valentine’s card + fire confetti + blur page
+         2) Create floating hearts in the background
+         3) Lightbox logic for gallery images
+  ────────────────────────────────────────────────────────────────────────── -->
+  <script>
+    // 1) Toggle active on the Valentine’s card, apply blur to #pageContent, fire confetti
+    const card = document.getElementById('valentineCard');
+    const pageContent = document.getElementById('pageContent');
+
+    card.addEventListener('click', function () {
+      this.classList.toggle('active');
+      pageContent.classList.toggle('blur');
+
+      // Only fire confetti when opening (not when closing)
+      if (this.classList.contains('active')) {
+        confetti({
+          particleCount: 60,
+          spread: 55,
+          origin: { x: 0.5, y: 0 },
+        });
+      }
+    });
+
+    // 2) Floating hearts in the background (random colors & durations)
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      // Random horizontal position
+      heart.style.left = Math.random() * 100 + 'vw';
+      // Pick one of three pink shades
+      const colors = ['#ff6fa5', '#ff9bbb', '#ffa3c4'];
+      heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      // Slightly slower on mobile
+      const baseDuration = window.innerWidth <= 480 ? 5 : 3;
+      heart.style.animationDuration = (baseDuration + Math.random() * 2) + 's';
+      heart.style.opacity = (0.4 + Math.random() * 0.6);
+      document.getElementById('hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+    setInterval(createHeart, 300);
+
+    // 3) LIGHTBOX: click a .gallery img to open full-screen modal
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeBtn = document.querySelector('.close-btn');
+
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        modalImg.src = img.src;
+        modal.style.display = 'flex';
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
