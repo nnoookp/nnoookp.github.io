@@ -4,11 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Matt</title>
-  <!-- Google Font: Quicksand (weights 400 & 600) -->
+
+  <!-- Meta Description & Open Graph for SEO & Social Sharing -->
+  <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating hearts, balloons, dark mode, and more!" />
+  <meta property="og:title" content="Happy Birthday Matt!" />
+  <meta property="og:description" content="Click to reveal a heartfelt message, watch confetti, and enjoy floating hearts." />
+  <meta property="og:image" content="https://example.com/preview-image.png" />
+  <meta property="og:url" content="https://example.com/birthday-matt.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <!-- Preload & Load Google Font (Quicksand) Optimally -->
   <link
+    rel="preload"
     href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap"
-    rel="stylesheet"
+    as="style"
+    onload="this.rel='stylesheet'"
   />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+  </noscript>
+
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
        BASE STYLES (uses Quicksand throughout)
@@ -16,15 +33,26 @@
     body {
       font-family: 'Quicksand', sans-serif;
       margin: 0;
-      background: linear-gradient(to bottom right, #fff5f8, #ffe4ec);
+      background: linear-gradient( to bottom right, #fff5f8, #ffe4ec );
+      background-size: 200% 200%;
+      animation: gradientShift 20s ease infinite, fadeIn 1.5s ease-in;
       color: #3a3a3a;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 30px 20px;
-      animation: fadeIn 1.5s ease-in;
       overflow-x: hidden;
     }
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     h1 {
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
@@ -34,6 +62,17 @@
       margin-bottom: 0.5em;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
+
+    /* Focus outline for interactive elements */
+    [role="button"]:focus,
+    button:focus,
+    .gallery img:focus,
+    #copyLink:focus,
+    #themeToggle:focus {
+      outline: 2px dashed #d14f7b;
+      outline-offset: 4px;
+    }
+
     .letter {
       max-width: 700px;
       background: #fff0f5;
@@ -46,6 +85,7 @@
       color: #6c3a4c;
       font-family: 'Quicksand', sans-serif;
     }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -55,6 +95,11 @@
       width: 100%;
       animation: slideUp 1s ease-out;
     }
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
     .gallery img {
       width: 100%;
       border-radius: 18px;
@@ -65,10 +110,12 @@
       background: #e8e8e8;
       cursor: pointer;
     }
-    .gallery img:hover {
+    .gallery img:hover,
+    .gallery img:focus {
       transform: scale(1.05);
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
     }
+
     .music-container {
       display: flex;
       justify-content: center;
@@ -87,7 +134,6 @@
       font-family: 'Quicksand', sans-serif;
     }
     .music h2 {
-      font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       font-size: 1.8em;
       margin-bottom: 10px;
@@ -97,12 +143,12 @@
       font-size: 1em;
       margin-bottom: 20px;
       color: #7a4c61;
-      font-family: 'Quicksand', sans-serif;
     }
     audio {
       margin: 10px 0;
       width: 100%;
     }
+
     .gif {
       margin: 40px 0 10px;
       text-align: center;
@@ -110,14 +156,6 @@
     .gif img {
       width: 220px;
       border-radius: 12px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -158,7 +196,7 @@
       transform: rotate(-45deg);
       opacity: 0.8;
       animation: drop 5s linear infinite; /* duration set in JS */
-      background-color: #ff6fa5; /* default, JS will override */
+      background-color: #ff6fa5; /* default, JS overrides */
     }
     .heart::before,
     .heart::after {
@@ -179,7 +217,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD STYLES (click‐only version)
+       VALENTINE’S‐DAY CARD STYLES (click‐only version with ARIA & focus)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
@@ -201,6 +239,10 @@
       cursor: pointer;
       animation: popIn 0.8s ease-out;
     }
+    .valentines-day-card:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(209, 79, 123, 0.6);
+    }
     .valentines-day-card.active {
       width: 800px;
       height: 600px;
@@ -209,14 +251,14 @@
       display: none;
     }
     .valentines-day-card:before {
-      content:"";
+      content: "";
       position: absolute;
       background-color: #ffb3c1;
-      width:100px;
-      height:100px;
-      border-radius:50%;
-      top:140px;
-      left:-25px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      top: 140px;
+      left: -25px;
       box-shadow:
         60px 20px #ffb3c1,
         130px 10px #ffb3c1,
@@ -225,14 +267,14 @@
         340px 20px #ffb3c1;
     }
     .valentines-day-card:after {
-      content:"";
+      content: "";
       position: absolute;
       background-color: #ffccd5;
-      width:100px;
-      height:100px;
-      border-radius:50%;
-      top:160px;
-      left:-40px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      top: 160px;
+      left: -40px;
       box-shadow:
         50px 20px #ffccd5,
         120px 40px #ffccd5,
@@ -243,13 +285,13 @@
     }
     .clouds {
       position: absolute;
-      width:100px;
-      height:100px;
-      border-radius:50%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
       background-color: #fff0f3;
-      z-index:5;
-      top:210px;
-      left:-20px;
+      z-index: 5;
+      top: 210px;
+      left: -20px;
       box-shadow:
         55px 30px #fff0f3,
         125px 10px #fff0f3,
@@ -260,7 +302,7 @@
     }
     .hearts {
       position: absolute;
-      z-index:2;
+      z-index: 2;
     }
     .heartOne { position: absolute; left:100px; top:250px; animation: up 4s linear forwards 1s; }
     .heartTwo { position: absolute; left:270px; top:230px; animation: up 5s linear forwards 1.8s; }
@@ -269,57 +311,57 @@
     .heartFive { position: absolute; left:150px; top:400px; animation: upTwo 13s linear infinite 4.5s; }
     .right-side:before, .right-side:after {
       position: absolute;
-      content:"";
+      content: "";
       transform-origin: left;
       animation: move 1s ease infinite;
     }
     .right-side:before {
-      border-radius:50% 50% 50% 0;
-      width:21px;
-      height:20px;
+      border-radius: 50% 50% 50% 0;
+      width: 21px;
+      height: 20px;
       background-color: #c9184a;
-      left:-0.26px;
+      left: -0.26px;
     }
     .right-side:after {
-      height:0;
-      width:0;
-      border-bottom:10px solid transparent;
+      height: 0;
+      width: 0;
+      border-bottom: 10px solid transparent;
       border-left: 15px solid #c9184a;
-      top:19px;
-      left:-0.26px;
+      top: 19px;
+      left: -0.26px;
     }
     .left-side:before, .left-side:after {
       position: absolute;
-      content:"";
+      content: "";
       transform-origin: right;
       animation: move 1s ease infinite;
     }
     .left-side:before {
-      border-radius:50% 50% 0 50%;
-      width:20px;
-      height:20px;
-      left:-20.7px;
+      border-radius: 50% 50% 0 50%;
+      width: 20px;
+      height: 20px;
+      left: -20.7px;
       background-color: #ff4d6d;
     }
     .left-side:after {
-      height:0;
-      width:0;
-      left:-15px;
-      border-bottom:10px solid transparent;
+      height: 0;
+      width: 0;
+      left: -15px;
+      border-bottom: 10px solid transparent;
       border-right: 15px solid #ff4d6d;
-      top:19px;
+      top: 19px;
     }
     @keyframes move {
-      0%, 100% {transform: rotateY(0);}
-      50% {transform: rotateY(-45deg);}
+      0%, 100% { transform: rotateY(0); }
+      50% { transform: rotateY(-45deg); }
     }
     @keyframes up {
-      0% {transform: translateY(0);}
-      100% {transform: translateY(-200px);}
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-200px); }
     }
     @keyframes upTwo {
-      0% {transform: translateY(0);}
-      100% {transform: translateY(-450px);}
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-450px); }
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -615,6 +657,27 @@ Love forever,\A Nook ♡";
       background: #5e0068;
       color: #f0e6f6;
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       COPY LINK BUTTON STYLES
+    ────────────────────────────────────────────────────────────────────────── */
+    #copyLink {
+      margin: 20px 0;
+      padding: 8px 16px;
+      background: #ff6fa5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+    }
+    #copyLink:hover,
+    #copyLink:focus {
+      background: #e75480;
+    }
   </style>
 </head>
 <body>
@@ -628,10 +691,17 @@ Love forever,\A Nook ♡";
   </div>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
-       ─── VALENTINE’S‐DAY CARD (now at the top) ───────────────────────────────
+       ─── VALENTINE’S‐DAY CARD (now at the top) with ARIA & tabindex ───────
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="happy-valentines">
-    <div class="valentines-day-card" id="valentineCard">
+    <div
+      class="valentines-day-card"
+      id="valentineCard"
+      role="button"
+      tabindex="0"
+      aria-expanded="false"
+      aria-label="Click to reveal a birthday message"
+    >
       <div class="clouds"></div>
       <div class="hearts">
         <div class="heartOne">
@@ -655,9 +725,10 @@ Love forever,\A Nook ♡";
           <div class="right-side"></div>
         </div>
       </div>
-      <div class="text"><span>- click the card to reveal &lt;3</span></div>
+      <div class="text"><span>click the card to reveal &lt;3</span></div>
     </div>
   </div>
+
 
   <!-- ──────────────────────────────────────────────────────────────────────────
        ─── BIRTHDAY SONG (moved just below the card) ───────────────────────────
@@ -674,7 +745,7 @@ Love forever,\A Nook ♡";
   </div>
 
   <!-- Theme Toggle Button (fixed at bottom right) -->
-  <button id="themeToggle">🌙 Night Mode</button>
+  <button id="themeToggle" aria-label="Toggle dark or light mode">🌙 Night Mode</button>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
        ─── PAGE CONTENT (gallery + floating hearts)
@@ -685,12 +756,60 @@ Love forever,\A Nook ♡";
          GALLERY: Thumbnails that open in a lightbox on click
     ────────────────────────────────────────────────────────────────────────── -->
     <div class="gallery">
-      <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
-      <img src="Screenshot 2025-05-22 at 9.55.35 pm.png" alt="Memory 2" />
-      <img src="Screenshot 2025-05-22 at 9.56.35 pm.png" alt="Memory 3" />
-      <img src="Screenshot 2025-05-22 at 9.56.22 pm.png" alt="Memory 4" />
-      <img src="Screenshot 2025-05-22 at 9.56.12 pm.png" alt="Memory 5" />
-      <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
+      <figure>
+        <img
+          src="Screenshot 2025-05-22 at 9.55.49 pm.png"
+          alt="Matt blowing out candles"
+          loading="lazy"
+          tabindex="0"
+        />
+        <figcaption>Matt blowing out candles</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="Screenshot 2025-05-22 at 9.55.35 pm.png"
+          alt="Matt and friends cake slice"
+          loading="lazy"
+          tabindex="0"
+        />
+        <figcaption>Matt and friends cake slice</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="Screenshot 2025-05-22 at 9.56.35 pm.png"
+          alt="Matt opening gift"
+          loading="lazy"
+          tabindex="0"
+        />
+        <figcaption>Matt opening gift</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="Screenshot 2025-05-22 at 9.56.22 pm.png"
+          alt="Matt smiling at camera"
+          loading="lazy"
+          tabindex="0"
+        />
+        <figcaption>Matt smiling at camera</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="Screenshot 2025-05-22 at 9.56.12 pm.png"
+          alt="Matt dancing with friends"
+          loading="lazy"
+          tabindex="0"
+        />
+        <figcaption>Matt dancing with friends</figcaption>
+      </figure>
+      <figure>
+        <img
+          src="Screenshot 2025-05-22 at 9.56.02 pm.png"
+          alt="Group photo with Matt"
+          loading="lazy"
+          tabindex="0"
+        />
+        <figcaption>Group photo with Matt</figcaption>
+      </figure>
     </div>
 
     <!-- Floating hearts container (will be blurred when card opens) -->
@@ -698,38 +817,37 @@ Love forever,\A Nook ♡";
   </div>
 
   <!-- IMAGE MODAL (hidden by default) -->
-  <div id="imageModal" class="image-modal">
-    <span class="close-btn">&times;</span>
+  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
+    <span class="close-btn" aria-label="Close full-size preview">&times;</span>
     <img id="modalImg" src="" alt="Full-size preview" />
   </div>
 
   <!-- Load Canvas‐Confetti (for the burst on reveal) -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-  <!-- ──────────────────────────────────────────────────────────────────────────
-       ─── SCRIPTS:
-         1) Toggle “active” on the Valentine’s card + fire confetti + blur page
-         2) Create floating hearts in the background
-         3) Lightbox logic for gallery images
-         4) Balloon cursor / interactive balloons on click
-         5) Theme switcher toggle
-  ────────────────────────────────────────────────────────────────────────── -->
   <script>
-    // 1) Toggle active on the Valentine’s card, apply blur to #pageContent, fire confetti
+    // 1) Toggle active on the Valentine’s card, apply blur to #pageContent, fire confetti, and update ARIA
     const card = document.getElementById('valentineCard');
     const pageContent = document.getElementById('pageContent');
 
-    card.addEventListener('click', function () {
-      this.classList.toggle('active');
+    function toggleCard() {
+      const isActive = card.classList.toggle('active');
       pageContent.classList.toggle('blur');
-
-      // Only fire confetti when opening (not when closing)
-      if (this.classList.contains('active')) {
+      card.setAttribute('aria-expanded', isActive);
+      if (isActive) {
         confetti({
           particleCount: 60,
           spread: 55,
           origin: { x: 0.5, y: 0 },
         });
+      }
+    }
+
+    card.addEventListener('click', toggleCard);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCard();
       }
     });
 
@@ -753,7 +871,7 @@ Love forever,\A Nook ♡";
     }
     setInterval(createHeart, 300);
 
-    // 3) LIGHTBOX: click a .gallery img to open full-screen modal
+    // 3) LIGHTBOX: click a .gallery img (or focus+Enter) to open full-size modal
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const closeBtn = document.querySelector('.close-btn');
@@ -762,16 +880,34 @@ Love forever,\A Nook ♡";
       img.addEventListener('click', () => {
         modalImg.src = img.src;
         modal.style.display = 'flex';
+        closeBtn.focus();
+      });
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          modalImg.src = img.src;
+          modal.style.display = 'flex';
+          closeBtn.focus();
+        }
       });
     });
 
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
+      card.focus();
+    });
+    closeBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        modal.style.display = 'none';
+        card.focus();
+      }
     });
 
     modal.addEventListener('click', e => {
       if (e.target === modal) {
         modal.style.display = 'none';
+        card.focus();
       }
     });
 
@@ -793,10 +929,31 @@ Love forever,\A Nook ♡";
     // 5) THEME SWITCHER TOGGLE
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      themeToggle.textContent = document.body.classList.contains("dark-mode")
-        ? "☀️ Day Mode"
-        : "🌙 Night Mode";
+      const isDark = document.body.classList.toggle("dark-mode");
+      themeToggle.textContent = isDark ? "☀️ Day Mode" : "🌙 Night Mode";
+    });
+    themeToggle.addEventListener("keydown", (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isDark = document.body.classList.toggle("dark-mode");
+        themeToggle.textContent = isDark ? "☀️ Day Mode" : "🌙 Night Mode";
+      }
+    });
+
+    // 6) COPY LINK BUTTON
+    const copyLinkBtn = document.getElementById("copyLink");
+    copyLinkBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => alert('Link copied to clipboard!'))
+        .catch(() => alert('Oops—couldn’t copy link.'));
+    });
+    copyLinkBtn.addEventListener("keydown", (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => alert('Link copied to clipboard!'))
+          .catch(() => alert('Oops—couldn’t copy link.'));
+      }
     });
   </script>
 </body>
