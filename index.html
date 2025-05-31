@@ -4,407 +4,510 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Matt</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
   <style>
+    /* ====== GLOBAL RESET & BASE ====== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      font-size: 16px;
+    }
     body {
       font-family: 'Quicksand', sans-serif;
-      margin: 0;
       background: linear-gradient(to bottom right, #fff5f8, #ffe4ec);
       color: #3a3a3a;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 30px 20px;
+      padding: 2rem 1rem;
       animation: fadeIn 1.5s ease-in;
       overflow-x: hidden;
     }
 
+    /* ====== TITLE (if you choose to re-enable it) ====== */
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 3em;
+      font-size: 2.5rem;
       color: #e75480;
       text-align: center;
-      margin-bottom: 0.5em;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    .letter {
-      max-width: 700px;
-      background: #fff0f5;
-      border-radius: 20px;
-      padding: 25px;
-      margin: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      font-size: 1.1em;
-      line-height: 1.7;
-      color: #6c3a4c;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin: 30px 0;
-      max-width: 1000px;
-      width: 100%;
-      animation: slideUp 1s ease-out;
-    }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 18px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s, box-shadow 0.3s;
-      object-fit: cover;
-      height: 340px;
-      background: #e8e8e8;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .music {
-      margin-top: 50px;
-      text-align: center;
-      animation: fadeIn 2s ease-in;
-      background: #ffffffaa;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-      max-width: 600px;
-    }
-
-    .music h2 {
-      font-size: 1.8em;
-      margin-bottom: 10px;
-      color: #d14f7b;
-    }
-
-    .music p {
-      font-size: 1em;
-      margin-bottom: 20px;
-      color: #7a4c61;
-    }
-
-    audio {
-      margin: 10px;
-      width: 100%;
-    }
-
-    .gif {
-      margin: 40px 0 10px;
-      text-align: center;
-    }
-
-    .gif img {
-      width: 220px;
-      border-radius: 12px;
-    }
-
-    .hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
+    /* ====== MAIN CARD CONTAINER ====== */
+    .valentines-day-card {
+      position: relative;
+      width: 90vw;
+      max-width: 400px;
+      aspect-ratio: 4 / 3; /* roughly 400×300 */
+      background-color: #ff8fa3;
       overflow: hidden;
+      border: 0.625rem solid white; /* 10px */
+      border-radius: 1rem; /* 10px */
+      box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.4);
+      margin-bottom: 2rem;
+      transition: all 0.6s ease-in-out;
+      cursor: pointer;
+    }
+    /* When "clicked"/toggled, scale up slightly on larger screens—but on mobile it stays the same size */
+    .valentines-day-card.active {
+      transform: scale(1.02);
+    }
+
+    /* ====== “CLOUDS” BEHIND ====== */
+    .valentines-day-card::before {
+      content: '';
+      position: absolute;
+      background-color: #ffb3c1;
+      width: 20vw;
+      max-width: 100px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      top: 45%;
+      left: -5%;
+      box-shadow:
+        20vw 6vw #ffb3c1,
+        40vw 3vw #ffb3c1,
+        60vw 6vw #ffb3c1,
+        80vw -1vw #ffb3c1,
+        95vw 6vw #ffb3c1;
+      z-index: 1;
+    }
+    .valentines-day-card::after {
+      content: '';
+      position: absolute;
+      background-color: #ffccd5;
+      width: 20vw;
+      max-width: 100px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      top: 50%;
+      left: -8%;
+      box-shadow:
+        18vw 6vw #ffccd5,
+        36vw 8vw #ffccd5,
+        54vw 3vw #ffccd5,
+        72vw 6vw #ffccd5,
+        90vw 6vw #ffccd5,
+        95vw 2vw #ffccd5;
       z-index: 1;
     }
 
-    /* Improved Heart Shape */
-    .heart {
+    /* ====== CLOUDS (static circles) ====== */
+    .clouds {
       position: absolute;
-      width: 20px;
-      height: 18px;
-      background-color: #ff6fa5;
+      width: 20vw;
+      max-width: 100px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #fff0f3;
+      top: 60%;
+      left: -5%;
+      box-shadow:
+        20vw 8vw #fff0f3,
+        45vw 3vw #fff0f3,
+        65vw 6vw #fff0f3,
+        85vw 3vw #fff0f3,
+        95vw 2vw #fff0f3;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+    .valentines-day-card.active .clouds {
+      opacity: 0;
+    }
+
+    /* ====== FLOATING HEARTS (SVG‐like shapes) ====== */
+    .hearts-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hearts-wrapper .heart {
+      position: absolute;
+      width: 5vw;
+      max-width: 25px;
+      aspect-ratio: 1 / 0.9; /* approximate shape ratio */
+      background-color: #ff4d6d;
       transform: rotate(-45deg);
       opacity: 0.8;
       animation: drop 5s linear infinite;
     }
-
-    .heart::before,
-    .heart::after {
-      content: "";
+    .hearts-wrapper .heart::before,
+    .hearts-wrapper .heart::after {
+      content: '';
       position: absolute;
-      width: 20px;
-      height: 18px;
-      background-color: #ff6fa5;
+      width: 5vw;
+      max-width: 25px;
+      aspect-ratio: 1 / 0.9;
+      background-color: #ff4d6d;
       border-radius: 50%;
     }
-
-    .heart::before {
-      top: -10px;
+    .hearts-wrapper .heart::before {
+      top: -50%;
       left: 0;
     }
-
-    .heart::after {
+    .hearts-wrapper .heart::after {
       top: 0;
-      left: 10px;
+      left: 50%;
     }
 
+    /* Position & animation delays for the five hearts */
+    .heartOne {
+      left: 25%;
+      top: 60%;
+      animation-duration: 4s;
+      animation-delay: 0.5s;
+    }
+    .heartTwo {
+      left: 65%;
+      top: 55%;
+      animation-duration: 5s;
+      animation-delay: 1.5s;
+    }
+    .heartThree {
+      left: 20%;
+      top: 80%;
+      animation-duration: 5s;
+      animation-delay: 2.5s;
+    }
+    .heartFour {
+      left: 75%;
+      top: 70%;
+      animation-duration: 6s;
+      animation-delay: 3.5s;
+      animation-iteration-count: infinite;
+    }
+    .heartFive {
+      left: 45%;
+      top: 75%;
+      animation-duration: 7s;
+      animation-delay: 4.5s;
+      animation-iteration-count: infinite;
+    }
+
+    /* Side halves of each heart */
+    .left-side,
+    .right-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+    }
+    .left-side::before,
+    .left-side::after,
+    .right-side::before,
+    .right-side::after {
+      content: '';
+      position: absolute;
+    }
+    .left-side::before {
+      border-radius: 50% 50% 0 50%;
+      width: 100%;
+      height: 100%;
+      background-color: #ff4d6d;
+      transform-origin: right;
+      animation: move 1s ease infinite;
+    }
+    .left-side::after {
+      top: 50%;
+      left: -50%;
+      border-bottom: 5px solid transparent;
+      border-right: 7.5px solid #ff4d6d;
+      transform-origin: right;
+      animation: move 1s ease infinite;
+    }
+    .right-side::before {
+      border-radius: 50% 50% 50% 0;
+      width: 100%;
+      height: 100%;
+      background-color: #c9184a;
+      transform-origin: left;
+      animation: move 1s ease infinite;
+    }
+    .right-side::after {
+      top: 50%;
+      left: 0;
+      border-bottom: 5px solid transparent;
+      border-left: 7.5px solid #c9184a;
+      transform-origin: left;
+      animation: move 1s ease infinite;
+    }
+
+    /* ====== THE HIDDEN TEXT BLOCK ====== */
+    .text {
+      position: absolute;
+      color: #800f2f;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      text-align: center;
+      width: 90%;
+      left: 5%;
+      padding: 1rem;
+      z-index: 3;
+      top: 65%;
+      display: none; /* start hidden */
+      white-space: pre-wrap;
+      background: #fff0f5;
+      border-radius: 0.75rem;
+      color: #6c3a4c;
+      box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+      transform: translateY(0);
+      transition: all 0.4s ease;
+    }
+    /* This span is the “teaser” text that shows initially inside .text */
+    .text span {
+      display: inline-block;
+      color: #fff;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* When .active—reveal full content */
+    .valentines-day-card.active .text {
+      display: block;
+    }
+
+    /* ====== ANIMATIONS ====== */
+    @keyframes move {
+      0%, 100% {
+        transform: rotateY(0);
+      }
+      50% {
+        transform: rotateY(-45deg);
+      }
+    }
+    @keyframes up {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+    }
     @keyframes drop {
       to {
         transform: translateY(100vh) rotate(-45deg);
         opacity: 0;
       }
     }
-
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    /* ====== GALLERY GRID ====== */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+      width: 100%;
+      max-width: 1000px;
+      animation: fadeIn 1s ease-out;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 0.75rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      object-fit: cover;
+      aspect-ratio: 1;
+      background: #e8e8e8;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0.75rem 1.25rem rgba(0, 0, 0, 0.2);
     }
 
+    /* ====== MUSIC SECTION ====== */
+    .music {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+    }
+    .music h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      color: #d14f7b;
+    }
+    .music p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #7a4c61;
+    }
+    audio {
+      margin-top: 0.75rem;
+      width: 100%;
+    }
+
+    /* ====== EXTRA RESPONSIVE TWEAKS ====== */
     @media (max-width: 768px) {
       h1 {
-        font-size: 2.2em;
-        padding: 0 10px;
+        font-size: 2rem;
+        padding: 0 0.5rem;
       }
-
-      .letter {
-        padding: 20px;
-        font-size: 1em;
-        margin: 15px 10px;
+      .text {
+        top: 60%;
+        font-size: 1rem;
       }
-
-      .gallery {
-        grid-template-columns: 1fr;
-        gap: 15px;
+      .text span {
+        font-size: 1.1rem;
       }
-
-      .gallery img {
-        height: auto;
-        max-height: 300px;
-      }
-
-      .music {
-        padding: 20px;
-        margin: 20px 10px;
-      }
-
       .music h2 {
-        font-size: 1.5em;
-      }
-
-      .gif img {
-        width: 160px;
-      }
-
-      audio {
-        width: 100%;
+        font-size: 1.5rem;
       }
     }
-
     @media (max-width: 480px) {
       h1 {
-        font-size: 1.8em;
+        font-size: 1.75rem;
       }
-
-      .letter {
-        font-size: 0.95em;
-      }
-
-      .music h2 {
-        font-size: 1.3em;
-      }
-
-      .gallery img {
-        max-height: 250px;
-      }
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
-    /* Updated Card and Text Styles */
-
-    .valentines-day-card {
-      position: relative;
-      width: 90vw;
-      max-width: 400px;
-      height: 300px;
-      background-color: #ff8fa3;
-      overflow: hidden;
-      border: 10px solid white;
-      border-radius: 10px;
-      box-shadow: 0 0 100px rgba(0,0,0,.4);
-      margin: 0 auto;
-      transition: all 0.6s ease-in-out;
-      cursor: pointer; /* Indicate clickable */
-    }
-
-    /* Expanded state controlled by class 'expanded' */
-    .valentines-day-card.expanded {
-      width: 90vw;
-      max-width: 800px;
-      height: auto;
-      padding-bottom: 40px;
-    }
-
-    .valentines-day-card.expanded .clouds {
-      display: none;
-    }
-
-    /* Text container normal state */
-    .text {
-      position: relative;
-      color: #800f2f;
-      font-size: 30px;
-      font-family: 'Courier New', monospace;
-      line-height: 1.2;
-      text-align: center;
-      width: 94%;
-      left: 0;
-      padding: 20px;
-      z-index: 3;
-      top: auto;
-      animation: none;
-      transition: .2s;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Text expanded state showing full message */
-    .valentines-day-card.expanded .text {
-      white-space: pre-wrap;
-      font-size: 22px;
-      background: #fff0f5;
-      border-radius: 12px;
-      color: #6c3a4c;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      overflow: visible;
-      text-overflow: initial;
-    }
-
-    /* Hide the "click" instruction on expanded */
-    .hover {
-      text-align: center;
-      font-family: 'Pacifico', cursive;
-      color: #d14f7b;
-      margin-top: 10px;
-    }
-
-    .valentines-day-card.expanded + .hover {
-      display: none;
-    }
-
-    @media (max-width: 480px) {
-      .valentines-day-card {
-        max-width: 90vw;
-      }
-
-      .valentines-day-card.expanded {
-        max-width: 90vw;
-      }
-
       .text {
-        font-size: 20px;
+        font-size: 0.9rem;
       }
-
-      .valentines-day-card.expanded .text {
-        font-size: 18px;
+      .text span {
+        font-size: 1rem;
+      }
+      .music h2 {
+        font-size: 1.3rem;
+      }
+      .gallery {
+        gap: 0.75rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Main Card Section -->
+  <!-- Uncomment if you want a page title -->
+  <!-- <h1>Happy Birthday Matt ❤️</h1> -->
+
   <div class="happy-valentines">
-    <div class="valentines-day-card" id="valentineCard">
+    <div class="valentines-day-card" id="card">
       <div class="clouds"></div>
-      <div class="hearts">
-        <div class="heartOne">
+
+      <div class="hearts-wrapper">
+        <div class="heart heartOne">
           <div class="left-side"></div>
           <div class="right-side"></div>
         </div>
-        <div class="heartTwo">
+        <div class="heart heartTwo">
           <div class="left-side"></div>
           <div class="right-side"></div>
         </div>
-        <div class="heartThree">
+        <div class="heart heartThree">
           <div class="left-side"></div>
           <div class="right-side"></div>
         </div>
-        <div class="heartFour">
+        <div class="heart heartFour">
           <div class="left-side"></div>
           <div class="right-side"></div>
         </div>
-        <div class="heartFive">
+        <div class="heart heartFive">
           <div class="left-side"></div>
           <div class="right-side"></div>
         </div>
       </div>
-      <div class="text" id="valentineText">
-        Happy birthday my bby Matt &lt;3
+
+      <div class="text" id="hiddenText">
+        <!-- Initial teaser text (white-on-pink) -->
+        <span>Happy birthday my bby Matt &lt;3<br />Tap/Click to open!</span>
+        <!-- Full message inserted by JS when active -->
       </div>
     </div>
-    <p class="hover">- click the text -</p>
+
+    <p class="hover" style="margin-top: 1rem; color: #6c3a4c;">
+      - tap / click on the card - 
+    </p>
+
+    <!-- GALLERY SECTION -->
+    <div class="gallery">
+      <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
+      <img src="Screenshot 2025-05-22 at 9.55.35 pm.png" alt="Memory 2" />
+      <img src="Screenshot 2025-05-22 at 9.56.35 pm.png" alt="Memory 3" />
+      <img src="Screenshot 2025-05-22 at 9.56.22 pm.png" alt="Memory 4" />
+      <img src="Screenshot 2025-05-22 at 9.56.12 pm.png" alt="Memory 5" />
+      <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
+    </div>
+
+    <!-- MUSIC SECTION -->
+    <div class="music">
+      <h2>Your Birthday Song 🎵</h2>
+      <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
+      <audio controls>
+        <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
   </div>
 
-  <!-- Image Gallery -->
-  <div class="gallery">
-    <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
-    <img src="Screenshot 2025-05-22 at 9.55.35 pm.png" alt="Memory 2" />
-    <img src="Screenshot 2025-05-22 at 9.56.35 pm.png" alt="Memory 3" />
-    <img src="Screenshot 2025-05-22 at 9.56.22 pm.png" alt="Memory 4" />
-    <img src="Screenshot 2025-05-22 at 9.56.12 pm.png" alt="Memory 5" />
-    <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
-  </div>
-
-  <!-- Birthday Song Section -->
-  <div class="music">
-    <h2>Your Birthday Song 🎵</h2>
-    <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
-    <audio controls>
-      <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
-      Your browser does not support the audio element.
-    </audio>
-  </div>
-
-  <!-- Floating Hearts -->
-  <div class="hearts" id="hearts"></div>
-
-  <!-- JavaScript -->
+  <!-- Floating heart generator script (keeps running even after click) -->
   <script>
-    // Floating heart generator
-    function createHeart() {
+    // Create random floating hearts that drift upward
+    function createFloatingHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
+      // random horizontal position (0–100vw)
       heart.style.left = Math.random() * 100 + 'vw';
+      // random animation duration between 3–6s
       heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      // random opacity between 0.5–1
       heart.style.opacity = (0.5 + Math.random() * 0.5);
-      document.getElementById('hearts').appendChild(heart);
+      // randomly pick from the five heart classes
+      const variants = ['heartOne', 'heartTwo', 'heartThree', 'heartFour', 'heartFive'];
+      const chosen = variants[Math.floor(Math.random() * variants.length)];
+      heart.classList.add(chosen);
+
+      document.querySelector('.hearts-wrapper').appendChild(heart);
+      // remove after animation ends (~6s max)
       setTimeout(() => heart.remove(), 6000);
     }
-    setInterval(createHeart, 300);
+    setInterval(createFloatingHeart, 400);
 
-    // Click-to-toggle for the birthday message
-    const card = document.getElementById('valentineCard');
-    const text = document.getElementById('valentineText');
-
-    const fullMessage = `My dearest Matt,
-
-Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.
-
-You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.
-
-Love forever,
-Nook ♡`;
+    // One-click toggle for showing/hiding the hidden message
+    const card = document.getElementById('card');
+    const hiddenText = document.getElementById('hiddenText');
+    let isOpen = false;
 
     card.addEventListener('click', () => {
-      if (!card.classList.contains('expanded')) {
-        card.classList.add('expanded');
-        text.textContent = fullMessage;
+      isOpen = !isOpen;
+      if (isOpen) {
+        card.classList.add('active');
+        hiddenText.innerHTML = `
+          My dearest Matt,
+
+          Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.
+
+          You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.
+
+          Love forever,
+          Nook ♡
+        `;
       } else {
-        card.classList.remove('expanded');
-        text.textContent = "Happy birthday my bby Matt <3";
+        card.classList.remove('active');
+        hiddenText.innerHTML = `<span>Happy birthday my bby Matt &lt;3<br />Tap/Click to open!</span>`;
       }
     });
   </script>
