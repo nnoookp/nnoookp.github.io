@@ -3,214 +3,321 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday Matt (Enhanced)</title>
+  <title>Happy Birthday Matt (Enhanced Experience!)</title>
+
+  <!-- Meta Description & Open Graph for SEO & Social Sharing -->
   <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating cakes, balloons, dark mode, and more!" />
   <meta property="og:title" content="Happy Birthday Matt!" />
   <meta property="og:description" content="Click to reveal a heartfelt message, watch confetti, and enjoy floating cakes." />
   <meta property="og:image" content="https://example.com/preview-image.png" />
   <meta property="og:url" content="https://example.com/birthday-matt.html" />
-  <link rel="icon" href="favicon.png" type="image/png" />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script:wght@700&display=swap" as="style" onload="this.rel='stylesheet'" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>" type="image/svg+xml" />
+
+  <!-- Preload & Load Google Font (Quicksand) Optimally -->
+  <link
+    rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap"
+    as="style"
+    onload="this.rel='stylesheet'"
+  />
   <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
   </noscript>
 
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       GLOBAL STYLES
+       BASE STYLES (uses Quicksand throughout)
     ────────────────────────────────────────────────────────────────────────── */
     :root {
       --primary: #e75480;
+      --primary-light: #ff8fa3;
       --secondary: #ffb3c1;
-      --accent: #d14f7b;
-      --light-bg: linear-gradient(to bottom right, #fff5f8, #ffe4ec);
-      --dark-bg: #2c003e;
-      --text-light: #3a3a3a;
-      --text-dark: #f0e6f6;
-      --card-bg-light: #fff0f5;
-      --card-bg-dark: #3e0030;
+      --bg-light: #fff5f8;
+      --bg-gradient: linear-gradient(to bottom right, var(--bg-light), #ffe4ec);
+      --text: #3a3a3a;
+      --text-alt: #6c3a4c;
+      --card-bg: #fff0f5;
+      --shadow: 0 8px 20px rgba(0,0,0,0.1);
       --transition: all 0.3s ease;
     }
     
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #ffe4ec;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 5px;
-    }
-    body.dark-mode ::-webkit-scrollbar-track {
-      background: #4b004b;
-    }
-    body.dark-mode ::-webkit-scrollbar-thumb {
-      background: #b030e7;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    .dark-mode {
+      --primary: #ffd1ff;
+      --primary-light: #b030e7;
+      --secondary: #800f9e;
+      --bg-light: #2c003e;
+      --bg-gradient: linear-gradient(to bottom right, var(--bg-light), #4b004b);
+      --text: #f0e6f6;
+      --text-alt: #e0c0e6;
+      --card-bg: #3e0030;
+      --shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
     body {
       font-family: 'Quicksand', sans-serif;
-      background: var(--light-bg);
+      margin: 0;
+      background: var(--bg-gradient);
       background-size: 200% 200%;
       animation: gradientShift 20s ease infinite, fadeIn 1.5s ease-in;
-      color: var(--text-light);
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 30px 20px;
       overflow-x: hidden;
-      min-height: 100vh;
-      transition: var(--transition);
+      transition: background 0.5s ease;
     }
-    
     @keyframes gradientShift {
       0%   { background-position: 0% 50%; }
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
 
-    /* ──────────────────────────────────────────────────────────────────────────
-       HEADER STYLES
-    ────────────────────────────────────────────────────────────────────────── */
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-    }
-    
-    .birthday-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 4.5rem;
+    h1 {
+      font-weight: 600;
+      font-size: 3em;
       color: var(--primary);
-      margin: 20px 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 2;
+      text-align: center;
+      margin-bottom: 0.5em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
-    
-    .birthday-title::after {
-      content: "🎉";
-      position: absolute;
-      top: -30px;
-      right: -20px;
-      font-size: 2rem;
-      animation: float 3s ease-in-out infinite;
+
+    /* Focus outline for interactive elements */
+    [role="button"]:focus,
+    button:focus,
+    .gallery img:focus,
+    #copyLink:focus,
+    #themeToggle:focus,
+    #toTop:focus {
+      outline: 2px dashed var(--primary);
+      outline-offset: 4px;
     }
-    
-    .birthday-title::before {
-      content: "🎂";
-      position: absolute;
-      top: -30px;
-      left: -20px;
-      font-size: 2rem;
-      animation: float 4s ease-in-out infinite;
+
+    .letter {
+      max-width: 700px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px;
+      box-shadow: var(--shadow);
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: var(--text-alt);
+      transition: var(--transition);
     }
-    
-    .header-subtitle {
-      font-size: 1.4rem;
-      color: var(--accent);
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+      max-width: 1000px;
+      width: 100%;
+      animation: slideUp 1s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      object-fit: cover;
+      height: 340px;
+      background: #e8e8e8;
+      cursor: pointer;
+    }
+    .gallery img:hover,
+    .gallery img:focus {
+      transform: scale(1.05);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+    .gallery figcaption {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.95em;
+      color: var(--text);
+    }
+
+    .music-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      width: 100%;
+      max-width: 600px;
+    }
+    .music {
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+      background: rgba(255, 255, 255, 0.67);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      width: 100%;
+      transition: var(--transition);
+    }
+    .dark-mode .music {
+      background: rgba(50, 0, 50, 0.7);
+    }
+    .music h2 {
+      font-weight: 600;
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    .music p {
+      font-size: 1em;
       margin-bottom: 20px;
-      animation: pulse 2s infinite;
+      color: var(--text-alt);
     }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+    audio {
+      margin: 10px 0;
+      width: 100%;
     }
-    
-    /* Floating elements */
-    .floating-element {
-      position: absolute;
-      font-size: 1.8rem;
-      animation: float 6s ease-in-out infinite;
-      z-index: 1;
-      opacity: 0.7;
+    .player-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
     }
-    
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
+    .player-controls button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
     }
-    
+    .player-controls button:hover {
+      transform: scale(1.1);
+      background: #d14f7b;
+    }
+
+    .gif {
+      margin: 40px 0 10px;
+      text-align: center;
+    }
+    .gif img {
+      width: 220px;
+      border-radius: 12px;
+    }
+
     /* ──────────────────────────────────────────────────────────────────────────
-       CARD STYLES
+       PAGE CONTENT BLUR (when the card is open)
+    ────────────────────────────────────────────────────────────────────────── */
+    #pageContent.blur {
+      filter: blur(4px);
+      transition: filter 0.3s ease;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       FLOATING CAKES (new implementation, replaces “.heart”)
+    ────────────────────────────────────────────────────────────────────────── */
+    @keyframes drop-cake {
+      0% { 
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .cake {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-size: 2rem;
+      opacity: 0.9;
+      animation-name: drop-cake;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      z-index: 5;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       VALENTINE’S‐DAY CARD STYLES (click‐only version with ARIA & focus)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
-      z-index: 10;
+      z-index: 10; /* stay on top when #pageContent is blurred */
       width: 400px;
       height: 300px;
-      background: linear-gradient(135deg, #ff8fa3 0%, #ffc1cb 50%, #ffe4eb 100%);
+      background: linear-gradient(
+        135deg,
+        var(--primary-light) 0%,
+        var(--secondary) 50%,
+        #ffe4eb 100%
+      );
       overflow: hidden;
       border: 10px solid white;
       border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      margin: 0 auto 40px;
-      transition: var(--transition);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      margin: 0 auto;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
       cursor: pointer;
       animation: popIn 0.8s ease-out;
     }
-    
-    .valentines-day-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    }
-    
     .valentines-day-card:focus {
       outline: none;
       box-shadow: 0 0 0 4px rgba(209, 79, 123, 0.6);
     }
-    
     .valentines-day-card.active {
       width: 800px;
       height: 600px;
     }
-    
     .valentines-day-card.active .clouds {
       display: none;
     }
-    
-    .valentines-day-card:before, .valentines-day-card:after {
+    .valentines-day-card:before {
       content: "";
       position: absolute;
-      border-radius: 50%;
-    }
-    
-    .valentines-day-card:before {
       background-color: #ffb3c1;
       width: 100px;
       height: 100px;
+      border-radius: 50%;
       top: 140px;
       left: -25px;
-      box-shadow: 60px 20px #ffb3c1, 130px 10px #ffb3c1, 190px 20px #ffb3c1, 260px -5px #ffb3c1, 340px 20px #ffb3c1;
+      box-shadow:
+        60px 20px #ffb3c1,
+        130px 10px #ffb3c1,
+        190px 20px #ffb3c1,
+        260px -5px #ffb3c1,
+        340px 20px #ffb3c1;
     }
-    
     .valentines-day-card:after {
+      content: "";
+      position: absolute;
       background-color: #ffccd5;
       width: 100px;
       height: 100px;
+      border-radius: 50%;
       top: 160px;
       left: -40px;
-      box-shadow: 50px 20px #ffccd5, 120px 40px #ffccd5, 200px 15px #ffccd5, 260px 30px #ffccd5, 330px 30px #ffccd5, 380px 10px #ffccd5;
+      box-shadow:
+        50px 20px #ffccd5,
+        120px 40px #ffccd5,
+        200px 15px #ffccd5,
+        260px 30px #ffccd5,
+        330px 30px #ffccd5,
+        380px 10px #ffccd5;
     }
-    
     .clouds {
       position: absolute;
       width: 100px;
@@ -220,28 +327,29 @@
       z-index: 5;
       top: 210px;
       left: -20px;
-      box-shadow: 55px 30px #fff0f3, 125px 10px #fff0f3, 175px 20px #fff0f3, 250px 10px #fff0f3, 320px 5px #fff0f3, 380px 10px #fff0f3;
+      box-shadow:
+        55px 30px #fff0f3,
+        125px 10px #fff0f3,
+        175px 20px #fff0f3,
+        250px 10px #fff0f3,
+        320px 5px #fff0f3,
+        380px 10px #fff0f3;
     }
-    
-    /* Hearts animation */
     .hearts {
       position: absolute;
       z-index: 2;
     }
-    
     .heartOne { position: absolute; left:100px; top:250px; animation: up 4s linear forwards 1s; }
     .heartTwo { position: absolute; left:270px; top:230px; animation: up 5s linear forwards 1.8s; }
     .heartThree { position: absolute; left:85px; top:415px; animation: up 5s linear forwards 3s; }
     .heartFour { position: absolute; left:320px; top:380px; animation: upTwo 9s linear infinite 3.5s; }
     .heartFive { position: absolute; left:150px; top:400px; animation: upTwo 13s linear infinite 4.5s; }
-    
     .right-side:before, .right-side:after {
       position: absolute;
       content: "";
       transform-origin: left;
       animation: move 1s ease infinite;
     }
-    
     .right-side:before {
       border-radius: 50% 50% 50% 0;
       width: 21px;
@@ -249,7 +357,6 @@
       background-color: #c9184a;
       left: -0.26px;
     }
-    
     .right-side:after {
       height: 0;
       width: 0;
@@ -258,14 +365,12 @@
       top: 19px;
       left: -0.26px;
     }
-    
     .left-side:before, .left-side:after {
       position: absolute;
       content: "";
       transform-origin: right;
       animation: move 1s ease infinite;
     }
-    
     .left-side:before {
       border-radius: 50% 50% 0 50%;
       width: 20px;
@@ -273,7 +378,6 @@
       left: -20.7px;
       background-color: #ff4d6d;
     }
-    
     .left-side:after {
       height: 0;
       width: 0;
@@ -282,29 +386,42 @@
       border-right: 15px solid #ff4d6d;
       top: 19px;
     }
-    
     @keyframes move {
       0%, 100% { transform: rotateY(0); }
       50% { transform: rotateY(-45deg); }
     }
-    
     @keyframes up {
       0% { transform: translateY(0); }
       100% { transform: translateY(-200px); }
     }
-    
     @keyframes upTwo {
       0% { transform: translateY(0); }
       100% { transform: translateY(-450px); }
     }
-    
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       POP‐IN ANIMATION FOR CARD ON LOAD
+    ────────────────────────────────────────────────────────────────────────── */
     @keyframes popIn {
       0%   { transform: scale(0.8); opacity: 0; }
       60%  { transform: scale(1.05); opacity: 1; }
       100% { transform: scale(1); }
     }
-    
-    /* Card text */
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       SLIDE‐IN ANIMATION FOR HIDDEN TEXT
+    ────────────────────────────────────────────────────────────────────────── */
+    @keyframes slideInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .text {
       position: absolute;
       color: #800f2f;
@@ -319,199 +436,388 @@
       animation: up 1s ease forwards;
       transition: 0.2s;
     }
-    
     .hover {
       color: white;
       text-align: center;
       margin-top: 10px;
     }
-    
-    /* Hidden message */
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN
+    ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
-      Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\
-      You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
-      Love forever,\A Nook ♡";
+Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\
+You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
+Love forever,\A Nook ♡";
       white-space: pre-wrap;
       display: block;
       font-family: 'Quicksand', sans-serif;
       font-weight: 400;
       font-size: 20px;
       line-height: 1.5;
-      background: var(--card-bg-light);
+      background: var(--card-bg);
       padding: 25px;
       border-radius: 12px;
-      color: #6c3a4c;
+      color: var(--text-alt);
       margin-top: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       animation: slideInUp 0.6s ease-out forwards;
       text-align: center;
+      transition: var(--transition);
     }
-    
     .valentines-day-card.active .text span {
       display: none;
     }
-    
-    @keyframes slideInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
+
     /* ──────────────────────────────────────────────────────────────────────────
-       MUSIC PLAYER STYLES
+       RESPONSIVE ADJUSTMENTS FOR CARD ON MOBILE SCREENS
     ────────────────────────────────────────────────────────────────────────── */
-    .music-container {
-      display: flex;
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2em;
+        padding: 0 10px;
+      }
+      .letter {
+        padding: 20px;
+        font-size: 1em;
+        margin: 15px 10px;
+      }
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .gallery img {
+        height: auto;
+        max-height: 200px;
+      }
+      .music-container {
+        margin-top: 30px;
+      }
+      .music h2 {
+        font-size: 1.5em;
+      }
+      .gif img {
+        width: 160px;
+      }
+      audio {
+        width: 100%;
+      }
+
+      .valentines-day-card,
+      .valentines-day-card.active {
+        width: 95vw;
+        height: auto;
+      }
+      .valentines-day-card:before,
+      .valentines-day-card:after {
+        top: 120px;
+        left: -20px;
+        box-shadow:
+          45px 15px #ffb3c1,
+          100px 8px #ffb3c1,
+          150px 15px #ffb3c1,
+          200px -4px #ffb3c1,
+          260px 15px #ffb3c1;
+      }
+      .clouds {
+        top: 180px;
+        left: -15px;
+        box-shadow:
+          45px 20px #fff0f3,
+          100px 8px #fff0f3,
+          150px 15px #fff0f3,
+          200px 8px #fff0f3,
+          260px 4px #fff0f3;
+      }
+      .valentines-day-card .text {
+        position: relative;
+        top: auto;
+        animation: none;
+      }
+      .valentines-day-card.active .text::before {
+        position: relative;
+        top: auto;
+        display: block;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .letter {
+        font-size: 0.95em;
+      }
+      .music h2 {
+        font-size: 1.3em;
+      }
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      .gallery img {
+        max-height: 250px;
+      }
+
+      .valentines-day-card,
+      .valentines-day-card.active {
+        width: 98vw;
+        height: auto;
+      }
+      .valentines-day-card .text,
+      .valentines-day-card.active .text::before {
+        font-size: 18px;
+      }
+      .valentines-day-card.active .text::before {
+        padding: 18px;
+      }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       IMAGE MODAL (Lightbox) STYLES
+    ────────────────────────────────────────────────────────────────────────── */
+    .image-modal {
+      display: none;             /* hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
       justify-content: center;
-      margin: 30px 0;
-      width: 100%;
-      max-width: 600px;
+      cursor: pointer;
     }
-    
-    .music {
-      text-align: center;
-      animation: fadeIn 2s ease-in;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      width: 100%;
-      transition: var(--transition);
-      backdrop-filter: blur(5px);
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
-    
-    .music h2 {
-      font-weight: 600;
-      font-size: 1.8em;
-      margin-bottom: 15px;
-      color: var(--primary);
+    .image-modal .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1001;
+      padding: 10px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
     }
-    
-    .music p {
-      font-size: 1em;
-      margin-bottom: 20px;
-      color: #7a4c61;
-    }
-    
-    audio {
-      margin: 10px 0;
-      width: 100%;
-      border-radius: 50px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    
-    audio::-webkit-media-controls-panel {
-      background-color: #ffe4ec;
-      border-radius: 50px;
-    }
-    
+
     /* ──────────────────────────────────────────────────────────────────────────
-       GALLERY STYLES
+       BALLOON CURSOR / INTERACTIVE BALLOONS
     ────────────────────────────────────────────────────────────────────────── */
-    .gallery-section {
-      width: 100%;
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    
-    .gallery-title {
-      text-align: center;
-      font-size: 2.2rem;
-      color: var(--primary);
-      margin-bottom: 30px;
-      position: relative;
-      display: inline-block;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    
-    .gallery-title::after {
-      content: "";
+    .balloon {
       position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: var(--accent);
-      border-radius: 2px;
+      width: 30px;
+      height: 40px;
+      font-size: 1.5rem;
+      pointer-events: none;
+      animation: floatUp 2s ease-out forwards;
+      z-index: 5;
+      user-select: none;
     }
-    
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin: 30px 0;
-      width: 100%;
-      animation: slideUp 1s ease-out;
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(0.6); opacity: 1; }
+      100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
     }
-    
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to   { transform: translateY(0); opacity: 1; }
-    }
-    
-    .gallery figure {
-      position: relative;
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
+    ────────────────────────────────────────────────────────────────────────── */
+    .marquee-container {
       overflow: hidden;
-      border-radius: 18px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-      transition: var(--transition);
-      height: 340px;
-      cursor: pointer;
-    }
-    
-    .gallery img {
+      white-space: nowrap;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      background: var(--primary-light);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      border-radius: 0 0 10px 10px;
+    }
+    .marquee {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 12s linear infinite;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 1.4em;
+      color: #800f2f;
+      padding: 10px 0;
+    }
+    .dark-mode .marquee {
+      color: #ffd1ff;
+    }
+    @keyframes scrollText {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
+    ────────────────────────────────────────────────────────────────────────── */
+    #themeToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
       transition: var(--transition);
-      background: #e8e8e8;
+    }
+    #themeToggle:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       RETURN TO TOP BUTTON STYLES
+    ────────────────────────────────────────────────────────────────────────── */
+    #toTop {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      padding: 12px 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: none;       /* hidden until scroll */
+      z-index: 1000;       /* ensure it sits on top */
+      transition: var(--transition);
+      font-size: 1.2rem;
+    }
+    #toTop:hover,
+    #toTop:focus {
+      background: #d14f7b;
+      transform: translateY(-3px);
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       NAVIGATION MENU
+    ────────────────────────────────────────────────────────────────────────── */
+    .nav-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
     }
     
-    .gallery figure:hover img {
+    .nav-toggle {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: var(--transition);
+      font-size: 1.5rem;
+    }
+    
+    .nav-toggle:hover {
       transform: scale(1.1);
     }
     
-    .gallery figcaption {
+    .nav-menu {
       position: absolute;
-      bottom: 0;
+      top: 60px;
       left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 1em;
-      transform: translateY(100%);
-      transition: var(--transition);
-      backdrop-filter: blur(5px);
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      padding: 15px 0;
+      display: none;
+      width: 200px;
+      z-index: 1000;
     }
     
-    .gallery figure:hover figcaption {
-      transform: translateY(0);
+    .dark-mode .nav-menu {
+      background: #3e0030;
+    }
+    
+    .nav-menu.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .nav-menu a {
+      display: block;
+      padding: 12px 20px;
+      color: var(--text);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    
+    .nav-menu a:hover {
+      background: rgba(231, 84, 128, 0.1);
+      color: var(--primary);
+    }
+    
+    .dark-mode .nav-menu a:hover {
+      background: rgba(255, 209, 255, 0.1);
     }
     
     /* ──────────────────────────────────────────────────────────────────────────
-       FLOATING CAKES
+       PROGRESS BAR
     ────────────────────────────────────────────────────────────────────────── */
-    @keyframes drop-cake {
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: transparent;
+      z-index: 1000;
+    }
+    
+    .progress-bar {
+      height: 5px;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       CAKE DROP ANIMATION
+    ────────────────────────────────────────────────────────────────────────── */
+    @keyframes cakeDrop {
       0% {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
+        transform: translateY(-100px) rotate(0deg);
         opacity: 1;
       }
       100% {
@@ -519,473 +825,330 @@
         opacity: 0;
       }
     }
-    
-    .cake {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: radial-gradient(circle, #ff9eb5 0%, #e75480 100%);
-      border-radius: 50% 50% 30% 30%;
-      opacity: 0.9;
-      animation-name: drop-cake;
-      animation-timing-function: linear;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      z-index: 1;
-    }
-    
-    .cake::before {
-      content: "🎂";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 20px;
-    }
-    
-    /* ──────────────────────────────────────────────────────────────────────────
-       BALLOON ANIMATION
-    ────────────────────────────────────────────────────────────────────────── */
-    .balloon {
-      position: absolute;
-      width: 40px;
-      height: 50px;
-      border-radius: 50%;
-      bottom: -100px;
-      animation: floatUp 10s ease-in infinite;
-      box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
-      z-index: 1;
-    }
-    
-    .balloon::before {
-      content: "";
-      position: absolute;
-      width: 2px;
-      height: 50px;
-      background: rgba(0,0,0,0.2);
-      bottom: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    
-    .balloon::after {
-      content: "";
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: rgba(0,0,0,0.1);
-      border-radius: 50%;
-      bottom: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(20px) rotate(10deg);
-        opacity: 0;
-      }
-    }
-    
-    /* ──────────────────────────────────────────────────────────────────────────
-       CONTROLS STYLES
-    ────────────────────────────────────────────────────────────────────────── */
-    .controls {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 1000;
-    }
-    
-    .control-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: none;
-      background: var(--primary);
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .control-btn:hover {
-      transform: translateY(-5px) scale(1.1);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    }
-    
-    #toTop {
-      display: none;
-    }
-    
-    /* ──────────────────────────────────────────────────────────────────────────
-       DARK MODE STYLES
-    ────────────────────────────────────────────────────────────────────────── */
-    body.dark-mode {
-      background: var(--dark-bg);
-      color: var(--text-dark);
-    }
-    
-    body.dark-mode h1 {
-      color: #ffd1ff;
-    }
-    
-    body.dark-mode .valentines-day-card {
-      background: linear-gradient(135deg, #5e0068 0%, #800f9e 50%, #b030e7 100%);
-      border-color: #f0e6f6;
-    }
-    
-    body.dark-mode .valentines-day-card .text::before {
-      background: var(--card-bg-dark);
-      color: var(--text-dark);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-    
-    body.dark-mode .text {
-      color: #ffd1ff;
-    }
-    
-    body.dark-mode .music {
-      background: rgba(50, 0, 50, 0.7);
-      color: var(--text-dark);
-    }
-    
-    body.dark-mode .music h2 {
-      color: #ffd1ff;
-    }
-    
-    body.dark-mode .music p {
-      color: #e0c0e6;
-    }
-    
-    body.dark-mode .gallery img {
-      filter: brightness(0.85);
-    }
-    
-    body.dark-mode figcaption {
-      color: var(--text-dark);
-    }
-    
-    /* ──────────────────────────────────────────────────────────────────────────
-       RESPONSIVE STYLES
-    ────────────────────────────────────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .birthday-title {
-        font-size: 3.5rem;
-      }
-      
-      .valentines-day-card,
-      .valentines-day-card.active {
-        width: 95vw;
-        height: auto;
-      }
-      
-      .valentines-day-card.active {
-        height: 500px;
-      }
-      
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    
-    @media (max-width: 600px) {
-      .birthday-title {
-        font-size: 2.8rem;
-      }
-      
-      .header-subtitle {
-        font-size: 1.2rem;
-      }
-      
-      .valentines-day-card.active {
-        height: 450px;
-      }
-      
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-      
-      .controls {
-        bottom: 10px;
-        right: 10px;
-      }
-      
-      .control-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .birthday-title {
-        font-size: 2.3rem;
-      }
-      
-      .valentines-day-card.active .text::before {
-        font-size: 16px;
-        padding: 15px;
-      }
-      
-      .music {
-        padding: 20px;
-      }
-      
-      .music h2 {
-        font-size: 1.5rem;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Floating elements in the background -->
-  <div class="floating-element" style="top: 10%; left: 10%;">🎈</div>
-  <div class="floating-element" style="top: 20%; right: 15%;">🎁</div>
-  <div class="floating-element" style="top: 40%; left: 5%;">✨</div>
-  <div class="floating-element" style="top: 70%; right: 10%;">🎊</div>
-  
-  <!-- Header Section -->
-  <header>
-    <h1 class="birthday-title">Happy Birthday Matt!</h1>
-    <p class="header-subtitle">A celebration of you and all the joy you bring</p>
-  </header>
+  <!-- Progress bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
 
-  <!-- Valentine Card -->
-  <div class="happy-valentines">
-    <div
-      class="valentines-day-card"
-      id="valentineCard"
-      role="button"
-      tabindex="0"
-      aria-expanded="false"
-      aria-label="Click to reveal a birthday message"
-    >
-      <div class="clouds"></div>
-      <div class="hearts">
-        <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
+  <!-- Navigation menu -->
+  <div class="nav-container">
+    <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu">🎂</button>
+    <div class="nav-menu" id="navMenu">
+      <a href="#card" class="nav-link">Birthday Card</a>
+      <a href="#gallery" class="nav-link">Memory Gallery</a>
+      <a href="#music" class="nav-link">Special Song</a>
+      <a href="#letter" class="nav-link">Personal Message</a>
+    </div>
+  </div>
+
+  <!-- Birthday marquee -->
+  <div class="marquee-container">
+    <div class="marquee" id="birthdayMarquee">
+      🎉 Happy Birthday Matt! 🎂 Wishing you the most amazing day filled with joy and love! 🎈🎁
+    </div>
+  </div>
+
+  <div id="pageContent">
+    <h1>Happy Birthday Matt!</h1>
+    
+    <section id="card" class="card-section">
+      <div
+        class="valentines-day-card"
+        id="valentineCard"
+        role="button"
+        tabindex="0"
+        aria-expanded="false"
+        aria-label="Click to reveal a birthday message"
+      >
+        <div class="clouds"></div>
+        <div class="hearts">
+          <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
+        </div>
+        <div class="text">
+          Click to open your card!
+          <div class="hover">(or press spacebar)</div>
+        </div>
       </div>
-      <div class="text"><span>click the card to reveal</span></div>
+    </section>
+
+    <section id="letter" class="letter-section">
+      <div class="letter">
+        <p>Dear Matt,</p>
+        <p>On this special day, I wanted to create something that reflects how much you mean to me. You've brought so much happiness into my life, and I cherish every moment we've shared together.</p>
+        <p>I hope this little interactive card brings a smile to your face. There are some memories in the gallery below, a special song I recorded just for you, and of course - plenty of cake!</p>
+        <p>Wishing you a day filled with laughter, love, and all your favorite things. May this year bring you even more joy, success, and beautiful moments to cherish.</p>
+        <p>With all my love,</p>
+        <p>Nook ♡</p>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+      <h2>Our Special Memories</h2>
+      <div class="gallery">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1529254479751-fbacb4c7b2c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Beach sunset" />
+          <figcaption>That amazing beach sunset</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Concert night" />
+          <figcaption>Our favorite concert night</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Mountain hike" />
+          <figcaption>Adventures in the mountains</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Celebration dinner" />
+          <figcaption>Celebrating your last achievement</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="music" class="music-section">
+      <div class="music-container">
+        <div class="music">
+          <h2>A Song Just For You</h2>
+          <p>I recorded this special song to celebrate your birthday. Hope you like it!</p>
+          <audio id="birthdaySong" controls>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+          <div class="player-controls">
+            <button id="playBtn" aria-label="Play">▶</button>
+            <button id="pauseBtn" aria-label="Pause">⏸</button>
+            <button id="restartBtn" aria-label="Restart">↺</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gif">
+      <img src="https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif" alt="Dancing cake animation" />
     </div>
   </div>
 
-  <!-- Music Player -->
-  <div class="music-container">
-    <div class="music">
-      <h2><span>🎵</span> Your Birthday Song</h2>
-      <p>A special piano piece from my heart to yours 💗</p>
-      <audio controls>
-        <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
-        Your browser does not support the audio element.
-      </audio>
-    </div>
+  <!-- Image Modal -->
+  <div class="image-modal" id="imageModal">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <img id="modalImage" src="" alt="Enlarged view">
   </div>
 
-  <!-- Gallery Section -->
-  <div class="gallery-section">
-    <h2 class="gallery-title">Our Special Moments</h2>
-    <div class="gallery">
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.55.49 pm.png"
-          alt="Bunny Matt"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Bunny Matt</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.55.35 pm.png"
-          alt="King Matthew"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>King Matthew</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.35 pm.png"
-          alt="Matt and his valentines Kori"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Matt and Kori enjoying ice cream</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.22 pm.png"
-          alt="Matt and the lord where is a ring?"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Matt and the lord</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.12 pm.png"
-          alt="Aww cute"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Aww cute</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.02 pm.png"
-          alt="Once in a while getting a nice photo"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>A perfect moment captured</figcaption>
-      </figure>
-    </div>
-  </div>
+  <button id="toTop" title="Go to top" aria-label="Scroll to top">↑</button>
+  <button id="themeToggle" aria-pressed="false">🌙 Dark Mode</button>
 
-  <!-- Cake Container -->
-  <div id="cakes"></div>
-  
-  <!-- Balloon Container -->
-  <div id="balloons"></div>
-
-  <!-- Controls -->
-  <div class="controls">
-    <button id="themeToggle" class="control-btn" aria-label="Toggle dark or light mode">🌙</button>
-    <button id="toTop" class="control-btn" aria-label="Scroll back to top">↑</button>
-    <button id="confettiBtn" class="control-btn" aria-label="Throw confetti">🎉</button>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
-    // Create floating balloons
-    function createBalloon() {
-      const balloon = document.createElement('div');
-      balloon.classList.add('balloon');
-      
-      // Random balloon properties
-      const colors = ['#ff6b6b', '#4ecdc4', '#ffbe0b', '#fb5607', '#8338ec'];
-      const sizes = [40, 45, 50, 55];
-      const leftPos = Math.random() * 100;
-      const animationDuration = 8 + Math.random() * 7;
-      const animationDelay = Math.random() * 5;
-      const size = sizes[Math.floor(Math.random() * sizes.length)];
-      
-      balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      balloon.style.width = `${size}px`;
-      balloon.style.height = `${size * 1.25}px`;
-      balloon.style.left = `${leftPos}%`;
-      balloon.style.animationDuration = `${animationDuration}s`;
-      balloon.style.animationDelay = `${animationDelay}s`;
-      
-      document.getElementById('balloons').appendChild(balloon);
-      
-      // Remove balloon after animation completes
-      setTimeout(() => balloon.remove(), (animationDuration + animationDelay) * 1000);
-    }
+    // DOM Elements
+    const valentineCard = document.getElementById('valentineCard');
+    const pageContent = document.getElementById('pageContent');
+    const themeToggle = document.getElementById('themeToggle');
+    const toTopButton = document.getElementById('toTop');
+    const progressBar = document.getElementById('progressBar');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    const birthdaySong = document.getElementById('birthdaySong');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.getElementById('closeModal');
+    const galleryImages = document.querySelectorAll('.gallery img');
     
-    // Create initial balloons
-    for (let i = 0; i < 15; i++) {
-      createBalloon();
-    }
-    
-    // Keep creating balloons periodically
-    setInterval(createBalloon, 3000);
-    
-    // Create floating cakes
-    function createCake() {
-      const cake = document.createElement('div');
-      cake.classList.add('cake');
+    // Card interaction
+    valentineCard.addEventListener('click', function() {
+      this.classList.toggle('active');
+      this.setAttribute('aria-expanded', this.classList.contains('active'));
+      pageContent.classList.toggle('blur', this.classList.contains('active'));
       
-      // Random horizontal position
-      cake.style.left = Math.random() * 100 + 'vw';
-      // Start just above the viewport
-      cake.style.top = '-50px';
-      // Randomly vary the fall duration (3s–6s)
-      const duration = 3 + Math.random() * 3;
-      cake.style.animationDuration = duration + 's';
-      // Optional: random slight rotation
-      const rotateStart = Math.random() * 30 - 15;
-      cake.style.transform = `rotate(${rotateStart}deg)`;
-      
-      document.getElementById('cakes').appendChild(cake);
-      setTimeout(() => cake.remove(), (duration + 0.5) * 1000);
-    }
-    
-    // Create cakes periodically
-    setInterval(createCake, 500);
-    
-    // Card toggle functionality
-    const card = document.getElementById('valentineCard');
-    const pageContent = document.querySelector('body');
-    
-    function toggleCard() {
-      const isActive = card.classList.toggle('active');
-      card.setAttribute('aria-expanded', isActive);
-      if (isActive) {
-        confetti({
-          particleCount: 150,
-          spread: 70,
-          origin: { x: 0.5, y: 0.3 },
-          colors: ['#ff6b6b', '#ffbe0b', '#4ecdc4', '#8338ec']
-        });
+      if (this.classList.contains('active')) {
+        // Add floating cakes when card is opened
+        createCakes(20);
       }
-    }
+    });
     
-    card.addEventListener('click', toggleCard);
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+    // Keyboard support for card
+    valentineCard.addEventListener('keydown', function(e) {
+      if (e.code === 'Space' || e.code === 'Enter') {
         e.preventDefault();
-        toggleCard();
+        this.click();
       }
     });
     
     // Theme toggle
-    const themeToggle = document.getElementById("themeToggle");
-    themeToggle.addEventListener("click", () => {
-      const isDark = document.body.classList.toggle("dark-mode");
-      themeToggle.textContent = isDark ? "☀️" : "🌙";
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      this.setAttribute('aria-pressed', isDarkMode);
+      this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+      
+      // Save preference to localStorage
+      localStorage.setItem('darkMode', isDarkMode);
     });
     
-    // Confetti button
-    const confettiBtn = document.getElementById('confettiBtn');
-    confettiBtn.addEventListener('click', () => {
-      confetti({
-        particleCount: 200,
-        spread: 90,
-        origin: { y: 0.6 },
-        colors: ['#ff6b6b', '#ffbe0b', '#4ecdc4', '#8338ec']
+    // Load saved theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      themeToggle.setAttribute('aria-pressed', 'true');
+      themeToggle.textContent = '☀️ Light Mode';
+    }
+    
+    // Scroll to top button
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        toTopButton.style.display = 'block';
+      } else {
+        toTopButton.style.display = 'none';
+      }
+      
+      // Update progress bar
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressBar.style.width = scrolled + '%';
+    });
+    
+    toTopButton.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
     });
     
-    // Scroll to top button
-    const toTop = document.getElementById('toTop');
-    window.addEventListener('scroll', () => {
-      toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
+    // Navigation toggle
+    navToggle.addEventListener('click', function() {
+      navMenu.classList.toggle('show');
     });
-    toTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('show');
+      }
     });
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+        
+        navMenu.classList.remove('show');
+      });
+    });
+    
+    // Music player controls
+    playBtn.addEventListener('click', function() {
+      birthdaySong.play();
+    });
+    
+    pauseBtn.addEventListener('click', function() {
+      birthdaySong.pause();
+    });
+    
+    restartBtn.addEventListener('click', function() {
+      birthdaySong.currentTime = 0;
+      birthdaySong.play();
+    });
+    
+    // Image modal
+    galleryImages.forEach(img => {
+      img.addEventListener('click', function() {
+        modalImage.src = this.src;
+        modalImage.alt = this.alt;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+      });
+    });
+    
+    closeModal.addEventListener('click', function() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+    
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+    // Escape key to close modal
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+    // Create floating cakes
+    function createCakes(count) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const cake = document.createElement('div');
+          cake.className = 'cake';
+          cake.innerHTML = '🎂';
+          cake.style.left = `${Math.random() * 100}%`;
+          cake.style.animationDuration = `${Math.random() * 3 + 5}s`;
+          document.body.appendChild(cake);
+          
+          // Remove cake after animation completes
+          setTimeout(() => {
+            cake.remove();
+          }, 6000);
+        }, i * 300);
+      }
+    }
+    
+    // Create interactive balloons
+    document.addEventListener('click', function(e) {
+      if (!valentineCard.contains(e.target) && !modal.contains(e.target)) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.innerHTML = '🎈';
+        balloon.style.left = `${e.clientX}px`;
+        balloon.style.top = `${e.clientY}px`;
+        document.body.appendChild(balloon);
+        
+        // Remove balloon after animation completes
+        setTimeout(() => {
+          balloon.remove();
+        }, 2000);
+      }
+    });
+    
+    // Add confetti on page load
+    window.addEventListener('load', function() {
+      createCakes(10);
+    });
+    
+    // Add dynamic message to marquee
+    const messages = [
+      "🎉 Happy Birthday Matt! 🎂 Wishing you the most amazing day! 🎈🎁",
+      "🎈 Another year older, another year more awesome! Happy Birthday Matt! 🎂",
+      "🎁 May your day be filled with joy, laughter, and all your favorite things! Happy Birthday!",
+      "🎂 Celebrating you today and always! Happy Birthday Matt! 🎉"
+    ];
+    
+    let currentMessage = 0;
+    const marquee = document.getElementById('birthdayMarquee');
+    
+    setInterval(() => {
+      currentMessage = (currentMessage + 1) % messages.length;
+      marquee.textContent = messages[currentMessage];
+    }, 8000);
   </script>
 </body>
 </html>
