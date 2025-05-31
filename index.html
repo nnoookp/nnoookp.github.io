@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday Matt (Enhanced Experience!)</title>
+  <title>Happy Birthday Matt (with Cake Drop!)</title>
 
   <!-- Meta Description & Open Graph for SEO & Social Sharing -->
   <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating cakes, balloons, dark mode, and more!" />
@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://example.com/birthday-matt.html" />
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>" type="image/svg+xml" />
+  <link rel="icon" href="favicon.png" type="image/png" />
 
   <!-- Preload & Load Google Font (Quicksand) Optimally -->
   <link
@@ -30,44 +30,18 @@
     /* ──────────────────────────────────────────────────────────────────────────
        BASE STYLES (uses Quicksand throughout)
     ────────────────────────────────────────────────────────────────────────── */
-    :root {
-      --primary: #e75480;
-      --primary-light: #ff8fa3;
-      --secondary: #ffb3c1;
-      --bg-light: #fff5f8;
-      --bg-gradient: linear-gradient(to bottom right, var(--bg-light), #ffe4ec);
-      --text: #3a3a3a;
-      --text-alt: #6c3a4c;
-      --card-bg: #fff0f5;
-      --shadow: 0 8px 20px rgba(0,0,0,0.1);
-      --transition: all 0.3s ease;
-    }
-    
-    .dark-mode {
-      --primary: #ffd1ff;
-      --primary-light: #b030e7;
-      --secondary: #800f9e;
-      --bg-light: #2c003e;
-      --bg-gradient: linear-gradient(to bottom right, var(--bg-light), #4b004b);
-      --text: #f0e6f6;
-      --text-alt: #e0c0e6;
-      --card-bg: #3e0030;
-      --shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
     body {
       font-family: 'Quicksand', sans-serif;
       margin: 0;
-      background: var(--bg-gradient);
+      background: linear-gradient(to bottom right, #fff5f8, #ffe4ec);
       background-size: 200% 200%;
       animation: gradientShift 20s ease infinite, fadeIn 1.5s ease-in;
-      color: var(--text);
+      color: #3a3a3a;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 30px 20px;
       overflow-x: hidden;
-      transition: background 0.5s ease;
     }
     @keyframes gradientShift {
       0%   { background-position: 0% 50%; }
@@ -82,7 +56,7 @@
     h1 {
       font-weight: 600;
       font-size: 3em;
-      color: var(--primary);
+      color: #e75480;
       text-align: center;
       margin-bottom: 0.5em;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
@@ -95,21 +69,20 @@
     #copyLink:focus,
     #themeToggle:focus,
     #toTop:focus {
-      outline: 2px dashed var(--primary);
+      outline: 2px dashed #d14f7b;
       outline-offset: 4px;
     }
 
     .letter {
       max-width: 700px;
-      background: var(--card-bg);
+      background: #fff0f5;
       border-radius: 20px;
       padding: 25px;
       margin: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       font-size: 1.1em;
       line-height: 1.7;
-      color: var(--text-alt);
-      transition: var(--transition);
+      color: #6c3a4c;
     }
 
     .gallery {
@@ -145,7 +118,7 @@
       text-align: center;
       margin-top: 8px;
       font-size: 0.95em;
-      color: var(--text);
+      color: #3a3a3a;
     }
 
     .music-container {
@@ -158,53 +131,26 @@
     .music {
       text-align: center;
       animation: fadeIn 2s ease-in;
-      background: rgba(255, 255, 255, 0.67);
+      background: #ffffffaa;
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.1);
       width: 100%;
-      transition: var(--transition);
-    }
-    .dark-mode .music {
-      background: rgba(50, 0, 50, 0.7);
     }
     .music h2 {
       font-weight: 600;
       font-size: 1.8em;
       margin-bottom: 10px;
-      color: var(--primary);
+      color: #d14f7b;
     }
     .music p {
       font-size: 1em;
       margin-bottom: 20px;
-      color: var(--text-alt);
+      color: #7a4c61;
     }
     audio {
       margin: 10px 0;
       width: 100%;
-    }
-    .player-controls {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 15px;
-    }
-    .player-controls button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-    }
-    .player-controls button:hover {
-      transform: scale(1.1);
-      background: #d14f7b;
     }
 
     .gif {
@@ -228,27 +174,20 @@
        FLOATING CAKES (new implementation, replaces “.heart”)
     ────────────────────────────────────────────────────────────────────────── */
     @keyframes drop-cake {
-      0% { 
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
+      to {
+        transform: translateY(100vh) rotate(0deg);
         opacity: 0;
       }
     }
     .cake {
       position: absolute;
-      width: 40px;
+      width: 40px;   /* adjust size of cake icon */
       height: 40px;
-      font-size: 2rem;
+      background: url('cake.png') no-repeat center/contain;
       opacity: 0.9;
       animation-name: drop-cake;
       animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      z-index: 5;
-      pointer-events: none;
-      user-select: none;
+      /* animation-duration will be set dynamically in JS */
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -261,8 +200,8 @@
       height: 300px;
       background: linear-gradient(
         135deg,
-        var(--primary-light) 0%,
-        var(--secondary) 50%,
+        #ff8fa3 0%,
+        #ffc1cb 50%,
         #ffe4eb 100%
       );
       overflow: hidden;
@@ -456,15 +395,14 @@ Love forever,\A Nook ♡";
       font-weight: 400;
       font-size: 20px;
       line-height: 1.5;
-      background: var(--card-bg);
+      background: #fff0f5;
       padding: 25px;
       border-radius: 12px;
-      color: var(--text-alt);
+      color: #6c3a4c;
       margin-top: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       animation: slideInUp 0.6s ease-out forwards;
       text-align: center;
-      transition: var(--transition);
     }
     .valentines-day-card.active .text span {
       display: none;
@@ -552,11 +490,8 @@ Love forever,\A Nook ♡";
       .music h2 {
         font-size: 1.3em;
       }
-      .gallery {
-        grid-template-columns: 1fr;
-      }
       .gallery img {
-        max-height: 250px;
+        max-height: 150px;
       }
 
       .valentines-day-card,
@@ -604,29 +539,18 @@ Love forever,\A Nook ♡";
       font-weight: bold;
       cursor: pointer;
       user-select: none;
-      z-index: 1001;
-      padding: 10px;
-      background: rgba(0,0,0,0.5);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       BALLOON CURSOR / INTERACTIVE BALLOONS
+       4. BALLOON CURSOR / INTERACTIVE BALLOONS
     ────────────────────────────────────────────────────────────────────────── */
     .balloon {
       position: absolute;
       width: 30px;
       height: 40px;
-      font-size: 1.5rem;
+      background: url('https://i.imgur.com/5RBlY7D.png') no-repeat center/contain;
       pointer-events: none;
       animation: floatUp 2s ease-out forwards;
-      z-index: 5;
-      user-select: none;
     }
     @keyframes floatUp {
       0%   { transform: translateY(0) scale(0.6); opacity: 1; }
@@ -634,16 +558,15 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
+       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
     ────────────────────────────────────────────────────────────────────────── */
     .marquee-container {
       overflow: hidden;
       white-space: nowrap;
       width: 100%;
-      background: var(--primary-light);
+      background: #ffb3c1;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       margin-bottom: 20px;
-      border-radius: 0 0 10px 10px;
     }
     .marquee {
       display: inline-block;
@@ -653,10 +576,6 @@ Love forever,\A Nook ♡";
       font-weight: 600;
       font-size: 1.4em;
       color: #800f2f;
-      padding: 10px 0;
-    }
-    .dark-mode .marquee {
-      color: #ffd1ff;
     }
     @keyframes scrollText {
       0%   { transform: translateX(0); }
@@ -664,31 +583,72 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
+       8. THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
     ────────────────────────────────────────────────────────────────────────── */
+    body.dark-mode {
+      background: #2c003e; /* deep plum */
+      color: #f0e6f6;
+    }
+    body.dark-mode h1 {
+      color: #ffd1ff;
+    }
+    body.dark-mode .valentines-day-card {
+      background: linear-gradient(
+        135deg,
+        #5e0068 0%,
+        #800f9e 50%,
+        #b030e7 100%
+      );
+      border-color: #f0e6f6;
+    }
+    body.dark-mode .valentines-day-card .text::before {
+      background: #3e0030; /* dark plum behind the message */
+      color: #f0e6f6;      /* near-white text */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    body.dark-mode .text {
+      color: #ffd1ff;
+    }
+    body.dark-mode .music {
+      background: rgba(50, 0, 50, 0.7);
+      color: #f0e6f6;
+    }
+    body.dark-mode .music h2 {
+      color: #ffd1ff;
+    }
+    body.dark-mode .music p {
+      color: #e0c0e6;
+    }
+    body.dark-mode .gallery img {
+      filter: brightness(0.8);
+    }
+    body.dark-mode figcaption {
+      color: #f0e6f6;
+    }
+    body.dark-mode .marquee-container {
+      background: #4b004b;
+    }
+    body.dark-mode .marquee {
+      color: #ffd1ff;
+    }
     #themeToggle {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      padding: 10px 15px;
-      background: var(--primary);
-      color: white;
+      padding: 8px 12px;
+      background: #ffe4ec;
       border: none;
-      border-radius: 30px;
+      border-radius: 6px;
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      z-index: 1000;
-      transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    #themeToggle:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    body.dark-mode #themeToggle {
+      background: #5e0068;
+      color: #f0e6f6;
     }
+
 
     /* ──────────────────────────────────────────────────────────────────────────
        RETURN TO TOP BUTTON STYLES
@@ -697,458 +657,42 @@ Love forever,\A Nook ♡";
       position: fixed;
       bottom: 80px;
       right: 20px;
-      padding: 12px 16px;
-      background: var(--primary);
+      padding: 10px 14px;
+      background: #ff6fa5;
       color: white;
       border: none;
-      border-radius: 50%;
+      border-radius: 6px;
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       display: none;       /* hidden until scroll */
       z-index: 1000;       /* ensure it sits on top */
-      transition: var(--transition);
-      font-size: 1.2rem;
+      transition: background 0.2s;
     }
     #toTop:hover,
     #toTop:focus {
-      background: #d14f7b;
-      transform: translateY(-3px);
-    }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       NAVIGATION MENU
-    ────────────────────────────────────────────────────────────────────────── */
-    .nav-container {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-    }
-    
-    .nav-toggle {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: var(--transition);
-      font-size: 1.5rem;
-    }
-    
-    .nav-toggle:hover {
-      transform: scale(1.1);
-    }
-    
-    .nav-menu {
-      position: absolute;
-      top: 60px;
-      left: 0;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      padding: 15px 0;
-      display: none;
-      width: 200px;
-      z-index: 1000;
-    }
-    
-    .dark-mode .nav-menu {
-      background: #3e0030;
-    }
-    
-    .nav-menu.show {
-      display: block;
-      animation: slideDown 0.3s ease;
-    }
-    
-    @keyframes slideDown {
-      0% { opacity: 0; transform: translateY(-10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    .nav-menu a {
-      display: block;
-      padding: 12px 20px;
-      color: var(--text);
-      text-decoration: none;
-      transition: var(--transition);
-      font-weight: 600;
-    }
-    
-    .nav-menu a:hover {
-      background: rgba(231, 84, 128, 0.1);
-      color: var(--primary);
-    }
-    
-    .dark-mode .nav-menu a:hover {
-      background: rgba(255, 209, 255, 0.1);
-    }
-    
-    /* ──────────────────────────────────────────────────────────────────────────
-       PROGRESS BAR
-    ────────────────────────────────────────────────────────────────────────── */
-    .progress-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: transparent;
-      z-index: 1000;
-    }
-    
-    .progress-bar {
-      height: 5px;
-      background: var(--primary);
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       CAKE DROP ANIMATION
-    ────────────────────────────────────────────────────────────────────────── */
-    @keyframes cakeDrop {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+      background: #e75480;
     }
   </style>
 </head>
 <body>
-  <!-- Progress bar -->
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <!-- Navigation menu -->
-  <div class="nav-container">
-    <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu">🎂</button>
-    <div class="nav-menu" id="navMenu">
-      <a href="#card" class="nav-link">Birthday Card</a>
-      <a href="#gallery" class="nav-link">Memory Gallery</a>
-      <a href="#music" class="nav-link">Special Song</a>
-      <a href="#letter" class="nav-link">Personal Message</a>
-    </div>
-  </div>
-
-  <!-- Birthday marquee -->
-  <div class="marquee-container">
-    <div class="marquee" id="birthdayMarquee">
-      🎉 Happy Birthday Matt! 🎂 Wishing you the most amazing day filled with joy and love! 🎈🎁
-    </div>
-  </div>
-
-  <div id="pageContent">
-    <h1>Happy Birthday Matt!</h1>
-    
-    <section id="card" class="card-section">
-      <div
-        class="valentines-day-card"
-        id="valentineCard"
-        role="button"
-        tabindex="0"
-        aria-expanded="false"
-        aria-label="Click to reveal a birthday message"
-      >
-        <div class="clouds"></div>
-        <div class="hearts">
-          <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
-          <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
-          <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
-          <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
-          <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
-        </div>
-        <div class="text">
-          Click to open your card!
-          <div class="hover">(or press spacebar)</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="letter" class="letter-section">
-      <div class="letter">
-        <p>Dear Matt,</p>
-        <p>On this special day, I wanted to create something that reflects how much you mean to me. You've brought so much happiness into my life, and I cherish every moment we've shared together.</p>
-        <p>I hope this little interactive card brings a smile to your face. There are some memories in the gallery below, a special song I recorded just for you, and of course - plenty of cake!</p>
-        <p>Wishing you a day filled with laughter, love, and all your favorite things. May this year bring you even more joy, success, and beautiful moments to cherish.</p>
-        <p>With all my love,</p>
-        <p>Nook ♡</p>
-      </div>
-    </section>
-
-    <section id="gallery" class="gallery-section">
-      <h2>Our Special Memories</h2>
-      <div class="gallery">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1529254479751-fbacb4c7b2c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Beach sunset" />
-          <figcaption>That amazing beach sunset</figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Concert night" />
-          <figcaption>Our favorite concert night</figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Mountain hike" />
-          <figcaption>Adventures in the mountains</figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Celebration dinner" />
-          <figcaption>Celebrating your last achievement</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section id="music" class="music-section">
-      <div class="music-container">
-        <div class="music">
-          <h2>A Song Just For You</h2>
-          <p>I recorded this special song to celebrate your birthday. Hope you like it!</p>
-          <audio id="birthdaySong" controls>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-          <div class="player-controls">
-            <button id="playBtn" aria-label="Play">▶</button>
-            <button id="pauseBtn" aria-label="Pause">⏸</button>
-            <button id="restartBtn" aria-label="Restart">↺</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="gif">
-      <img src="https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif" alt="Dancing cake animation" />
-    </div>
-  </div>
-
-  <!-- Image Modal -->
-  <div class="image-modal" id="imageModal">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <img id="modalImage" src="" alt="Enlarged view">
-  </div>
-
-  <button id="toTop" title="Go to top" aria-label="Scroll to top">↑</button>
-  <button id="themeToggle" aria-pressed="false">🌙 Dark Mode</button>
-
-  <script>
-    // DOM Elements
-    const valentineCard = document.getElementById('valentineCard');
-    const pageContent = document.getElementById('pageContent');
-    const themeToggle = document.getElementById('themeToggle');
-    const toTopButton = document.getElementById('toTop');
-    const progressBar = document.getElementById('progressBar');
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    const birthdaySong = document.getElementById('birthdaySong');
-    const playBtn = document.getElementById('playBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
-    const restartBtn = document.getElementById('restartBtn');
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    const closeModal = document.getElementById('closeModal');
-    const galleryImages = document.querySelectorAll('.gallery img');
-    
-    // Card interaction
-    valentineCard.addEventListener('click', function() {
-      this.classList.toggle('active');
-      this.setAttribute('aria-expanded', this.classList.contains('active'));
-      pageContent.classList.toggle('blur', this.classList.contains('active'));
-      
-      if (this.classList.contains('active')) {
-        // Add floating cakes when card is opened
-        createCakes(20);
-      }
-    });
-    
-    // Keyboard support for card
-    valentineCard.addEventListener('keydown', function(e) {
-      if (e.code === 'Space' || e.code === 'Enter') {
-        e.preventDefault();
-        this.click();
-      }
-    });
-    
-    // Theme toggle
-    themeToggle.addEventListener('click', function() {
-      document.body.classList.toggle('dark-mode');
-      const isDarkMode = document.body.classList.contains('dark-mode');
-      this.setAttribute('aria-pressed', isDarkMode);
-      this.textContent = isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
-      
-      // Save preference to localStorage
-      localStorage.setItem('darkMode', isDarkMode);
-    });
-    
-    // Load saved theme preference
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark-mode');
-      themeToggle.setAttribute('aria-pressed', 'true');
-      themeToggle.textContent = '☀️ Light Mode';
-    }
-    
-    // Scroll to top button
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 300) {
-        toTopButton.style.display = 'block';
-      } else {
-        toTopButton.style.display = 'none';
-      }
-      
-      // Update progress bar
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      progressBar.style.width = scrolled + '%';
-    });
-    
-    toTopButton.addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-    
-    // Navigation toggle
-    navToggle.addEventListener('click', function() {
-      navMenu.classList.toggle('show');
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-        navMenu.classList.remove('show');
-      }
-    });
-    
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        window.scrollTo({
-          top: targetElement.offsetTop - 80,
-          behavior: 'smooth'
-        });
-        
-        navMenu.classList.remove('show');
-      });
-    });
-    
-    // Music player controls
-    playBtn.addEventListener('click', function() {
-      birthdaySong.play();
-    });
-    
-    pauseBtn.addEventListener('click', function() {
-      birthdaySong.pause();
-    });
-    
-    restartBtn.addEventListener('click', function() {
-      birthdaySong.currentTime = 0;
-      birthdaySong.play();
-    });
-    
-    // Image modal
-    galleryImages.forEach(img => {
-      img.addEventListener('click', function() {
-        modalImage.src = this.src;
-        modalImage.alt = this.alt;
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-      });
-    });
-    
-    closeModal.addEventListener('click', function() {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    });
-    
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    });
-    
-    // Escape key to close modal
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.style.display === 'flex') {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    });
-    
-    // Create floating cakes
-    function createCakes(count) {
-      for (let i = 0; i < count; i++) {
-        setTimeout(() => {
-          const cake = document.createElement('div');
-          cake.className = 'cake';
-          cake.innerHTML = '🎂';
-          cake.style.left = `${Math.random() * 100}%`;
-          cake.style.animationDuration = `${Math.random() * 3 + 5}s`;
-          document.body.appendChild(cake);
-          
-          // Remove cake after animation completes
-          setTimeout(() => {
-            cake.remove();
-          }, 6000);
-        }, i * 300);
-      }
-    }
-    
-    // Create interactive balloons
-    document.addEventListener('click', function(e) {
-      if (!valentineCard.contains(e.target) && !modal.contains(e.target)) {
-        const balloon = document.createElement('div');
-        balloon.className = 'balloon';
-        balloon.innerHTML = '🎈';
-        balloon.style.left = `${e.clientX}px`;
-        balloon.style.top = `${e.clientY}px`;
-        document.body.appendChild(balloon);
-        
-        // Remove balloon after animation completes
-        setTimeout(() => {
-          balloon.remove();
-        }, 2000);
-      }
-    });
-    
-    // Add confetti on page load
-    window.addEventListener('load', function() {
-      createCakes(10);
-    });
-    
-    // Add dynamic message to marquee
-    const messages = [
-      "🎉 Happy Birthday Matt! 🎂 Wishing you the most amazing day! 🎈🎁",
-      "🎈 Another year older, another year more awesome! Happy Birthday Matt! 🎂",
-      "🎁 May your day be filled with joy, laughter, and all your favorite things! Happy Birthday!",
-      "🎂 Celebrating you today and always! Happy Birthday Matt! 🎉"
-    ];
-    
-    let currentMessage = 0;
-    const marquee = document.getElementById('birthdayMarquee');
-    
-    setInterval(() => {
-      currentMessage = (currentMessage + 1) % messages.length;
-      marquee.textContent = messages[currentMessage];
-    }, 8000);
-  </script>
-</body>
-</html>
+  <!-- ──────────────────────────────────────────────────────────────────────────
+       VALENTINE’S‐DAY CARD (with ARIA & tabindex)
+  ────────────────────────────────────────────────────────────────────────── -->
+  <div class="happy-valentines">
+    <div
+      class="valentines-day-card"
+      id="valentineCard"
+      role="button"
+      tabindex="0"
+      aria-expanded="false"
+      aria-label="Click to reveal a birthday message"
+    >
+      <div class="clouds"></div>
+      <div class="hearts">
+        <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartFive
