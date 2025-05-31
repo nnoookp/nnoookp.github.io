@@ -6,9 +6,6 @@
   <title>Happy Birthday Matt</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       font-family: 'Quicksand', sans-serif;
       margin: 0;
@@ -17,181 +14,191 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 10px;
+      padding: 30px 20px;
       animation: fadeIn 1.5s ease-in;
       overflow-x: hidden;
     }
     h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 2.5em;
+      font-size: 3em;
       color: #e75480;
       text-align: center;
       margin-bottom: 0.5em;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
     .valentines-day-card {
-      width: 100%;
+      position: relative;
+      width: 90%;
       max-width: 400px;
       height: auto;
-      aspect-ratio: 4 / 3;
       background-color: #ff8fa3;
       overflow: hidden;
       border: 10px solid white;
       border-radius: 10px;
-      box-shadow: 0 0 30px rgba(0,0,0,.3);
-      position: relative;
-      margin-bottom: 20px;
+      box-shadow: 0 0 100px rgba(0,0,0,.4);
+      margin: 0 auto;
+      transition: all 0.6s ease-in-out;
+      cursor: pointer;
     }
-    .valentines-day-card:hover {
-      transform: scale(1.05);
+
+    .clouds {
+      position: absolute;
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      background-color: #fff0f3;
+      z-index:5;
+      top:210px;
+      left:-20px;
+      box-shadow: 55px 30px #fff0f3, 125px 10px #fff0f3,175px 20px #fff0f3, 250px 10px #fff0f3, 320px 5px #fff0f3, 380px 10px #fff0f3;
     }
-    .valentines-day-card:before, .valentines-day-card:after {
+
+    .hearts {
+      position: absolute;
+      z-index:2;
+    }
+    .heartOne, .heartTwo, .heartThree, .heartFour, .heartFive {
+      position: absolute;
+    }
+
+    .left-side:before, .left-side:after, .right-side:before, .right-side:after {
       content: "";
       position: absolute;
-      border-radius: 50%;
     }
-    .valentines-day-card:before {
-      background-color: #ffb3c1;
-      width: 80px;
-      height: 80px;
-      top: 60%;
-      left: -20px;
-      box-shadow: 60px 20px #ffb3c1;
+
+    .right-side:before {
+      border-radius:50% 50% 50% 0;
+      width:21px;
+      height:20px;
+      background-color: #c9184a;
+      left:-0.26px;
     }
-    .valentines-day-card:after {
-      background-color: #ffccd5;
-      width: 80px;
-      height: 80px;
-      top: 65%;
-      left: -30px;
-      box-shadow: 50px 20px #ffccd5;
+
+    .right-side:after {
+      height:0;
+      width:0;
+      border-bottom:10px solid transparent;
+      border-left: 15px solid #c9184a;
+      top:19px;
+      left:-0.26px;
     }
+
+    .left-side:before {
+      border-radius:50% 50% 0 50%;
+      width:20px;
+      height:20px;
+      left:-20.7px;
+      background-color: #ff4d6d;
+    }
+
+    .left-side:after {
+      height:0;
+      width:0;
+      left:-15px;
+      border-bottom:10px solid transparent;
+      border-right: 15px solid #ff4d6d;
+      top:19px;
+    }
+
     .text {
-      position: absolute;
-      color: #800f2f;
-      font-size: 1.1em;
-      text-align: center;
-      width: 100%;
-      top: 50%;
-      transform: translateY(-50%);
+      position: relative;
       padding: 20px;
-      z-index: 3;
-      line-height: 1.4;
+      font-size: 20px;
+      font-family: 'Courier New', monospace;
+      color: #800f2f;
+      text-align: center;
     }
-    .text:hover::before {
-      content: "My dearest Matt,\A\AHappy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share.\A\AYou are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished.\A\ALove forever,\ANook ♡";
+
+    .hidden-message {
+      display: none;
       white-space: pre-wrap;
-      display: block;
+      font-size: 16px;
       background: #fff0f5;
-      padding: 15px;
-      border-radius: 10px;
+      padding: 20px;
+      border-radius: 12px;
       color: #6c3a4c;
-      font-size: 1em;
+      margin-top: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
+
+    .valentines-day-card.active .hidden-message {
+      display: block;
+    }
+
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+      max-width: 1000px;
       width: 100%;
-      max-width: 600px;
     }
+
     .gallery img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 18px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
       object-fit: cover;
-      max-height: 200px;
-      background: #eee;
+      height: 300px;
+      background: #e8e8e8;
     }
+
     .music {
       margin-top: 30px;
+      background: #ffffffaa;
       padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      max-width: 600px;
       text-align: center;
-      background: #ffffffcc;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 500px;
     }
+
     .music h2 {
-      font-size: 1.5em;
       color: #d14f7b;
+      margin-bottom: 10px;
     }
-    .music p {
-      font-size: 1em;
-      color: #7a4c61;
-    }
+
     audio {
       width: 100%;
     }
-    .hover {
-      margin-top: 10px;
-      font-size: 0.9em;
-      font-family: 'Pacifico', cursive;
-      color: #a14e66;
-    }
-    .hearts-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .heart {
-      position: absolute;
-      width: 16px;
-      height: 14px;
-      background-color: #ff6fa5;
-      transform: rotate(-45deg);
-      opacity: 0.8;
-      animation: drop 5s linear infinite;
-    }
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 16px;
-      height: 14px;
-      background-color: #ff6fa5;
-      border-radius: 50%;
-    }
-    .heart::before {
-      top: -8px;
-      left: 0;
-    }
-    .heart::after {
-      top: 0;
-      left: 8px;
-    }
-    @keyframes drop {
-      to {
-        transform: translateY(100vh) rotate(-45deg);
-        opacity: 0;
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2em;
+      }
+
+      .gallery img {
+        height: auto;
+        max-height: 300px;
       }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 1.8em;
       }
-      .valentines-day-card {
-        aspect-ratio: 3 / 2;
+      .gallery img {
+        max-height: 250px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Happy Birthday My Bby Matt ♥</h1>
+  <div class="valentines-day-card" onclick="this.classList.toggle('active')">
+    <div class="text">
+      <span>Happy birthday my bby Matt &lt;3</span>
+      <div class="hidden-message">
+        My dearest Matt,
 
-  <div class="valentines-day-card">
-    <div class="text"><span>Happy Birthday My Bby Matt &lt;3</span></div>
+        Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.
+
+        You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.
+
+        Love forever,
+        Nook ♡
+      </div>
+    </div>
   </div>
-  <p class="hover">- hover over the text -</p>
 
   <div class="gallery">
     <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
@@ -210,20 +217,5 @@
       Your browser does not support the audio element.
     </audio>
   </div>
-
-  <div class="hearts-container" id="hearts"></div>
-
-  <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-      heart.style.opacity = (0.5 + Math.random() * 0.5);
-      document.getElementById('hearts').appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 300);
-  </script>
 </body>
 </html>
