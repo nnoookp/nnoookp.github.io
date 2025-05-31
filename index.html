@@ -173,7 +173,7 @@
     /* ──────────────────────────────────────────────────────────────────────────
        FLOATING HEARTS CONTAINER
     ────────────────────────────────────────────────────────────────────────── */
-    #hearts {Add commentMore actions
+    #hearts {
       position: fixed;
       top: 0;
       left: 0;
@@ -184,11 +184,10 @@
       z-index: 1;
     }
 
-
     /* ──────────────────────────────────────────────────────────────────────────
        FLOATING HEARTS ANIMATION
     ────────────────────────────────────────────────────────────────────────── */
-    @keyframes drop {More actions
+    @keyframes drop {
       to {
         transform: translateY(100vh) rotate(-45deg);
         opacity: 0;
@@ -588,6 +587,30 @@ Love forever,\A Nook ♡";
       100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
     }
 
+    /* ──────────────────────────────────────────────────────────────────────────
+       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
+    ────────────────────────────────────────────────────────────────────────── */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      background: #ffb3c1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .marquee {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 12s linear infinite;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 1.4em;
+      color: #800f2f;
+    }
+    @keyframes scrollText {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
 
     /* ──────────────────────────────────────────────────────────────────────────
        8. THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
@@ -656,6 +679,7 @@ Love forever,\A Nook ♡";
       color: #f0e6f6;
     }
 
+
     /* ──────────────────────────────────────────────────────────────────────────
        RETURN TO TOP BUTTON STYLES
     ────────────────────────────────────────────────────────────────────────── */
@@ -684,10 +708,7 @@ Love forever,\A Nook ♡";
 </head>
 <body>
   <!-- ──────────────────────────────────────────────────────────────────────────
-       HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER (at the very top)
-  ────────────────────────────────────────────────────────────────────────── -->
-
-
+    
   <!-- ──────────────────────────────────────────────────────────────────────────
        VALENTINE’S‐DAY CARD (with ARIA & tabindex)
   ────────────────────────────────────────────────────────────────────────── -->
@@ -708,9 +729,10 @@ Love forever,\A Nook ♡";
         <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
         <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
       </div>
-      <div class="text"><span>click the card to reveal &lt;3</span></div>
+      <div class="text"><span>click the card to reveal </span></div>
     </div>
   </div>
+
 
   <!-- BIRTHDAY SONG (just below the card) -->
   <div class="music-container">
@@ -756,11 +778,11 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.35 pm.png"
-          alt="Matt and his valentines Kori icecream"
+          alt="Matt and his valentines Kori"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Matt and his valentines Kori icecream</figcaption>
+        <figcaption>Matt and his valentines Kori – ice cream</figcaption>
       </figure>
       <figure>
         <img
