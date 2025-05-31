@@ -33,7 +33,7 @@
     body {
       font-family: 'Quicksand', sans-serif;
       margin: 0;
-      background: linear-gradient( to bottom right, #fff5f8, #ffe4ec );
+      background: linear-gradient(to bottom right, #fff5f8, #ffe4ec);
       background-size: 200% 200%;
       animation: gradientShift 20s ease infinite, fadeIn 1.5s ease-in;
       color: #3a3a3a;
@@ -68,7 +68,8 @@
     button:focus,
     .gallery img:focus,
     #copyLink:focus,
-    #themeToggle:focus {
+    #themeToggle:focus,
+    #toTop:focus {
       outline: 2px dashed #d14f7b;
       outline-offset: 4px;
     }
@@ -114,6 +115,13 @@
     .gallery img:focus {
       transform: scale(1.05);
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery figcaption {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.95em;
+      color: #3a3a3a;
     }
 
     .music-container {
@@ -617,6 +625,9 @@ Love forever,\A Nook ♡";
       background: #2c003e; /* deep plum */
       color: #f0e6f6;
     }
+    body.dark-mode h1 {
+      color: #ffd1ff;
+    }
     body.dark-mode .valentines-day-card {
       background: linear-gradient(
         135deg,
@@ -626,12 +637,29 @@ Love forever,\A Nook ♡";
       );
       border-color: #f0e6f6;
     }
+    body.dark-mode .valentines-day-card .text::before {
+      background: #3e0030;
+      color: #f0e6f6;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    body.dark-mode .text {
+      color: #ffd1ff;
+    }
     body.dark-mode .music {
       background: rgba(50, 0, 50, 0.7);
       color: #f0e6f6;
     }
+    body.dark-mode .music h2 {
+      color: #ffd1ff;
+    }
+    body.dark-mode .music p {
+      color: #e0c0e6;
+    }
     body.dark-mode .gallery img {
       filter: brightness(0.8);
+    }
+    body.dark-mode figcaption {
+      color: #f0e6f6;
     }
     body.dark-mode .marquee-container {
       background: #4b004b;
@@ -678,6 +706,31 @@ Love forever,\A Nook ♡";
     #copyLink:focus {
       background: #e75480;
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       RETURN TO TOP BUTTON STYLES
+    ────────────────────────────────────────────────────────────────────────── */
+    #toTop {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      padding: 10px 14px;
+      background: #ff6fa5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    #toTop:hover,
+    #toTop:focus {
+      background: #e75480;
+    }
   </style>
 </head>
 <body>
@@ -704,31 +757,18 @@ Love forever,\A Nook ♡";
     >
       <div class="clouds"></div>
       <div class="hearts">
-        <div class="heartOne">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartTwo">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartThree">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFour">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFive">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
+        <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
+        <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
       </div>
       <div class="text"><span>click the card to reveal &lt;3</span></div>
     </div>
   </div>
 
+  <!-- Copy Link Button (for sharing) -->
+  <button id="copyLink">Copy Link</button>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
        ─── BIRTHDAY SONG (moved just below the card) ───────────────────────────
@@ -746,6 +786,9 @@ Love forever,\A Nook ♡";
 
   <!-- Theme Toggle Button (fixed at bottom right) -->
   <button id="themeToggle" aria-label="Toggle dark or light mode">🌙 Night Mode</button>
+
+  <!-- Return to Top Button (hidden until scroll) -->
+  <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
        ─── PAGE CONTENT (gallery + floating hearts)
@@ -768,7 +811,7 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.55.35 pm.png"
-          alt=" King Matthew"
+          alt="King Matthew"
           loading="lazy"
           tabindex="0"
         />
@@ -777,11 +820,11 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.35 pm.png"
-          alt=" Matt and his Valentines Kori"
+          alt="Matt and his valentines Kori"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption> Matt and his Valentines Kori icecream </figcaption>
+        <figcaption>Matt and his valentines Kori – ice cream</figcaption>
       </figure>
       <figure>
         <img
@@ -804,11 +847,11 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.02 pm.png"
-          alt="Once in awhile getting a nice photo"
+          alt="Once in a while getting a nice photo"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Once in awhile getting a nice photo</figcaption>
+        <figcaption>Once in a while getting a nice photo</figcaption>
       </figure>
     </div>
 
@@ -953,6 +996,21 @@ Love forever,\A Nook ♡";
         navigator.clipboard.writeText(window.location.href)
           .then(() => alert('Link copied to clipboard!'))
           .catch(() => alert('Oops—couldn’t copy link.'));
+      }
+    });
+
+    // 7) RETURN TO TOP BUTTON LOGIC
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
+    });
+    toTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    toTop.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   </script>
