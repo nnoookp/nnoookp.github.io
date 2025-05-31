@@ -145,7 +145,7 @@
     .valentines-day-card {
       position: relative;
       width: 400px;
-      height: 300px;                /* fixed when inactive */
+      height: 300px;
       background-color: #ff8fa3;
       overflow: hidden;
       border: 10px solid white;
@@ -159,7 +159,7 @@
       flex-direction: column;
       align-items: center;
       box-sizing: border-box;
-      padding-top: 10px;            /* space so hearts/clouds aren’t cut */
+      padding-top: 10px;
     }
 
     /* When active on desktop, let the card grow */
@@ -182,7 +182,7 @@
       border-radius:50%;
       top:140px;
       left:-25px;
-      z-index: 2; /* behind the reveal text */
+      z-index: 2;
       box-shadow:
         60px 20px #ffb3c1,
         130px 10px #ffb3c1,
@@ -199,7 +199,7 @@
       border-radius:50%;
       top:160px;
       left:-40px;
-      z-index: 2; /* behind the reveal text */
+      z-index: 2;
       box-shadow:
         50px 20px #ffccd5,
         120px 40px #ffccd5,
@@ -214,7 +214,7 @@
       height:100px;
       border-radius:50%;
       background-color: #fff0f3;
-      z-index:5;                       /* above inside‐hearts, below text */
+      z-index:5;
       top:210px;
       left:-20px;
       box-shadow:
@@ -229,7 +229,7 @@
     /* The five hearts inside the card when not yet expanded */
     .hearts-inside {
       position: absolute;
-      z-index: 1;                   /* behind clouds */
+      z-index: 1;
     }
     .heartOne {
       position: absolute;
@@ -274,329 +274,138 @@
       50% {transform: rotateY(-45deg);}
     }
 
-    /* The “header” text and hidden message container */
-    .text {
-      /* Now in normal document flow (not absolute) */
-      color: #800f2f;
-      font-size: 30px;
-      font-family: 'Courier New', monospace;
-      line-height: 1;
-      text-align: center;
-      width: 94%;
-      padding: 20px 10px 0 10px;    /* top padding so initial span isn’t flush */
-      box-sizing: border-box;
-      margin-top: 10px;
-      position: relative;           /* so child .message can be absolute */
-    }
-    .hover {
-      color: white;
+    /* The “header” text and subheader */
+    .header {
       font-family: 'Pacifico', cursive;
+      font-size: 2.8em;
+      color: #e1477e;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4em;
       text-align: center;
-      margin-top: 10px;
+      z-index: 10;
+      margin-top: 20px;
+    }
+    .subheader {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 1.25em;
+      color: #e1477e;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5em;
+      text-align: center;
+      opacity: 0.9;
+      z-index: 10;
     }
 
-    /* ──────────────────────────────────────────────────────────────────────────
-       REVEALED MESSAGE (DESKTOP / TABLET > 768px)
-    ────────────────────────────────────────────────────────────────────────── */
+    /* The message inside the card (hidden until expanded) */
     .message {
-      display: none;
-    }
-    /* When card is active, hide the <span> and show <div class="message"> */
-    .valentines-day-card.active .text span {
-      display: none;
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1.2em;
+      font-weight: 600;
+      line-height: 1.45em;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease, opacity 0.6s ease;
+      color: #592f3d;
+      text-align: center;
+      z-index: 10;
     }
     .valentines-day-card.active .message {
-      display: block;
-      background: #fff0f5;
-      border-radius: 12px;
-      color: #6c3a4c;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      font-size: 26px;
-      line-height: 1.4;
-      padding: 30px;
-      margin: 20px 0;
-      box-sizing: border-box;
-      width: 100%;
-      position: relative;         /* sits in normal flow, pushing card height */
-      z-index: 10;                /* above any remaining clouds/hearts */
+      max-height: 400px;
+      opacity: 1;
+      margin-top: 20px;
     }
 
-    /* ──────────────────────────────────────────────────────────────────────────
-       IMAGE MODAL (LIGHTBOX)
-    ────────────────────────────────────────────────────────────────────────── */
-    .image-modal {
+    /* LIGHTBOX MODAL for gallery images */
+    #imageModal {
       display: none;
       position: fixed;
-      z-index: 1000;
+      z-index: 20;
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.85);
       justify-content: center;
-      cursor: pointer;
+      align-items: center;
     }
-    .image-modal img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    #imageModal img {
+      max-width: 80vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(255, 111, 162, 0.7);
+      object-fit: contain;
     }
-    .image-modal .close-btn {
-      position: absolute;
+    .close-btn {
+      position: fixed;
       top: 20px;
-      right: 20px;
-      color: #fff;
-      font-size: 30px;
-      font-weight: bold;
+      right: 30px;
+      font-size: 40px;
+      font-weight: 900;
+      color: #ff6fa5;
       cursor: pointer;
       user-select: none;
+      z-index: 30;
+      transition: color 0.3s;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       MOBILE‐SPECIFIC ADJUSTMENTS (max-width: 768px)
-       • 2-column gallery
-       • Card initially 350px high
-       • When active, card grows (so message is visible)
-       • Clouds hide, and message overlays inside that taller card
-    ────────────────────────────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2em;
-        padding: 0 10px;
-      }
-
-      .letter {
-        padding: 20px;
-        font-size: 1em;
-        margin: 15px 10px;
-      }
-
-      /* Instagram‐style: exactly 2 columns on mobile */
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-      .gallery img {
-        height: auto;
-        max-height: 200px;
-      }
-
-      .music-container {
-        margin-top: 30px;
-      }
-
-      .music h2 {
-        font-size: 1.5em;
-      }
-
-      .gif img {
-        width: 160px;
-      }
-
-      audio {
-        width: 100%;
-      }
-
-      /* Fix card to 95vw × 350px when inactive */
-      .valentines-day-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 95vw;
-        height: 350px;       /* fixed “hidden” height */
-        padding-top: 10px;   /* space for clouds/hearts */
-        box-sizing: border-box;
-      }
-      /* When active, allow it to grow so the user sees the message */
-      .valentines-day-card.active {
-        height: auto;       /* card expands vertically */
-      }
-
-      /* Clouds reposition slightly for smaller mobiles */
-      .valentines-day-card:before,
-      .valentines-day-card:after {
-        top: 140px;
-        left: -20px;
-      }
-      .valentines-day-card:before {
-        box-shadow:
-          45px 15px #ffb3c1,
-          100px 8px #ffb3c1,
-          150px 15px #ffb3c1,
-          200px -4px #ffb3c1,
-          260px 15px #ffb3c1;
-      }
-      .valentines-day-card:after {
-        box-shadow:
-          45px 15px #ffccd5,
-          100px 8px #ffccd5,
-          150px 15px #ffccd5,
-          200px 8px #ffccd5,
-          260px 4px #ffccd5;
-      }
-
-      .clouds {
-        top: 180px;
-        left: -15px;
-        box-shadow:
-          45px 20px #fff0f3,
-          100px 8px #fff0f3,
-          150px 15px #fff0f3,
-          200px 8px #fff0f3,
-          260px 4px #fff0f3;
-      }
-
-      /* On mobile, .message now overlays inside that taller card */
-      .valentines-day-card.active .message {
-        /* Already display:block; now we must reposition it absolutely */
-        position: absolute;
-        top: 10px;              
-        left: 10px;             
-        right: 10px;            
-        /* bottom margin can be expanded if the content needs scroll */
-        background: #fff0f5;
-        border-radius: 12px;
-        color: #6c3a4c;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 24px;
-        line-height: 1.5;
-        padding: 20px;
-        overflow-y: auto;       /* scroll inside if too tall */
-        box-sizing: border-box;
-        z-index: 10;            /* above any remnant of clouds/hearts */
-      }
-      /* Hide the <span> when active */
-      .valentines-day-card.active .text span {
-        display: none;
-      }
-    }
-
-    /* VERY SMALL PHONES (≤480px): slightly tweak font/padding */
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      .letter {
-        font-size: 0.95em;
-      }
-
-      .music h2 {
-        font-size: 1.3em;
-      }
-
-      .gallery img {
-        max-height: 150px;
-      }
-
-      /* Shrink the card a bit on tiny screens */
-      .valentines-day-card {
-        width: 95vw;
-        height: 320px;
-      }
-      .valentines-day-card.active {
-        height: auto;
-      }
-
-      /* Slightly reduce text size and padding inside the message */
-      .valentines-day-card.active .message {
-        font-size: 22px;
-        line-height: 1.4;
-        padding: 15px;
-      }
+    .close-btn:hover {
+      color: #ff3e7b;
     }
   </style>
 </head>
 <body>
-  <div class="happy-valentines">
-    <!-- ──────────────────────────────────────────────────────────────────────────
-         VALENTINE’S CARD: click to reveal
-    ────────────────────────────────────────────────────────────────────────── -->
-    <div class="valentines-day-card" id="valentineCard">
-      <div class="clouds"></div>
+  <h1 class="header">Happy Birthday Matt 🎉</h1>
+  <p class="subheader">A special day deserves a special card</p>
 
-      <div class="hearts-inside">
-        <div class="heartOne">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartTwo">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartThree">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFour">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-        <div class="heartFive">
-          <div class="left-side"></div>
-          <div class="right-side"></div>
-        </div>
-      </div>
+  <div id="valentineCard" class="valentines-day-card" aria-label="Birthday card. Click to reveal a message.">
+    <div class="clouds"></div>
 
-      <!-- The “trigger” text and the hidden message container -->
-      <div class="text">
-        <span>Happy birthday my bby Matt &lt;3</span>
-        <div class="message">
-          My dearest Matt,
+    <div class="hearts-inside heartOne heart" aria-hidden="true"></div>
+    <div class="hearts-inside heartTwo heart" aria-hidden="true"></div>
+    <div class="hearts-inside heartThree heart" aria-hidden="true"></div>
+    <div class="hearts-inside heartFour heart" aria-hidden="true"></div>
+    <div class="hearts-inside heartFive heart" aria-hidden="true"></div>
 
-          Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.
-
-          You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.
-
-          Love forever,
-          Nook ♡
-        </div>
-      </div>
+    <div class="message">
+      <p>Dear Matt,</p>
+      <p>Wishing you a birthday filled with laughter, love, and unforgettable moments. You deserve the best today and always!</p>
+      <p>Enjoy your special day to the fullest. 🎂❤️</p>
     </div>
-    <p class="hover">- click the card to reveal -</p>
-
-    <!-- ──────────────────────────────────────────────────────────────────────────
-         GALLERY: Thumbnails open in lightbox on click
-    ────────────────────────────────────────────────────────────────────────── -->
-    <div class="gallery">
-      <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
-      <img src="Screenshot 2025-05-22 at 9.55.35 pm.png" alt="Memory 2" />
-      <img src="Screenshot 2025-05-22 at 9.56.35 pm.png" alt="Memory 3" />
-      <img src="Screenshot 2025-05-22 at 9.56.22 pm.png" alt="Memory 4" />
-      <img src="Screenshot 2025-05-22 at 9.56.12 pm.png" alt="Memory 5" />
-      <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
-    </div>
-
-    <!-- IMAGE MODAL (hidden by default) -->
-    <div id="imageModal" class="image-modal">
-      <span class="close-btn">&times;</span>
-      <img id="modalImg" src="" alt="Full-size preview" />
-    </div>
-
-    <!-- ──────────────────────────────────────────────────────────────────────────
-         BIRTHDAY SONG (centered)
-    ────────────────────────────────────────────────────────────────────────── -->
-    <div class="music-container">
-      <div class="music">
-        <h2>Your Birthday Song 🎵</h2>
-        <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
-        <audio controls>
-          <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-    </div>
-
-    <!-- Floating hearts background -->
-    <div class="hearts" id="hearts"></div>
   </div>
 
-  <!-- ──────────────────────────────────────────────────────────────────────────
-       SCRIPTS: 1) Card‐reveal, 2) Floating hearts, 3) Lightbox
-  ────────────────────────────────────────────────────────────────────────── -->
+  <div class="gallery" aria-label="Birthday photo gallery">
+    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=400&q=80" alt="Birthday cake with candles" />
+    <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80" alt="Balloons and confetti" />
+    <img src="https://images.unsplash.com/photo-1523978591478-c753949ff840?auto=format&fit=crop&w=400&q=80" alt="Colorful party decorations" />
+    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=400&q=80" alt="Friends celebrating at a party" />
+  </div>
+
+  <div id="imageModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <span class="close-btn" aria-label="Close image modal">&times;</span>
+    <img id="modalImg" src="" alt="Expanded gallery image" />
+  </div>
+
+  <div id="hearts" class="hearts" aria-hidden="true"></div>
+
+  <div class="music-container" aria-label="Birthday song player">
+    <div class="music">
+      <h2>Special Birthday Song</h2>
+      <p>Here’s a tune to brighten your day, Matt! 🎶</p>
+      <audio controls>
+        <source src="https://cdn.pixabay.com/download/audio/2021/09/20/audio_137f00462c.mp3?filename=happy-birthday-135997.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+
+  <div class="gif">
+    <img src="https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif" alt="Happy birthday animated GIF" />
+  </div>
+
   <script>
     // 1) Toggle “active” on the Valentine's card to reveal message
     document.getElementById('valentineCard').addEventListener('click', function() {
@@ -624,19 +433,31 @@
       img.addEventListener('click', () => {
         modalImg.src = img.src;
         modal.style.display = 'flex';
+        modal.focus();
       });
     });
-    // Close modal on “×”
+
+    // Close modal on "×" click
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
+      modalImg.src = '';
     });
-    // Close modal if clicking outside the image
-    modal.addEventListener('click', e => {
+
+    // Also close modal when clicking outside the image inside the modal
+    modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.style.display = 'none';
+        modalImg.src = '';
+      }
+    });
+
+    // Optional: Close modal on ESC key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === "Escape" && modal.style.display === 'flex') {
+        modal.style.display = 'none';
+        modalImg.src = '';
       }
     });
   </script>
 </body>
 </html>
-
