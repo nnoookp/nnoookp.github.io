@@ -123,7 +123,21 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       FLOATING HEARTS (background) – will be inside #pageContent
+       FLOATING HEARTS CONTAINER (now restored)
+    ────────────────────────────────────────────────────────────────────────── */
+    #hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       FLOATING HEARTS (background) – individual hearts
     ────────────────────────────────────────────────────────────────────────── */
     @keyframes drop {
       to {
@@ -165,7 +179,7 @@
       z-index: 10; /* stay on top when #pageContent is blurred */
       width: 400px;
       height: 300px;
-      /* 1) Gradient background instead of flat pink */
+      /* Gradient background instead of flat pink */
       background: linear-gradient(
         135deg,
         #ff8fa3 0%,
@@ -175,12 +189,12 @@
       overflow: hidden;
       border: 10px solid white;
       border-radius: 10px;
-      /* 4) Softer, layered box-shadow */
+      /* Softer, layered box-shadow */
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       margin: 0 auto;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
       cursor: pointer;
-      /* 2) Pop-in animation on page load */
+      /* Pop-in animation on page load */
       animation: popIn 0.8s ease-out;
     }
     .valentines-day-card.active {
@@ -509,11 +523,107 @@ Love forever,\A Nook ♡";
       cursor: pointer;
       user-select: none;
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       4. BALLOON CURSOR / INTERACTIVE BALLOONS
+    ────────────────────────────────────────────────────────────────────────── */
+    .balloon {
+      position: absolute;
+      width: 30px;
+      height: 40px;
+      background: url('https://i.imgur.com/5RBlY7D.png') no-repeat center/contain;
+      pointer-events: none;
+      animation: floatUp 2s ease-out forwards;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(0.6); opacity: 1; }
+      100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
+    ────────────────────────────────────────────────────────────────────────── */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      background: #ffb3c1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .marquee {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 12s linear infinite;
+      font-size: 1.4em;
+      font-family: 'Pacifico', cursive;
+      color: #800f2f;
+    }
+    @keyframes scrollText {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       8. THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
+    ────────────────────────────────────────────────────────────────────────── */
+    body.dark-mode {
+      background: #2c003e; /* deep plum */
+      color: #f0e6f6;
+    }
+    body.dark-mode .valentines-day-card {
+      background: linear-gradient(
+        135deg,
+        #5e0068 0%,
+        #800f9e 50%,
+        #b030e7 100%
+      );
+      border-color: #f0e6f6;
+    }
+    body.dark-mode .music {
+      background: rgba(50, 0, 50, 0.7);
+      color: #f0e6f6;
+    }
+    body.dark-mode .gallery img {
+      filter: brightness(0.8);
+    }
+    body.dark-mode .marquee-container {
+      background: #4b004b;
+    }
+    body.dark-mode .marquee {
+      color: #ffd1ff;
+    }
+    #themeToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      background: #ffe4ec;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      font-family: 'Pacifico', cursive;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    body.dark-mode #themeToggle {
+      background: #5e0068;
+      color: #f0e6f6;
+    }
   </style>
 </head>
 <body>
   <!-- ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD (now at the top)
+       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER (at the very top)
+  ────────────────────────────────────────────────────────────────────────── -->
+  <div class="marquee-container">
+    <div class="marquee">
+      🎈🎈🎈 Happy Birthday, Matt! Happy Birthday, Matt! Happy Birthday, Matt! 🎈🎈🎈
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────────────────────────────────────────
+       ─── VALENTINE’S‐DAY CARD (now at the top) ───────────────────────────────
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="happy-valentines">
     <div class="valentines-day-card" id="valentineCard">
@@ -546,7 +656,7 @@ Love forever,\A Nook ♡";
   </div>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
-       BIRTHDAY SONG (moved just below the card)
+       ─── BIRTHDAY SONG (moved just below the card) ───────────────────────────
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="music-container">
     <div class="music">
@@ -559,8 +669,11 @@ Love forever,\A Nook ♡";
     </div>
   </div>
 
+  <!-- Theme Toggle Button (fixed at bottom right) -->
+  <button id="themeToggle">🌙 Night Mode</button>
+
   <!-- ──────────────────────────────────────────────────────────────────────────
-       PAGE CONTENT (gallery + floating hearts)
+       ─── PAGE CONTENT (gallery + floating hearts)
        Wrapped in #pageContent so we can blur it when the card opens
   ────────────────────────────────────────────────────────────────────────── -->
   <div id="pageContent">
@@ -577,7 +690,7 @@ Love forever,\A Nook ♡";
     </div>
 
     <!-- Floating hearts container (will be blurred when card opens) -->
-    <div class="hearts" id="hearts"></div>
+    <div id="hearts"></div>
   </div>
 
   <!-- IMAGE MODAL (hidden by default) -->
@@ -590,10 +703,12 @@ Love forever,\A Nook ♡";
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <!-- ──────────────────────────────────────────────────────────────────────────
-       SCRIPTS:
+       ─── SCRIPTS:
          1) Toggle “active” on the Valentine’s card + fire confetti + blur page
          2) Create floating hearts in the background
          3) Lightbox logic for gallery images
+         4) Balloon cursor / interactive balloons on click
+         5) Theme switcher toggle
   ────────────────────────────────────────────────────────────────────────── -->
   <script>
     // 1) Toggle active on the Valentine’s card, apply blur to #pageContent, fire confetti
@@ -620,6 +735,8 @@ Love forever,\A Nook ♡";
       heart.classList.add('heart');
       // Random horizontal position
       heart.style.left = Math.random() * 100 + 'vw';
+      // Start at top of viewport
+      heart.style.top = '-20px';
       // Pick one of three pink shades
       const colors = ['#ff6fa5', '#ff9bbb', '#ffa3c4'];
       heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -628,7 +745,7 @@ Love forever,\A Nook ♡";
       heart.style.animationDuration = (baseDuration + Math.random() * 2) + 's';
       heart.style.opacity = (0.4 + Math.random() * 0.6);
       document.getElementById('hearts').appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
+      setTimeout(() => heart.remove(), (baseDuration + 2) * 1000);
     }
     setInterval(createHeart, 300);
 
@@ -652,6 +769,30 @@ Love forever,\A Nook ♡";
       if (e.target === modal) {
         modal.style.display = 'none';
       }
+    });
+
+    // 4) BALLOON CURSOR / INTERACTIVE BALLOONS ON CLICK
+    document.addEventListener("click", (e) => {
+      // Only trigger on left-click and ignore clicks on buttons/inputs to avoid conflicts
+      if (e.button !== 0) return;
+      const targetTag = e.target.tagName.toLowerCase();
+      if (["button", "input", "textarea"].includes(targetTag)) return;
+
+      const balloon = document.createElement("div");
+      balloon.classList.add("balloon");
+      balloon.style.left = (e.pageX - 15) + "px";
+      balloon.style.top = (e.pageY - 20) + "px";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 2000);
+    });
+
+    // 5) THEME SWITCHER TOGGLE
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      themeToggle.textContent = document.body.classList.contains("dark-mode")
+        ? "☀️ Day Mode"
+        : "🌙 Night Mode";
     });
   </script>
 </body>
