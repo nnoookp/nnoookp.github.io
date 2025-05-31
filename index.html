@@ -60,22 +60,17 @@
       object-fit: cover;
       height: 340px;
       background: #e8e8e8;
+      cursor: pointer;
     }
     .gallery img:hover {
       transform: scale(1.05);
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       NEW: wrapper to center the music box
-    ────────────────────────────────────────────────────────────────────────── */
     .music-container {
       display: flex;
       justify-content: center;
-      margin-top: 50px; /* same vertical spacing as before */
-      width: 100%;
+      margin-top: 50px;
     }
-
     .music {
       text-align: center;
       animation: fadeIn 2s ease-in;
@@ -100,7 +95,6 @@
       margin: 10px;
       width: 100%;
     }
-
     .gif {
       margin: 40px 0 10px;
       text-align: center;
@@ -174,17 +168,16 @@
         margin: 15px 10px;
       }
 
+      /* ── Instagram‐style: 2 columns per row on mobile ── */
       .gallery {
-        grid-template-columns: 1fr;
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
       }
-
       .gallery img {
         height: auto;
-        max-height: 300px;
+        max-height: 200px;
       }
 
-      /* Adjust the music-container margin for smaller screens */
       .music-container {
         margin-top: 30px;
       }
@@ -216,14 +209,15 @@
       }
 
       .gallery img {
-        max-height: 250px;
+        max-height: 150px;
       }
     }
 
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
+
     /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD STYLES (click‐only version; unchanged)
+       VALENTINE’S‐DAY CARD STYLES (click‐only version)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
@@ -419,7 +413,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       “.active”‐based hidden message (click‐only)
+       “.active”‐based hidden message (instead of hover)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
@@ -441,7 +435,7 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       RESPONSIVE ADJUSTMENTS FOR CARD ON SMALL SCREENS
+       RESPONSIVE ADJUSTMENTS FOR “.active” CARD ON SMALL SCREENS
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .valentines-day-card,
@@ -496,20 +490,53 @@ Love forever,\A Nook ♡";
         padding: 15px;
       }
     }
+
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       IMAGE MODAL (Lightbox) STYLES
+    ────────────────────────────────────────────────────────────────────────── */
+    .image-modal {
+      display: none;             /* hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .image-modal .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
   </style>
 </head>
-
 <body>
-  <!-- (everything up to the card remains exactly the same) -->
+  <!-- (everything up to the card remains the same) -->
   <!--
-    <h1>Happy birthday my bby Matt &lt;3</h1>
-  
-    <div class="letter">
-      <p>My dearest Matt,</p>
-      <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share every look that says more than words.</p>
-      <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
-      <p>Love forever,<br />Nook ♡</p>
-    </div>
+  <h1>Happy birthday my bby Matt &lt;3</h1>
+
+  <div class="letter">
+    <p>My dearest Matt,</p>
+    <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share every look that says more than words.</p>
+    <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
+    <p>Love forever,<br />Nook ♡</p>
+  </div>
   -->
 
   <div class="happy-valentines">
@@ -541,6 +568,9 @@ Love forever,\A Nook ♡";
     </div>
     <p class="hover">- click the card to reveal -</p>
 
+    <!-- ──────────────────────────────────────────────────────────────────────────
+         GALLERY: Thumbnails that open in a lightbox on click
+    ────────────────────────────────────────────────────────────────────────── -->
     <div class="gallery">
       <img src="Screenshot 2025-05-22 at 9.55.49 pm.png" alt="Memory 1" />
       <img src="Screenshot 2025-05-22 at 9.55.35 pm.png" alt="Memory 2" />
@@ -550,7 +580,15 @@ Love forever,\A Nook ♡";
       <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
     </div>
 
-    <!-- Wrapped the music box in a flex container to center it -->
+    <!-- IMAGE MODAL (hidden by default) -->
+    <div id="imageModal" class="image-modal">
+      <span class="close-btn">&times;</span>
+      <img id="modalImg" src="" alt="Full-size preview" />
+    </div>
+
+    <!-- ──────────────────────────────────────────────────────────────────────────
+         BIRTHDAY SONG (wrapped in .music-container for centering)
+    ────────────────────────────────────────────────────────────────────────── -->
     <div class="music-container">
       <div class="music">
         <h2>Your Birthday Song 🎵</h2>
@@ -564,14 +602,21 @@ Love forever,\A Nook ♡";
 
     <div class="hearts" id="hearts"></div>
 
+    <!-- ──────────────────────────────────────────────────────────────────────────
+         SCRIPTS:
+           1) Toggle “active” class on the Valentine’s card
+           2) Create floating hearts
+           3) Lightbox logic for gallery images
+    ────────────────────────────────────────────────────────────────────────── -->
     <script>
-      // Only “.active” toggles the expansion and hidden message
+      // 1) Valentine’s card: click to toggle hidden message + expand
       document
         .getElementById('valentineCard')
         .addEventListener('click', function () {
           this.classList.toggle('active');
         });
 
+      // 2) Floating hearts in the background
       function createHeart() {
         const heart = document.createElement('div');
         heart.classList.add('heart');
@@ -582,6 +627,32 @@ Love forever,\A Nook ♡";
         setTimeout(() => heart.remove(), 6000);
       }
       setInterval(createHeart, 300);
+
+      // 3) LIGHTBOX: click a .gallery img to open full-screen modal
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const closeBtn = document.querySelector('.close-btn');
+
+      // When any thumbnail is clicked:
+      document.querySelectorAll('.gallery img').forEach(img => {
+        img.addEventListener('click', () => {
+          modalImg.src = img.src;
+          modal.style.display = 'flex';
+        });
+      });
+
+      // Close modal when clicking the “×”:
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      // Also close if user clicks anywhere outside the image:
+      modal.addEventListener('click', e => {
+        // If click is directly on the overlay (not the image), close
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
     </script>
   </div>
 </body>
