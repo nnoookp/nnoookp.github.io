@@ -182,7 +182,7 @@
       height: auto;                  /* allow to grow for message */
     }
     .valentines-day-card.active .clouds {
-      display: none;
+      display: none;                 /* hide clouds once card is active */
     }
 
     .valentines-day-card:before {
@@ -194,7 +194,7 @@
       border-radius:50%;
       top:140px;
       left:-25px;
-      z-index: 2; /* behind the revealed text */
+      z-index: 2;                    /* behind the revealed text */
       box-shadow:
         60px 20px #ffb3c1,
         130px 10px #ffb3c1,
@@ -211,7 +211,7 @@
       border-radius:50%;
       top:160px;
       left:-40px;
-      z-index: 2; /* behind the revealed text */
+      z-index: 2;                    /* behind the revealed text */
       box-shadow:
         50px 20px #ffccd5,
         120px 40px #ffccd5,
@@ -226,7 +226,7 @@
       height:100px;
       border-radius:50%;
       background-color: #fff0f3;
-      z-index:5; /* some clouds appear above hearts */
+      z-index:5;                     /* appear above hearts, but below text */
       top:210px;
       left:-20px;
       box-shadow:
@@ -240,7 +240,7 @@
 
     .hearts-inside {
       position: absolute;
-      z-index: 1; /* behind clouds */
+      z-index: 1;                    /* behind clouds */
     }
     .heartOne {
       position: absolute;
@@ -331,16 +331,16 @@
     }
 
     .text {
-      /* no more absolute—text sits in normal flow */
+      /* now sits in normal flow, below the hearts */
       color: #800f2f;
       font-size: 30px;
       font-family: 'Courier New', monospace;
       line-height: 1;
       text-align: center;
       width: 94%;
-      padding: 20px 10px 0 10px;  /* top padding for initial span */
+      padding: 20px 10px 0 10px;    /* top padding for initial span */
       box-sizing: border-box;
-      animation: none;            /* no “up” animation */
+      animation: none;              /* no “up” animation */
       margin-top: 10px;
     }
     .hover {
@@ -371,8 +371,8 @@ Love forever,\A Nook ♡";
       padding: 30px;
       margin: 20px 0;
       box-sizing: border-box;
-      position: relative;   /* enable z-index */
-      z-index: 10;          /* sits above .clouds and pseudo-elements */
+      position: relative;      /* enable z-index layering */
+      z-index: 10;             /* always above clouds */
     }
     .valentines-day-card.active .text span {
       display: none;
@@ -413,7 +413,7 @@ Love forever,\A Nook ♡";
 
     /* ──────────────────────────────────────────────────────────────────────────
        MOBILE‐SPECIFIC ADJUSTMENTS (max-width: 768px)
-       (2-column gallery, flex card, fixed‐height reveal overlay)
+       (2-column gallery, flex card, expand to auto height so reveal shows)
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       h1 {
@@ -459,13 +459,13 @@ Love forever,\A Nook ♡";
         flex-direction: column;
         align-items: center;
         width: 95vw;
-        height: 350px;       /* fixed “hidden box” height */
-        padding-top: 10px;   /* space for clouds/hearts */
+        height: 350px;        /* initial “hidden box” height */
+        padding-top: 10px;    /* space for clouds/hearts */
         box-sizing: border-box;
       }
-      /* Keep the same height once active, so it does NOT expand */
+      /* On mobile, let it grow once active */
       .valentines-day-card.active {
-        height: 350px;
+        height: auto;       /* card expands so reveal text is visible */
       }
 
       /* Adjust cloud circles to remain visible */
@@ -502,27 +502,22 @@ Love forever,\A Nook ♡";
           260px 4px #fff0f3;
       }
 
-      /* .text is static; its ::before overlays inside the fixed 350px */
+      /* .text remains static; ::before pushes the card’s height */
       .valentines-day-card .text {
         margin-top: 10px;
         width: 100%;
         box-sizing: border-box;
-        position: relative;
       }
 
-      /* Revealed message overlays with scrollable content */
+      /* On mobile, the reveal text simply appears inside the taller card */
       .valentines-day-card.active .text::before {
         content: "My dearest Matt,\A\A\
-Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\
+Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\A\
 You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
 Love forever,\A Nook ♡";
         white-space: pre-wrap;
         display: block;
-        position: absolute;
-        top: 10px;              /* sits just below the top border/padding */
-        left: 10px;             /* small inset so it doesn’t sit flush to edge */
-        right: 10px;
-        bottom: 10px;           /* sit above bottom border/padding */
+        width: 100%;          /* fill the card’s 95vw */
         background: #fff0f5;
         border-radius: 12px;
         color: #6c3a4c;
@@ -530,10 +525,11 @@ Love forever,\A Nook ♡";
         text-align: center;
         font-size: 24px;
         line-height: 1.5;
-        padding: 20px;          /* internal padding so text isn’t flush */
-        overflow-y: auto;       /* enable scrolling if content exceeds 350px */
+        padding: 30px;
+        margin: 20px 0;       /* vertical spacing, no horizontal margins */
         box-sizing: border-box;
-        z-index: 10;            /* above clouds */
+        position: relative;   /* enable z-index layering */
+        z-index: 10;          /* always above clouds */
       }
       .valentines-day-card.active .text span {
         display: none;
@@ -557,20 +553,20 @@ Love forever,\A Nook ♡";
         max-height: 150px;
       }
 
-      /* Keep that 350px height on very small phones */
+      /* Slightly shrink the card on very small phones */
       .valentines-day-card {
         width: 95vw;
         height: 320px;
       }
       .valentines-day-card.active {
-        height: 320px;
+        height: auto;
       }
 
-      /* Slightly smaller font/padding in the overlay */
+      /* Smaller reveal text on tiny screens */
       .valentines-day-card.active .text::before {
         font-size: 22px;
         line-height: 1.4;
-        padding: 15px;
+        padding: 20px;
       }
     }
 
