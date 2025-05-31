@@ -215,7 +215,6 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-
     /* ──────────────────────────────────────────────────────────────────────────
        VALENTINE’S‐DAY CARD STYLES (click‐only version)
     ────────────────────────────────────────────────────────────────────────── */
@@ -440,8 +439,8 @@ Love forever,\A Nook ♡";
     @media (max-width: 768px) {
       .valentines-day-card,
       .valentines-day-card.active {
-        width: 95vw;    /* increased from 90vw */
-        height: auto;   /* ensure hidden text still expands */
+        width: 95vw;    /* was 90vw */
+        height: auto;   /* ensure the revealed text can expand */
       }
       .valentines-day-card:before,
       .valentines-day-card:after {
@@ -479,8 +478,8 @@ Love forever,\A Nook ♡";
     @media (max-width: 480px) {
       .valentines-day-card,
       .valentines-day-card.active {
-        width: 98vw;   /* increased from 95vw */
-        height: auto;  /* ensure hidden text still expands */
+        width: 98vw;   /* was 95vw */
+        height: auto;  /* ensure the revealed text can expand */
       }
       .valentines-day-card .text,
       .valentines-day-card.active .text::before {
@@ -490,7 +489,6 @@ Love forever,\A Nook ♡";
         padding: 15px;
       }
     }
-
 
     /* ──────────────────────────────────────────────────────────────────────────
        IMAGE MODAL (Lightbox) STYLES
@@ -528,17 +526,6 @@ Love forever,\A Nook ♡";
 </head>
 <body>
   <!-- (everything up to the card remains the same) -->
-  <!--
-  <h1>Happy birthday my bby Matt &lt;3</h1>
-
-  <div class="letter">
-    <p>My dearest Matt,</p>
-    <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share every look that says more than words.</p>
-    <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
-    <p>Love forever,<br />Nook ♡</p>
-  </div>
-  -->
-
   <div class="happy-valentines">
     <div class="valentines-day-card" id="valentineCard">
       <div class="clouds"></div>
