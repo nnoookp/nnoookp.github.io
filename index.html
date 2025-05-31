@@ -412,7 +412,7 @@ Love forever,\A Nook ♡";
 
     /* ──────────────────────────────────────────────────────────────────────────
        MOBILE‐SPECIFIC ADJUSTMENTS (max-width: 768px)
-       (2-column gallery, flex card, centered revealed text with 45vw max)
+       (2-column gallery, flex card, full‐width revealed text)
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       h1 {
@@ -509,15 +509,15 @@ Love forever,\A Nook ♡";
         animation: none;
       }
 
-      /* Centered, inline-block revealed message with 45vw max-width */
+      /* Centered, block‐level revealed message matching card width */
       .valentines-day-card.active .text::before {
         content: "My dearest Matt,\A\A\
 Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share—every look that says more than words.\A\A\
 You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
 Love forever,\A Nook ♡";
         white-space: pre-wrap;
-        display: inline-block;
-        max-width: 45vw;             /* roughly match one photo’s width on mobile */
+        display: block;            /* full‐width inside the card */
+        width: 100%;               /* match the card’s 95vw width */
         background: #fff0f5;
         border-radius: 12px;
         color: #6c3a4c;
@@ -526,7 +526,7 @@ Love forever,\A Nook ♡";
         font-size: 24px;
         line-height: 1.5;
         padding: 30px;
-        margin: 20px auto;           /* vertical gap + horizontal centering */
+        margin: 20px 0;            /* vertical gap, no horizontal margin needed */
         box-sizing: border-box;
       }
       .valentines-day-card.active .text span {
@@ -572,7 +572,7 @@ Love forever,\A Nook ♡";
   </style>
 </head>
 <body>
-  <!-- If you want to include the commented‐out letter, it can go here -->
+  <!-- (Optional letter markup can go here) -->
   <!--
   <h1>Happy birthday my bby Matt &lt;3</h1>
 
