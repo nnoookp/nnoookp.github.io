@@ -41,65 +41,6 @@
       cursor: pointer;
     }
 
-    .clouds {
-      position: absolute;
-      width:100px;
-      height:100px;
-      border-radius:50%;
-      background-color: #fff0f3;
-      z-index:5;
-      top:210px;
-      left:-20px;
-      box-shadow: 55px 30px #fff0f3, 125px 10px #fff0f3,175px 20px #fff0f3, 250px 10px #fff0f3, 320px 5px #fff0f3, 380px 10px #fff0f3;
-    }
-
-    .hearts {
-      position: absolute;
-      z-index:2;
-    }
-    .heartOne, .heartTwo, .heartThree, .heartFour, .heartFive {
-      position: absolute;
-    }
-
-    .left-side:before, .left-side:after, .right-side:before, .right-side:after {
-      content: "";
-      position: absolute;
-    }
-
-    .right-side:before {
-      border-radius:50% 50% 50% 0;
-      width:21px;
-      height:20px;
-      background-color: #c9184a;
-      left:-0.26px;
-    }
-
-    .right-side:after {
-      height:0;
-      width:0;
-      border-bottom:10px solid transparent;
-      border-left: 15px solid #c9184a;
-      top:19px;
-      left:-0.26px;
-    }
-
-    .left-side:before {
-      border-radius:50% 50% 0 50%;
-      width:20px;
-      height:20px;
-      left:-20.7px;
-      background-color: #ff4d6d;
-    }
-
-    .left-side:after {
-      height:0;
-      width:0;
-      left:-15px;
-      border-bottom:10px solid transparent;
-      border-right: 15px solid #ff4d6d;
-      top:19px;
-    }
-
     .text {
       position: relative;
       padding: 20px;
@@ -162,6 +103,48 @@
       width: 100%;
     }
 
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 4s infinite;
+      opacity: 0.7;
+      z-index: 10;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 2.2em;
@@ -182,17 +165,10 @@
       }
     }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const card = document.querySelector('.valentines-day-card');
-      card.addEventListener('click', function () {
-        card.classList.toggle('active');
-      });
-    });
-  </script>
 </head>
 <body>
-  <div class="valentines-day-card">
+  <h1>Happy Birthday Matt</h1>
+  <div class="valentines-day-card" id="card">
     <div class="text">
       <span>Happy birthday my bby Matt &lt;3</span>
       <div class="hidden-message">
@@ -225,5 +201,22 @@
       Your browser does not support the audio element.
     </audio>
   </div>
+
+  <script>
+    // Toggle message on tap/click
+    document.getElementById('card').addEventListener('click', function () {
+      this.classList.toggle('active');
+    });
+
+    // Drop floating hearts
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = '100vh';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }, 500);
+  </script>
 </body>
 </html>
