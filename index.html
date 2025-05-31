@@ -193,6 +193,61 @@
       audio {
         width: 100%;
       }
+
+      /* ── MOBILE‐ONLY VALENTINE CARD: larger “hidden box” before reveal ── */
+      /* Increase the card’s initial height so you see a bigger box pre-click */
+      .valentines-day-card {
+        width: 95vw;
+        height: 350px;          /* ↑ increased from “auto” to a fixed 350px */
+      }
+      /* When “active” (clicked), let it expand vertically to show message */
+      .valentines-day-card.active {
+        width: 95vw;
+        height: auto;           /* ↑ expand as-needed for hidden text */
+      }
+      /* Adjust cloud circles to fit the new height */
+      .valentines-day-card:before,
+      .valentines-day-card:after {
+        top: 140px;             /* slightly higher so they remain visible */
+        left: -20px;
+      }
+      .valentines-day-card:before {
+        box-shadow:
+          45px 15px #ffb3c1,
+          100px 8px #ffb3c1,
+          150px 15px #ffb3c1,
+          200px -4px #ffb3c1,
+          260px 15px #ffb3c1;
+      }
+      .valentines-day-card:after {
+        box-shadow:
+          45px 15px #ffccd5,
+          100px 8px #ffccd5,
+          150px 15px #ffccd5,
+          200px 8px #ffccd5,
+          260px 4px #ffccd5;
+      }
+
+      .clouds {
+        top: 180px;
+        left: -15px;
+        box-shadow:
+          45px 20px #fff0f3,
+          100px 8px #fff0f3,
+          150px 15px #fff0f3,
+          200px 8px #fff0f3,
+          260px 4px #fff0f3;
+      }
+      .valentines-day-card .text {
+        position: relative;
+        top: auto;
+        animation: none;
+      }
+      .valentines-day-card.active .text::before {
+        position: relative;
+        top: auto;
+        display: block;
+      }
     }
 
     @media (max-width: 480px) {
@@ -210,6 +265,23 @@
 
       .gallery img {
         max-height: 150px;
+      }
+
+      /* For very small phones, shrink the card just a bit: */
+      .valentines-day-card {
+        width: 95vw;
+        height: 320px;  /* slightly smaller than 350px */
+      }
+      .valentines-day-card.active {
+        width: 95vw;
+        height: auto;
+      }
+      .valentines-day-card .text,
+      .valentines-day-card.active .text::before {
+        font-size: 18px;
+      }
+      .valentines-day-card.active .text::before {
+        padding: 15px;
       }
     }
 
@@ -433,64 +505,6 @@ Love forever,\A Nook ♡";
     .valentines-day-card.active .text span {
       display: none;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       RESPONSIVE ADJUSTMENTS FOR “.active” CARD ON SMALL SCREENS
-    ────────────────────────────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .valentines-day-card,
-      .valentines-day-card.active {
-        width: 90vw;
-        height: auto;
-      }
-      .valentines-day-card:before,
-      .valentines-day-card:after {
-        top: 120px;
-        left: -20px;
-        box-shadow:
-          45px 15px #ffb3c1,
-          100px 8px #ffb3c1,
-          150px 15px #ffb3c1,
-          200px -4px #ffb3c1,
-          260px 15px #ffb3c1;
-      }
-      .clouds {
-        top: 180px;
-        left: -15px;
-        box-shadow:
-          45px 20px #fff0f3,
-          100px 8px #fff0f3,
-          150px 15px #fff0f3,
-          200px 8px #fff0f3,
-          260px 4px #fff0f3;
-      }
-      .valentines-day-card .text {
-        position: relative;
-        top: auto;
-        animation: none;
-      }
-      .valentines-day-card.active .text::before {
-        position: relative;
-        top: auto;
-        display: block;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .valentines-day-card,
-      .valentines-day-card.active {
-        width: 95vw;
-        height: auto;
-      }
-      .valentines-day-card .text,
-      .valentines-day-card.active .text::before {
-        font-size: 18px;
-      }
-      .valentines-day-card.active .text::before {
-        padding: 15px;
-      }
-    }
-
 
     /* ──────────────────────────────────────────────────────────────────────────
        IMAGE MODAL (Lightbox) STYLES
