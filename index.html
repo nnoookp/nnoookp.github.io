@@ -65,8 +65,18 @@
       transform: scale(1.05);
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       NEW: wrapper to center the music box
+    ────────────────────────────────────────────────────────────────────────── */
+    .music-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px; /* same vertical spacing as before */
+      width: 100%;
+    }
+
     .music {
-      margin: 50px auto 0; 
       text-align: center;
       animation: fadeIn 2s ease-in;
       background: #ffffffaa;
@@ -74,6 +84,7 @@
       border-radius: 20px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.1);
       max-width: 600px;
+      width: 100%;
     }
     .music h2 {
       font-size: 1.8em;
@@ -89,6 +100,7 @@
       margin: 10px;
       width: 100%;
     }
+
     .gif {
       margin: 40px 0 10px;
       text-align: center;
@@ -172,9 +184,9 @@
         max-height: 300px;
       }
 
-      .music {
-        padding: 20px;
-        margin: 20px 10px;
+      /* Adjust the music-container margin for smaller screens */
+      .music-container {
+        margin-top: 30px;
       }
 
       .music h2 {
@@ -210,9 +222,8 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-
     /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD STYLES (click‐only version)
+       VALENTINE’S‐DAY CARD STYLES (click‐only version; unchanged)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
@@ -225,12 +236,9 @@
       box-shadow: 0 0 100px rgba(0,0,0,.4);
       margin: 0 auto;
       transition: all 0.6s ease-in-out;
-      cursor: pointer; /* indicate it’s clickable */
+      cursor: pointer;
     }
 
-    /* ── we have removed ALL “:hover” rules here ── */
-
-    /* Instead, only the “.active” class causes expansion + hiding of clouds */
     .valentines-day-card.active {
       width: 800px;
       height: 600px;
@@ -411,7 +419,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       “.active”‐based hidden message (instead of hover)
+       “.active”‐based hidden message (click‐only)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
@@ -433,7 +441,7 @@ Love forever,\A Nook ♡";
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       RESPONSIVE ADJUSTMENTS FOR “.active” CARD ON SMALL SCREENS
+       RESPONSIVE ADJUSTMENTS FOR CARD ON SMALL SCREENS
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .valentines-day-card,
@@ -494,14 +502,14 @@ Love forever,\A Nook ♡";
 <body>
   <!-- (everything up to the card remains exactly the same) -->
   <!--
-  <h1>Happy birthday my bby Matt &lt;3</h1>
-
-  <div class="letter">
-    <p>My dearest Matt,</p>
-    <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share every look that says more than words.</p>
-    <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
-    <p>Love forever,<br />Nook ♡</p>
-  </div>
+    <h1>Happy birthday my bby Matt &lt;3</h1>
+  
+    <div class="letter">
+      <p>My dearest Matt,</p>
+      <p>Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share every look that says more than words.</p>
+      <p>You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.</p>
+      <p>Love forever,<br />Nook ♡</p>
+    </div>
   -->
 
   <div class="happy-valentines">
@@ -542,19 +550,22 @@ Love forever,\A Nook ♡";
       <img src="Screenshot 2025-05-22 at 9.56.02 pm.png" alt="Memory 6" />
     </div>
 
-    <div class="music">
-      <h2>Your Birthday Song 🎵</h2>
-      <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
-      <audio controls>
-        <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
-        Your browser does not support the audio element.
-      </audio>
+    <!-- Wrapped the music box in a flex container to center it -->
+    <div class="music-container">
+      <div class="music">
+        <h2>Your Birthday Song 🎵</h2>
+        <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
+        <audio controls>
+          <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
     </div>
 
     <div class="hearts" id="hearts"></div>
 
     <script>
-      // Only “.active” toggles the expansion and hidden message now
+      // Only “.active” toggles the expansion and hidden message
       document
         .getElementById('valentineCard')
         .addEventListener('click', function () {
