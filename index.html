@@ -157,8 +157,8 @@
       height: 18px;
       transform: rotate(-45deg);
       opacity: 0.8;
-      animation: drop 5s linear infinite; /* duration overridden in JS */
-      background-color: #ff6fa5; /* default, JS overrides */
+      animation: drop 5s linear infinite; /* duration set in JS */
+      background-color: #ff6fa5; /* default, JS will override */
     }
     .heart::before,
     .heart::after {
@@ -345,10 +345,6 @@
       }
     }
 
-    /* ──────────────────────────────────────────────────────────────────────────
-       .text container (desktop default)
-       Position absolute with left:0, width:94%, centered by parent’s padding
-    ────────────────────────────────────────────────────────────────────────── */
     .text {
       position: absolute;
       color: #800f2f;
@@ -356,14 +352,13 @@
       font-family: 'Quicksand', sans-serif;
       line-height: 1;
       text-align: center;
-      left: 0;
       width: 94%;
+      left: 0;
       padding: 20px;
       z-index: 3;
       top: 320px;
       animation: up 1s ease forwards;
       transition: 0.2s;
-      margin: 0 3% 0 3%; /* centers within card’s 400px on desktop */
     }
     .hover {
       color: white;
@@ -373,8 +368,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN & TYPOGRAPHY UPDATE
-       Desktop default: width:100%, margin:auto
+       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
@@ -391,9 +385,7 @@ Love forever,\A Nook ♡";
       padding: 25px;
       border-radius: 12px;
       color: #6c3a4c;
-      margin: 20px auto 0;
-      width: 100%;
-      box-sizing: border-box;
+      margin-top: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       animation: slideInUp 0.6s ease-out forwards;
       text-align: center;
@@ -404,7 +396,6 @@ Love forever,\A Nook ♡";
 
     /* ──────────────────────────────────────────────────────────────────────────
        RESPONSIVE ADJUSTMENTS FOR CARD ON MOBILE SCREENS
-       Override .text positioning to truly center via left:50%+transform
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       h1 {
@@ -464,20 +455,14 @@ Love forever,\A Nook ♡";
           260px 4px #fff0f3;
       }
       .valentines-day-card .text {
-        /* On mobile, center horizontally using transform */
-        left: 50%;
-        transform: translateX(-50%);
-        top: 280px;
-        width: 95%;
-        margin: 0;
+        position: relative;
+        top: auto;
+        animation: none;
       }
       .valentines-day-card.active .text::before {
-        /* Ensure hidden text fills full width of .text */
-        margin: 20px auto 0;
-        width: 100%;
-        left: auto;
-        transform: none;
-        box-sizing: border-box;
+        position: relative;
+        top: auto;
+        display: block;
       }
     }
 
@@ -499,10 +484,6 @@ Love forever,\A Nook ♡";
       .valentines-day-card.active {
         width: 98vw;
         height: auto;
-      }
-      .valentines-day-card .text {
-        top: 260px;
-        width: 98%;
       }
       .valentines-day-card .text,
       .valentines-day-card.active .text::before {
