@@ -173,22 +173,22 @@
     /* ──────────────────────────────────────────────────────────────────────────
        FLOATING HEARTS CONTAINER
     ────────────────────────────────────────────────────────────────────────── */
-Heart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-        heart.style.opacity = (0.5 + Math.random() * 0.5);
-        document.getElementById('hearts').appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }
-      setInterval(createHeart, 300);
+    #hearts {Add commentMore actions
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
 
 
     /* ──────────────────────────────────────────────────────────────────────────
        FLOATING HEARTS ANIMATION
     ────────────────────────────────────────────────────────────────────────── */
-    @keyframes drop {
+    @keyframes drop {More actions
       to {
         transform: translateY(100vh) rotate(-45deg);
         opacity: 0;
@@ -200,7 +200,7 @@ Heart() {
       height: 18px;
       transform: rotate(-45deg);
       opacity: 0.8;
-      animation: drop 5s linear infinite; /* duration set in JS *
+      animation: drop 5s linear infinite; /* duration set in JS */
       background-color: #ff6fa5; /* default, JS overrides */
     }
     .heart::before,
