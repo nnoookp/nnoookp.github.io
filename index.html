@@ -168,7 +168,7 @@
         margin: 15px 10px;
       }
 
-      /* ── Instagram‐style: 2 columns per row on mobile ── */
+      /* ── Instagram-style: 2 columns per row on mobile ── */
       .gallery {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
@@ -194,21 +194,18 @@
         width: 100%;
       }
 
-      /* ── MOBILE‐ONLY VALENTINE CARD: larger “hidden box” before reveal ── */
-      /* Increase the card’s initial height so you see a bigger box pre-click */
+      /* ── MOBILE-ONLY VALENTINE’S CARD: larger “hidden box” before reveal ── */
       .valentines-day-card {
         width: 95vw;
-        height: 350px;          /* ↑ increased from “auto” to a fixed 350px */
+        height: 350px;
       }
-      /* When “active” (clicked), let it expand vertically to show message */
       .valentines-day-card.active {
         width: 95vw;
-        height: auto;           /* ↑ expand as-needed for hidden text */
+        height: auto;
       }
-      /* Adjust cloud circles to fit the new height */
       .valentines-day-card:before,
       .valentines-day-card:after {
-        top: 140px;             /* slightly higher so they remain visible */
+        top: 140px;
         left: -20px;
       }
       .valentines-day-card:before {
@@ -243,10 +240,16 @@
         top: auto;
         animation: none;
       }
+      /* ── MOBILE: make revealed text bigger & centered ── */
       .valentines-day-card.active .text::before {
         position: relative;
         top: auto;
         display: block;
+        width: 100%;
+        padding: 30px;             /* more breathing room */
+        font-size: 24px;           /* larger text on mobile */
+        line-height: 1.5;          /* increase line-height */
+        text-align: center;        /* center horizontally */
       }
     }
 
@@ -267,21 +270,19 @@
         max-height: 150px;
       }
 
-      /* For very small phones, shrink the card just a bit: */
+      /* ── VERY SMALL PHONES: shrink card slightly ── */
       .valentines-day-card {
         width: 95vw;
-        height: 320px;  /* slightly smaller than 350px */
+        height: 320px;
       }
       .valentines-day-card.active {
         width: 95vw;
         height: auto;
       }
-      .valentines-day-card .text,
+      /* Adjust revealed text on very small phones */
       .valentines-day-card.active .text::before {
-        font-size: 18px;
-      }
-      .valentines-day-card.active .text::before {
-        padding: 15px;
+        font-size: 22px;    /* a bit smaller on tiny screens */
+        padding: 20px;
       }
     }
 
@@ -289,7 +290,7 @@
 
 
     /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD STYLES (click‐only version)
+       VALENTINE’S-DAY CARD STYLES (click-only version)
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card {
       position: relative;
@@ -485,7 +486,8 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       “.active”‐based hidden message (instead of hover)
+       “.active”-based hidden message (instead of hover)
+       — adjusted for centered, bigger text
     ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
@@ -494,14 +496,22 @@ You are the calm to my chaos, the melody to my lyrics, and the best part of ever
 Love forever,\A Nook ♡";
       white-space: pre-wrap;
       display: block;
-      font-size: 22px;
+      width: 100%;
+      padding: 40px;             /* extra padding for breathing room */
       background: #fff0f5;
-      padding: 20px;
       border-radius: 12px;
       color: #6c3a4c;
-      margin-top: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      /* ─ center text horizontally ─ */
+      text-align: center;
+
+      /* ─ larger font and better line‐height ─ */
+      font-size: 26px;
+      line-height: 1.4;
+      margin: 20px 0;            /* some vertical spacing inside the card */
     }
+
     .valentines-day-card.active .text span {
       display: none;
     }
@@ -662,7 +672,6 @@ Love forever,\A Nook ♡";
 
       // Also close if user clicks anywhere outside the image:
       modal.addEventListener('click', e => {
-        // If click is directly on the overlay (not the image), close
         if (e.target === modal) {
           modal.style.display = 'none';
         }
