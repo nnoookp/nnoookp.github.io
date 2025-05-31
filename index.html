@@ -173,16 +173,16 @@
     /* ──────────────────────────────────────────────────────────────────────────
        FLOATING HEARTS CONTAINER
     ────────────────────────────────────────────────────────────────────────── */
- .cake {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background-image: url('🍰'); /* Emoji fallback */
-  background-size: cover;
-  animation: drop 6s linear infinite;
-  opacity: 0.9;
-  font-size: 24px;
-}
+Heart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+        heart.style.opacity = (0.5 + Math.random() * 0.5);
+        document.getElementById('hearts').appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+      setInterval(createHeart, 300);
 
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -194,7 +194,7 @@
         opacity: 0;
       }
     }
-    .cake {
+    .heart {
       position: absolute;
       width: 20px;
       height: 18px;
@@ -203,8 +203,8 @@
       animation: drop 5s linear infinite; /* duration set in JS *
       background-color: #ff6fa5; /* default, JS overrides */
     }
-    .cake::before,
-    .cake::after {
+    .heart::before,
+    .heart::after {
       content: "";
       position: absolute;
       width: 20px;
@@ -212,11 +212,11 @@
       background-color: inherit;
       border-radius: 50%;
     }
-    .cake::before {
+    .heart::before {
       top: -10px;
       left: 0;
     }
-    .cake::after {
+    .heart::after {
       top: 0;
       left: 10px;
     }
