@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday Matt</title>
+  <title>Happy Birthday Matt (with Cake Drop!)</title>
 
   <!-- Meta Description & Open Graph for SEO & Social Sharing -->
-  <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating hearts, balloons, dark mode, and more!" />
+  <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating cakes, balloons, dark mode, and more!" />
   <meta property="og:title" content="Happy Birthday Matt!" />
-  <meta property="og:description" content="Click to reveal a heartfelt message, watch confetti, and enjoy floating hearts." />
+  <meta property="og:description" content="Click to reveal a heartfelt message, watch confetti, and enjoy floating cakes." />
   <meta property="og:image" content="https://example.com/preview-image.png" />
   <meta property="og:url" content="https://example.com/birthday-matt.html" />
 
@@ -171,53 +171,23 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       FLOATING HEARTS CONTAINER
+       FLOATING CAKES (new implementation, replaces “.heart”)
     ────────────────────────────────────────────────────────────────────────── */
-    #hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       FLOATING HEARTS ANIMATION
-    ────────────────────────────────────────────────────────────────────────── */
-    @keyframes drop {
+    @keyframes drop-cake {
       to {
-        transform: translateY(100vh) rotate(-45deg);
+        transform: translateY(100vh) rotate(0deg);
         opacity: 0;
       }
     }
-    .heart {
+    .cake {
       position: absolute;
-      width: 20px;
-      height: 18px;
-      transform: rotate(-45deg);
-      opacity: 0.8;
-      animation: drop 5s linear infinite; /* duration set in JS */
-      background-color: #ff6fa5; /* default, JS overrides */
-    }
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 18px;
-      background-color: inherit;
-      border-radius: 50%;
-    }
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-    .heart::after {
-      top: 0;
-      left: 10px;
+      width: 40px;   /* adjust size of cake icon */
+      height: 40px;
+      background: url('cake.png') no-repeat center/contain;
+      opacity: 0.9;
+      animation-name: drop-cake;
+      animation-timing-function: linear;
+      /* animation-duration will be set dynamically in JS */
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
@@ -708,8 +678,6 @@ Love forever,\A Nook ♡";
 </head>
 <body>
   <!-- ──────────────────────────────────────────────────────────────────────────
-    
-  <!-- ──────────────────────────────────────────────────────────────────────────
        VALENTINE’S‐DAY CARD (with ARIA & tabindex)
   ────────────────────────────────────────────────────────────────────────── -->
   <div class="happy-valentines">
@@ -733,7 +701,6 @@ Love forever,\A Nook ♡";
     </div>
   </div>
 
-
   <!-- BIRTHDAY SONG (just below the card) -->
   <div class="music-container">
     <div class="music">
@@ -752,7 +719,7 @@ Love forever,\A Nook ♡";
   <!-- Return to Top Button (hidden until scroll) -->
   <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
 
-  <!-- PAGE CONTENT (gallery + floating hearts)
+  <!-- PAGE CONTENT (gallery + floating cakes)
        Wrapped in #pageContent so we can blur it when the card opens -->
   <div id="pageContent">
     <!-- GALLERY: Thumbnails that open in a lightbox on click -->
@@ -813,7 +780,7 @@ Love forever,\A Nook ♡";
       </figure>
     </div>
 
-    <!-- Floating hearts container (will be blurred when card opens) -->
+    <!-- Floating cakes container -->
     <div id="hearts"></div>
   </div>
 
@@ -852,25 +819,26 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 2) Floating hearts in the background (random colors & durations)
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
+    // 2) Floating cakes in the background (random durations)
+    function createCake() {
+      const cake = document.createElement('div');
+      cake.classList.add('cake');
+
       // Random horizontal position
-      heart.style.left = Math.random() * 100 + 'vw';
-      // Start at top of viewport
-      heart.style.top = '-20px';
-      // Pick one of three pink shades
-      const colors = ['#ff6fa5', '#ff9bbb', '#ffa3c4'];
-      heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      // Slightly slower on mobile
-      const baseDuration = window.innerWidth <= 480 ? 5 : 3;
-      heart.style.animationDuration = (baseDuration + Math.random() * 2) + 's';
-      heart.style.opacity = (0.4 + Math.random() * 0.6);
-      document.getElementById('hearts').appendChild(heart);
-      setTimeout(() => heart.remove(), (baseDuration + 2) * 1000);
+      cake.style.left = Math.random() * 100 + 'vw';
+      // Start just above the viewport
+      cake.style.top = '-50px';
+      // Randomly vary the fall duration (3s–6s)
+      const duration = 3 + Math.random() * 3;
+      cake.style.animationDuration = duration + 's';
+      // Optional: random slight rotation
+      const rotateStart = Math.random() * 30 - 15;
+      cake.style.transform = `rotate(${rotateStart}deg)`;
+
+      document.getElementById('hearts').appendChild(cake);
+      setTimeout(() => cake.remove(), (duration + 0.5) * 1000);
     }
-    setInterval(createHeart, 300);
+    setInterval(createCake, 300);
 
     // 3) LIGHTBOX: click a .gallery img (or focus+Enter) to open full-size modal
     const modal = document.getElementById('imageModal');
@@ -914,7 +882,6 @@ Love forever,\A Nook ♡";
 
     // 4) BALLOON CURSOR / INTERACTIVE BALLOONS ON CLICK
     document.addEventListener("click", (e) => {
-      // Only trigger on left-click and ignore clicks on buttons/inputs to avoid conflicts
       if (e.button !== 0) return;
       const targetTag = e.target.tagName.toLowerCase();
       if (["button", "input", "textarea"].includes(targetTag)) return;
@@ -940,7 +907,6 @@ Love forever,\A Nook ♡";
         themeToggle.textContent = isDark ? "☀️ Day Mode" : "🌙 Night Mode";
       }
     });
-
 
     // 7) RETURN TO TOP BUTTON LOGIC
     const toTop = document.getElementById('toTop');
