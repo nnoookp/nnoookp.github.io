@@ -182,9 +182,17 @@
       }
     }
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const card = document.querySelector('.valentines-day-card');
+      card.addEventListener('click', function () {
+        card.classList.toggle('active');
+      });
+    });
+  </script>
 </head>
 <body>
-  <div class="valentines-day-card" onclick="this.classList.toggle('active')">
+  <div class="valentines-day-card">
     <div class="text">
       <span>Happy birthday my bby Matt &lt;3</span>
       <div class="hidden-message">
