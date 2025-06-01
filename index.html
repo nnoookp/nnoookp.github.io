@@ -20,7 +20,7 @@
 
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       BASE STYLES
+       BODY: keep background‐attachment: fixed
     ────────────────────────────────────────────────────────────────────────── */
     html, body {
       height: 100%;
@@ -29,21 +29,29 @@
     }
     body {
       font-family: 'Quicksand', sans-serif;
+      /* we keep background-attachment: fixed; exactly as before */
       background:
         linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)),
-        url('background.png') no-repeat center center;
+        url('background.png') no-repeat center center fixed;
       background-size: contain;
-      background-attachment: fixed;
-      animation: fadeIn 1.5s ease-in;
       color: #3a3a3a;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 20px 30px;
-      overflow-x: hidden;
-      min-height: 100vh;
+      /* nothing scrolls on the body itself */
+      overflow: hidden;
       position: relative;
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       SCROLLABLE CONTAINER: takes full viewport height, scrolls internally
+    ────────────────────────────────────────────────────────────────────────── */
+    #scrollable {
+      position: relative;
+      height: 100vh;            /* fill the viewport height */
+      overflow-y: auto;         /* scroll inside here */
+      overflow-x: hidden;
+      padding: 0 20px 30px;
+      box-sizing: border-box;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
@@ -51,23 +59,32 @@
     [role="button"]:focus,
     button:focus,
     .gallery img:focus,
-    #copyLink:focus,
     #themeToggle:focus,
     #toTop:focus {
       outline: 2px dashed #d14f7b;
       outline-offset: 4px;
     }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 2.5em;
+      color: #e75480;
+      animation: fadeIn 1.5s ease-in;
+    }
+
     .letter {
       max-width: 700px;
       background: #fff0f5;
       border-radius: 20px;
       padding: 25px;
-      margin: 20px;
+      margin: 20px auto;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       font-size: 1.1em;
       line-height: 1.7;
       color: #6c3a4c;
     }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -102,6 +119,7 @@
       font-size: 0.95em;
       color: #3a3a3a;
     }
+
     .music-container {
       display: flex;
       justify-content: center;
@@ -133,6 +151,7 @@
       margin: 10px 0;
       width: 100%;
     }
+
     .gif {
       margin: 40px 0 10px;
       text-align: center;
@@ -141,6 +160,7 @@
       width: 220px;
       border-radius: 12px;
     }
+
     #pageContent.blur {
       filter: blur(4px);
       transition: filter 0.3s ease;
@@ -592,124 +612,125 @@ Love forever,\A Nook ♡";
   </style>
 </head>
 <body>
-  <!-- H1 TITLE -->
-  <h1>Happy Birthday Matt!</h1>
+  <!-- SCROLLABLE CONTAINER: all “page content” goes here -->
+  <div id="scrollable">
+    <h1>Happy Birthday Matt!</h1>
 
-  <!-- VALENTINE’S‐DAY CARD -->
-  <div class="happy-valentines">
-    <div
-      class="valentines-day-card"
-      id="valentineCard"
-      role="button"
-      tabindex="0"
-      aria-expanded="false"
-      aria-label="Click to reveal a birthday message"
-    >
-      <div class="clouds"></div>
-      <div class="hearts">
-        <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
-        <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
+    <!-- VALENTINE’S‐DAY CARD -->
+    <div class="happy-valentines">
+      <div
+        class="valentines-day-card"
+        id="valentineCard"
+        role="button"
+        tabindex="0"
+        aria-expanded="false"
+        aria-label="Click to reveal a birthday message"
+      >
+        <div class="clouds"></div>
+        <div class="hearts">
+          <div class="heartOne"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartTwo"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartThree"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartFour"><div class="left-side"></div><div class="right-side"></div></div>
+          <div class="heartFive"><div class="left-side"></div><div class="right-side"></div></div>
+        </div>
+        <div class="text"><span>click the card to reveal </span></div>
       </div>
-      <div class="text"><span>click the card to reveal </span></div>
     </div>
-  </div>
 
-  <!-- BIRTHDAY SONG -->
-  <div class="music-container">
-    <div class="music">
-      <h2>Your Birthday Song 🎵</h2>
-      <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
-      <audio controls>
-        <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
-        Your browser does not support the audio element.
-      </audio>
+    <!-- BIRTHDAY SONG -->
+    <div class="music-container">
+      <div class="music">
+        <h2>Your Birthday Song 🎵</h2>
+        <p>(Just one from my solo piano, not perfect but it's from my heart 💗)</p>
+        <audio controls>
+          <source src="2025-05-19-20-55-22.m4a" type="audio/mp4" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT (gallery + floating cakes) -->
+    <div id="pageContent">
+      <!-- GALLERY -->
+      <div class="gallery">
+        <figure>
+          <img
+            src="Screenshot 2025-05-22 at 9.55.49 pm.png"
+            alt="Matt dressed as a bunny"
+            loading="lazy"
+            tabindex="0"
+          />
+          <figcaption>Bunny Matt</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="Screenshot 2025-05-22 at 9.55.35 pm.png"
+            alt="Matt as King Matthew"
+            loading="lazy"
+            tabindex="0"
+          />
+          <figcaption>King Matthew</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="Screenshot 2025-05-22 at 9.56.35 pm.png"
+            alt="Matt and Kori enjoying ice cream"
+            loading="lazy"
+            tabindex="0"
+          />
+          <figcaption>Matt and Kori Ice Cream</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="Screenshot 2025-05-22 at 9.56.22 pm.png"
+            alt="Matt asking where the ring is"
+            loading="lazy"
+            tabindex="0"
+          />
+          <figcaption>Where’s the ring?</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="Screenshot 2025-05-22 at 9.56.12 pm.png"
+            alt="Adorable Matt"
+            loading="lazy"
+            tabindex="0"
+          />
+          <figcaption>Aww Cute</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="Screenshot 2025-05-22 at 9.56.02 pm.png"
+            alt="A nice candid photo of Matt"
+            loading="lazy"
+            tabindex="0"
+          />
+          <figcaption>Nice Candid</figcaption>
+        </figure>
+      </div>
+
+      <!-- Floating cakes container -->
+      <div id="hearts"></div>
+    </div>
+
+    <!-- IMAGE MODAL (hidden by default) -->
+    <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
+      <span class="close-btn" aria-label="Close">×</span>
+      <img id="modalImg" src="" alt="Full-size preview" />
     </div>
   </div>
 
   <!-- Theme Toggle Button -->
   <button id="themeToggle" aria-label="Toggle dark or light mode">🌙 Night Mode</button>
-
   <!-- Return to Top Button -->
   <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
-
-  <!-- PAGE CONTENT (gallery + floating cakes) -->
-  <div id="pageContent">
-    <!-- GALLERY -->
-    <div class="gallery">
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.55.49 pm.png"
-          alt="Matt dressed as a bunny"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Bunny Matt</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.55.35 pm.png"
-          alt="Matt as King Matthew"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>King Matthew</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.35 pm.png"
-          alt="Matt and Kori enjoying ice cream"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Matt and Kori Ice Cream</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.22 pm.png"
-          alt="Matt asking where the ring is"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Where’s the ring?</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.12 pm.png"
-          alt="Adorable Matt"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Aww Cute</figcaption>
-      </figure>
-      <figure>
-        <img
-          src="Screenshot 2025-05-22 at 9.56.02 pm.png"
-          alt="A nice candid photo of Matt"
-          loading="lazy"
-          tabindex="0"
-        />
-        <figcaption>Nice Candid</figcaption>
-      </figure>
-    </div>
-
-    <!-- Floating cakes container -->
-    <div id="hearts"></div>
-  </div>
-
-  <!-- IMAGE MODAL (hidden by default) -->
-  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
-    <span class="close-btn" aria-label="Close">×</span>
-    <img id="modalImg" src="" alt="Full-size preview" />
-  </div>
 
   <!-- Load Canvas‐Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <script>
-    // Toggle card open/close, blur background, and fire confetti
+    // 1) Toggle card open/close, blur background, and fire confetti
     const card = document.getElementById('valentineCard');
     const pageContent = document.getElementById('pageContent');
     function toggleCard() {
@@ -732,7 +753,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // Floating cakes in background
+    // 2) Floating cakes in the background
     function createCake() {
       const cake = document.createElement('div');
       cake.classList.add('cake');
@@ -747,7 +768,7 @@ Love forever,\A Nook ♡";
     }
     setInterval(createCake, 300);
 
-    // Lightbox modal for gallery images + lightweight confetti on hover
+    // 3) Lightbox modal for gallery images + lightweight confetti on hover
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const closeBtn = document.querySelector('.close-btn');
@@ -796,7 +817,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // Balloon animation on click
+    // 4) Balloon animation on click
     document.addEventListener("click", (e) => {
       if (e.button !== 0) return;
       const targetTag = e.target.tagName.toLowerCase();
@@ -809,7 +830,7 @@ Love forever,\A Nook ♡";
       setTimeout(() => balloon.remove(), 2000);
     });
 
-    // Theme switcher
+    // 5) Theme switcher
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
       const isDark = document.body.classList.toggle("dark-mode");
@@ -823,18 +844,20 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // Return to top button logic
+    // 6) Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
-      toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
+      // But note: the actual scrolling is happening inside #scrollable
+      const scrollable = document.getElementById('scrollable');
+      toTop.style.display = scrollable.scrollTop > 200 ? 'block' : 'none';
     });
     toTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
     });
     toTop.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   </script>
