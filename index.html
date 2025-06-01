@@ -20,59 +20,20 @@
 
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       STICKY HEADER
-    ────────────────────────────────────────────────────────────────────────── */
-    .header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.90);
-      backdrop-filter: blur(5px);
-      z-index: 200;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 1.6em;
-      font-weight: 600;
-      color: #e75480;
-    }
-    .header .marquee-container {
-      flex: 1;
-      margin-left: 20px;
-      overflow: hidden;
-      white-space: nowrap;
-      background: #ffb3c1;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .header .marquee {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scrollText 12s linear infinite;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      font-size: 1.2em;
-      color: #800f2f;
-    }
-    @keyframes scrollText {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* ──────────────────────────────────────────────────────────────────────────
        BASE STYLES
     ────────────────────────────────────────────────────────────────────────── */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Quicksand', sans-serif;
-      margin: 0;
       background:
         linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)),
-        url('background.png') no-repeat center center fixed;
+        url('background.png') no-repeat center center;
       background-size: contain;
+      background-attachment: fixed;
       animation: fadeIn 1.5s ease-in;
       color: #3a3a3a;
       display: flex;
@@ -184,6 +145,7 @@
       filter: blur(4px);
       transition: filter 0.3s ease;
     }
+
     /* FLOATING CAKES */
     @keyframes drop-cake {
       to {
@@ -200,7 +162,8 @@
       animation-name: drop-cake;
       animation-timing-function: linear;
     }
-    /* VALENTINES CARD */
+
+    /* VALENTINES‐DAY CARD */
     .valentines-day-card {
       position: relative;
       z-index: 10;
@@ -403,18 +366,6 @@ Love forever,\A Nook ♡";
        RESPONSIVE ADJUSTMENTS
     ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .header h1 {
-        font-size: 1.4em;
-        margin-bottom: 5px;
-      }
-      .header .marquee-container {
-        width: 100%;
-        margin-left: 0;
-      }
       h1 {
         font-size: 2.2em;
         padding: 0 10px;
@@ -507,6 +458,7 @@ Love forever,\A Nook ♡";
         padding: 18px;
       }
     }
+
     /* ──────────────────────────────────────────────────────────────────────────
        IMAGE MODAL (Lightbox)
     ────────────────────────────────────────────────────────────────────────── */
@@ -539,6 +491,7 @@ Love forever,\A Nook ♡";
       cursor: pointer;
       user-select: none;
     }
+
     /* ──────────────────────────────────────────────────────────────────────────
        BALLOONS
     ────────────────────────────────────────────────────────────────────────── */
@@ -554,6 +507,7 @@ Love forever,\A Nook ♡";
       0%   { transform: translateY(0) scale(0.6); opacity: 1; }
       100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
     }
+
     /* ──────────────────────────────────────────────────────────────────────────
        THEME SWITCHER
     ────────────────────────────────────────────────────────────────────────── */
@@ -592,12 +546,11 @@ Love forever,\A Nook ♡";
     body.dark-mode figcaption {
       color: #f0e6f6;
     }
-    body.dark-mode .marquee-container {
-      background: #4b004b;
+    body.dark-mode #themeToggle {
+      background: #5e0068;
+      color: #f0e6f6;
     }
-    body.dark-mode .marquee {
-      color: #ffd1ff;
-    }
+
     #themeToggle {
       position: fixed;
       bottom: 20px;
@@ -611,10 +564,7 @@ Love forever,\A Nook ♡";
       font-weight: 600;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    body.dark-mode #themeToggle {
-      background: #5e0068;
-      color: #f0e6f6;
-    }
+
     /* ──────────────────────────────────────────────────────────────────────────
        RETURN TO TOP BUTTON
     ────────────────────────────────────────────────────────────────────────── */
@@ -642,13 +592,8 @@ Love forever,\A Nook ♡";
   </style>
 </head>
 <body>
-  <!-- STICKY HEADER WITH MARQUEE -->
-  <div class="header">
-    <h1>Happy Birthday Matt!</h1>
-    <div class="marquee-container">
-      <div class="marquee">🎉🎂🎉 Celebrate and enjoy! 🎉🎂🎉</div>
-    </div>
-  </div>
+  <!-- H1 TITLE -->
+  <h1>Happy Birthday Matt!</h1>
 
   <!-- VALENTINE’S‐DAY CARD -->
   <div class="happy-valentines">
@@ -764,7 +709,7 @@ Love forever,\A Nook ♡";
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <script>
-    // 1) Toggle card open/close, blur background, and fire confetti
+    // Toggle card open/close, blur background, and fire confetti
     const card = document.getElementById('valentineCard');
     const pageContent = document.getElementById('pageContent');
     function toggleCard() {
@@ -787,7 +732,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 2) Floating cakes in the background (random durations)
+    // Floating cakes in background
     function createCake() {
       const cake = document.createElement('div');
       cake.classList.add('cake');
@@ -802,19 +747,17 @@ Love forever,\A Nook ♡";
     }
     setInterval(createCake, 300);
 
-    // 3) LIGHTBOX: click a .gallery img (or focus+Enter) to open full-size modal
+    // Lightbox modal for gallery images + lightweight confetti on hover
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const closeBtn = document.querySelector('.close-btn');
 
     document.querySelectorAll('.gallery img').forEach(img => {
-      // Open modal on click
       img.addEventListener('click', () => {
         modalImg.src = img.src;
         modal.style.display = 'flex';
         closeBtn.focus();
       });
-      // Open modal on Enter/Space
       img.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -823,7 +766,7 @@ Love forever,\A Nook ♡";
           closeBtn.focus();
         }
       });
-      // LIGHTWEIGHT CONFETTI BURST on hover
+      // Lightweight confetti burst on hover
       img.addEventListener('mouseenter', (e) => {
         const x = e.clientX / window.innerWidth;
         const y = e.clientY / window.innerHeight;
@@ -835,7 +778,6 @@ Love forever,\A Nook ♡";
       });
     });
 
-    // Close modal on close button
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
       card.focus();
@@ -847,7 +789,6 @@ Love forever,\A Nook ♡";
         card.focus();
       }
     });
-    // Close modal on background click
     modal.addEventListener('click', e => {
       if (e.target === modal) {
         modal.style.display = 'none';
@@ -855,7 +796,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 4) BALLOON CURSOR / INTERACTIVE BALLOONS ON CLICK
+    // Balloon animation on click
     document.addEventListener("click", (e) => {
       if (e.button !== 0) return;
       const targetTag = e.target.tagName.toLowerCase();
@@ -868,7 +809,7 @@ Love forever,\A Nook ♡";
       setTimeout(() => balloon.remove(), 2000);
     });
 
-    // 5) THEME SWITCHER TOGGLE
+    // Theme switcher
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
       const isDark = document.body.classList.toggle("dark-mode");
@@ -882,7 +823,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 6) RETURN TO TOP BUTTON LOGIC
+    // Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
       toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
