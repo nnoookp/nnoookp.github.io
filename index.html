@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy 32nd Birthday Matt</title>
+  <title>Happy Birthday Matt (with Cake Drop!)</title>
 
   <!-- Meta Description & Open Graph for SEO & Social Sharing -->
   <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating cakes, balloons, dark mode, and more!" />
-  <meta property="og:title" content="Happy 32nd Birthday Matt!" />
+  <meta property="og:title" content="Happy Birthday Matt!" />
   <meta property="og:description" content="Click to reveal a heartfelt message, watch confetti, and enjoy floating cakes." />
   <meta property="og:image" content="https://example.com/preview-image.png" />
   <meta property="og:url" content="https://example.com/birthday-matt.html" />
@@ -26,6 +26,7 @@
       height: 100%;
       margin: 0;
       padding: 0;
+      /* allow the entire page to scroll */
       overflow-y: auto;
       overflow-x: hidden;
       font-family: 'Quicksand', sans-serif;
@@ -39,6 +40,7 @@
     /* ──────────────────────────────────────────────────────────────────────────
        PINK SCROLLBAR STYLING
     ────────────────────────────────────────────────────────────────────────── */
+    /* Chrome, Edge, Safari */
     ::-webkit-scrollbar {
       width: 12px;
     }
@@ -48,7 +50,7 @@
     ::-webkit-scrollbar-thumb {
       background-color: #ff6fa5; /* pink thumb */
       border-radius: 6px;
-      border: 3px solid #ffe4ec; /* padding around thumb */
+      border: 3px solid #ffe4ec; /* give a little padding */
     }
     /* Firefox */
     * {
@@ -57,7 +59,8 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       SCROLLABLE CONTAINER: centered, no internal scrollbar
+       SCROLLABLE CONTAINER: remove its own scrollbar (content flows normally)
+       and center everything inside
     ────────────────────────────────────────────────────────────────────────── */
     #scrollable {
       position: relative;
@@ -651,7 +654,7 @@ Love forever,\A Nook ♡";
 <body>
   <!-- SCROLLABLE CONTAINER: all “page content” goes here -->
   <div id="scrollable">
-    <h1>Happy 32nd Birthday Matt!</h1>
+    <h1>Happy Birthday Matt!</h1>
 
     <!-- VALENTINE’S‐DAY CARD -->
     <div class="happy-valentines">
@@ -725,7 +728,7 @@ Love forever,\A Nook ♡";
             loading="lazy"
             tabindex="0"
           />
-          <figcaption>Where’s a ring?</figcaption>
+          <figcaption>Where’s the ring?</figcaption>
         </figure>
         <figure>
           <img
@@ -743,12 +746,18 @@ Love forever,\A Nook ♡";
             loading="lazy"
             tabindex="0"
           />
-          <figcaption>Once in a while getting a nice pic</figcaption>
+          <figcaption>Nice Candid</figcaption>
         </figure>
       </div>
 
       <!-- Floating cakes container -->
       <div id="hearts"></div>
+    </div>
+
+    <!-- IMAGE MODAL (hidden by default) -->
+    <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
+      <span class="close-btn" aria-label="Close">×</span>
+      <img id="modalImg" src="" alt="Full-size preview" />
     </div>
   </div>
 
@@ -756,12 +765,6 @@ Love forever,\A Nook ♡";
   <button id="themeToggle" aria-label="Toggle dark or light mode">🌙 Night Mode</button>
   <!-- Return to Top Button -->
   <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
-
-  <!-- IMAGE MODAL (hidden by default) -->
-  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
-    <span class="close-btn" aria-label="Close">×</span>
-    <img id="modalImg" src="" alt="Full-size preview" />
-  </div>
 
   <!-- Load Canvas‐Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -884,17 +887,16 @@ Love forever,\A Nook ♡";
     // 6) Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
-      // But note: the actual scrolling is happening inside #scrollable
-      const scrollable = document.getElementById('scrollable');
-      toTop.style.display = scrollable.scrollTop > 200 ? 'block' : 'none';
+      // Now the window itself scrolls
+      toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
     });
     toTop.addEventListener('click', () => {
-      document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     toTop.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   </script>
