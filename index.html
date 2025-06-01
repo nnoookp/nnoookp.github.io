@@ -18,12 +18,6 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
 
-  <!-- A-Frame core (for AR) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.1/aframe.min.js"></script>
-  <!-- AR.js for A-Frame (face-tracking extension) -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/face-tracking/dist/aframe-face-tracking.js"></script>
-
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
        BODY: allow page‐wide scrolling, pink scrollbar
@@ -32,7 +26,6 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      /* allow the entire page to scroll */
       overflow-y: auto;
       overflow-x: hidden;
       font-family: 'Quicksand', sans-serif;
@@ -46,7 +39,6 @@
     /* ──────────────────────────────────────────────────────────────────────────
        PINK SCROLLBAR STYLING
     ────────────────────────────────────────────────────────────────────────── */
-    /* Chrome, Edge, Safari */
     ::-webkit-scrollbar {
       width: 12px;
     }
@@ -56,7 +48,7 @@
     ::-webkit-scrollbar-thumb {
       background-color: #ff6fa5; /* pink thumb */
       border-radius: 6px;
-      border: 3px solid #ffe4ec; /* give a little padding */
+      border: 3px solid #ffe4ec; /* padding around thumb */
     }
     /* Firefox */
     * {
@@ -65,8 +57,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       SCROLLABLE CONTAINER: takes full viewport height, scrolls internally
-       (centered, no scrollbar here)
+       SCROLLABLE CONTAINER: centered, no internal scrollbar
     ────────────────────────────────────────────────────────────────────────── */
     #scrollable {
       position: relative;
@@ -655,40 +646,6 @@ Love forever,\A Nook ♡";
     #toTop:focus {
       background: #e75480;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       AR CONTAINER (hidden by default)
-    ────────────────────────────────────────────────────────────────────────── */
-    #arContainer {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2000;
-      background: black;
-    }
-    #arContainer a-scene {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    #exitArBtn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 2100;
-      background: rgba(255, 111, 165, 0.85);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 12px;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -793,11 +750,6 @@ Love forever,\A Nook ♡";
       <!-- Floating cakes container -->
       <div id="hearts"></div>
     </div>
-
-    <!-- AR Activation Button -->
-    <button id="enterArBtn" style="margin: 20px auto; display: block; padding: 10px 16px; background: #ff6fa5; color: white; border: none; border-radius: 6px; font-family: 'Quicksand', sans-serif; font-weight: 600; cursor: pointer;">
-      🎩 Try AR Birthday Hat
-    </button>
   </div>
 
   <!-- Theme Toggle Button -->
@@ -809,27 +761,6 @@ Love forever,\A Nook ♡";
   <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
     <span class="close-btn" aria-label="Close">×</span>
     <img id="modalImg" src="" alt="Full-size preview" />
-  </div>
-
-  <!-- AR Container (hidden by default) -->
-  <div id="arContainer">
-    <!-- Exit button -->
-    <button id="exitArBtn">✕ Exit AR</button>
-
-    <!-- A-Frame scene with AR.js face-tracking -->
-    <a-scene
-      vr-mode-ui="enabled: false"
-      embedded
-      arjs="trackingMethod: best; debugUIEnabled: false; sourceType: webcam; facingMode: user;"
-    >
-      <!-- Replace the CesiumMan model with your birthday-hat glTF URL -->
-      <a-entity
-        face-tracking-model="src: url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/CesiumMan/glTF/CesiumMan.gltf);
-                             scale: 0.02 0.02 0.02;
-                             rotation: 0 180 0;
-                             position: 0 0.15 0;"
-      ></a-entity>
-    </a-scene>
   </div>
 
   <!-- Load Canvas‐Confetti -->
