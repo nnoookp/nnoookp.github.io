@@ -19,7 +19,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* BASE STYLES */
+    /* ──────────────────────────────────────────────────────────────────────────
+       STICKY HEADER
+    ────────────────────────────────────────────────────────────────────────── */
+    .header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(5px);
+      z-index: 200;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #e75480;
+    }
+    .header .marquee-container {
+      flex: 1;
+      margin-left: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      background: #ffb3c1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .header .marquee {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 12s linear infinite;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 1.2em;
+      color: #800f2f;
+    }
+    @keyframes scrollText {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       BASE STYLES
+    ────────────────────────────────────────────────────────────────────────── */
     body {
       font-family: 'Quicksand', sans-serif;
       margin: 0;
@@ -32,7 +78,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 30px 20px;
+      padding: 0 20px 30px;
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
@@ -40,14 +86,6 @@
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
-    }
-    h1 {
-      font-weight: 600;
-      font-size: 3em;
-      color: #e75480;
-      text-align: center;
-      margin-bottom: 0.5em;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
     [role="button"]:focus,
     button:focus,
@@ -173,7 +211,7 @@
       border: 10px solid white;
       border-radius: 10px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      margin: 0 auto;
+      margin: 20px auto;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
       cursor: pointer;
       animation: popIn 0.8s ease-out;
@@ -338,9 +376,9 @@
       margin-top: 10px;
     }
     .valentines-day-card.active .text::before {
-      content: "My dearest Matt,\A\A\ 
-Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\ 
-You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\ 
+      content: "My dearest Matt,\A\A\
+Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\
+You are the calm to my chaos, the melody to my lyrics, and the best part of every day. I hope this little website reminds you how much you're loved and cherished. Here's to more memories, more songs, more kisses, and a life as beautiful as your heart.\A\A\
 Love forever,\A Nook ♡";
       white-space: pre-wrap;
       display: block;
@@ -360,8 +398,23 @@ Love forever,\A Nook ♡";
     .valentines-day-card.active .text span {
       display: none;
     }
-    /* RESPONSIVE ADJUSTMENTS */
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       RESPONSIVE ADJUSTMENTS
+    ────────────────────────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header h1 {
+        font-size: 1.4em;
+        margin-bottom: 5px;
+      }
+      .header .marquee-container {
+        width: 100%;
+        margin-left: 0;
+      }
       h1 {
         font-size: 2.2em;
         padding: 0 10px;
@@ -454,7 +507,9 @@ Love forever,\A Nook ♡";
         padding: 18px;
       }
     }
-    /* IMAGE MODAL (Lightbox) */
+    /* ──────────────────────────────────────────────────────────────────────────
+       IMAGE MODAL (Lightbox)
+    ────────────────────────────────────────────────────────────────────────── */
     .image-modal {
       display: none;
       position: fixed;
@@ -484,7 +539,9 @@ Love forever,\A Nook ♡";
       cursor: pointer;
       user-select: none;
     }
-    /* BALLOONS */
+    /* ──────────────────────────────────────────────────────────────────────────
+       BALLOONS
+    ────────────────────────────────────────────────────────────────────────── */
     .balloon {
       position: absolute;
       width: 30px;
@@ -497,29 +554,9 @@ Love forever,\A Nook ♡";
       0%   { transform: translateY(0) scale(0.6); opacity: 1; }
       100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
     }
-    /* MARQUEE */
-    .marquee-container {
-      overflow: hidden;
-      white-space: nowrap;
-      width: 100%;
-      background: #ffb3c1;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-    .marquee {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scrollText 12s linear infinite;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      font-size: 1.4em;
-      color: #800f2f;
-    }
-    @keyframes scrollText {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-    /* THEME SWITCHER */
+    /* ──────────────────────────────────────────────────────────────────────────
+       THEME SWITCHER
+    ────────────────────────────────────────────────────────────────────────── */
     body.dark-mode {
       background: #2c003e;
       color: #f0e6f6;
@@ -578,7 +615,9 @@ Love forever,\A Nook ♡";
       background: #5e0068;
       color: #f0e6f6;
     }
-    /* RETURN TO TOP BUTTON */
+    /* ──────────────────────────────────────────────────────────────────────────
+       RETURN TO TOP BUTTON
+    ────────────────────────────────────────────────────────────────────────── */
     #toTop {
       position: fixed;
       bottom: 80px;
@@ -603,6 +642,14 @@ Love forever,\A Nook ♡";
   </style>
 </head>
 <body>
+  <!-- STICKY HEADER WITH MARQUEE -->
+  <div class="header">
+    <h1>Happy Birthday Matt!</h1>
+    <div class="marquee-container">
+      <div class="marquee">🎉🎂🎉 Celebrate and enjoy! 🎉🎂🎉</div>
+    </div>
+  </div>
+
   <!-- VALENTINE’S‐DAY CARD -->
   <div class="happy-valentines">
     <div
@@ -650,7 +697,7 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.55.49 pm.png"
-          alt="Bunny Matt"
+          alt="Matt dressed as a bunny"
           loading="lazy"
           tabindex="0"
         />
@@ -659,7 +706,7 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.55.35 pm.png"
-          alt="King Matthew"
+          alt="Matt as King Matthew"
           loading="lazy"
           tabindex="0"
         />
@@ -668,38 +715,38 @@ Love forever,\A Nook ♡";
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.35 pm.png"
-          alt="Matt and his valentines Kori"
+          alt="Matt and Kori enjoying ice cream"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Matt and his valentines Kori icecream</figcaption>
+        <figcaption>Matt and Kori Ice Cream</figcaption>
       </figure>
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.22 pm.png"
-          alt="Matt and the lord where is a ring?"
+          alt="Matt asking where the ring is"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Matt and the lord where is a ring?</figcaption>
+        <figcaption>Where’s the ring?</figcaption>
       </figure>
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.12 pm.png"
-          alt="Aww cute"
+          alt="Adorable Matt"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Aww cute</figcaption>
+        <figcaption>Aww Cute</figcaption>
       </figure>
       <figure>
         <img
           src="Screenshot 2025-05-22 at 9.56.02 pm.png"
-          alt="Once in a while getting a nice photo"
+          alt="A nice candid photo of Matt"
           loading="lazy"
           tabindex="0"
         />
-        <figcaption>Once in a while getting a nice photo</figcaption>
+        <figcaption>Nice Candid</figcaption>
       </figure>
     </div>
 
@@ -709,7 +756,7 @@ Love forever,\A Nook ♡";
 
   <!-- IMAGE MODAL (hidden by default) -->
   <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
-    <span class="close-btn" aria-label="Close full-size preview">&times;</span>
+    <span class="close-btn" aria-label="Close">×</span>
     <img id="modalImg" src="" alt="Full-size preview" />
   </div>
 
@@ -717,7 +764,7 @@ Love forever,\A Nook ♡";
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <script>
-    // Toggle card open/close, blur background, and fire confetti
+    // 1) Toggle card open/close, blur background, and fire confetti
     const card = document.getElementById('valentineCard');
     const pageContent = document.getElementById('pageContent');
     function toggleCard() {
@@ -740,7 +787,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // Floating cakes in background
+    // 2) Floating cakes in the background (random durations)
     function createCake() {
       const cake = document.createElement('div');
       cake.classList.add('cake');
@@ -755,16 +802,19 @@ Love forever,\A Nook ♡";
     }
     setInterval(createCake, 300);
 
-    // Lightbox modal for gallery images
+    // 3) LIGHTBOX: click a .gallery img (or focus+Enter) to open full-size modal
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const closeBtn = document.querySelector('.close-btn');
+
     document.querySelectorAll('.gallery img').forEach(img => {
+      // Open modal on click
       img.addEventListener('click', () => {
         modalImg.src = img.src;
         modal.style.display = 'flex';
         closeBtn.focus();
       });
+      // Open modal on Enter/Space
       img.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -773,7 +823,19 @@ Love forever,\A Nook ♡";
           closeBtn.focus();
         }
       });
+      // LIGHTWEIGHT CONFETTI BURST on hover
+      img.addEventListener('mouseenter', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        confetti({
+          particleCount: 20,
+          spread: 30,
+          origin: { x, y }
+        });
+      });
     });
+
+    // Close modal on close button
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
       card.focus();
@@ -785,6 +847,7 @@ Love forever,\A Nook ♡";
         card.focus();
       }
     });
+    // Close modal on background click
     modal.addEventListener('click', e => {
       if (e.target === modal) {
         modal.style.display = 'none';
@@ -792,7 +855,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // Balloon animation on click
+    // 4) BALLOON CURSOR / INTERACTIVE BALLOONS ON CLICK
     document.addEventListener("click", (e) => {
       if (e.button !== 0) return;
       const targetTag = e.target.tagName.toLowerCase();
@@ -805,7 +868,7 @@ Love forever,\A Nook ♡";
       setTimeout(() => balloon.remove(), 2000);
     });
 
-    // Theme switcher (light/dark)
+    // 5) THEME SWITCHER TOGGLE
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
       const isDark = document.body.classList.toggle("dark-mode");
@@ -819,7 +882,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // Return to top button logic
+    // 6) RETURN TO TOP BUTTON LOGIC
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
       toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
