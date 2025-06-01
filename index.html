@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Happy Birthday Matt (with Cake Drop!)</title>
 
   <!-- Meta Description & Open Graph for SEO & Social Sharing -->
@@ -15,27 +15,18 @@
   <!-- Favicon -->
   <link rel="icon" href="favicon.png" type="image/png" />
 
-  <!-- Preload & Load Google Font (Quicksand) Optimally -->
-  <link
-    rel="preload"
-    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap"
-    as="style"
-    onload="this.rel='stylesheet'"
-  />
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
-  </noscript>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ──────────────────────────────────────────────────────────────────────────
-       BASE STYLES (uses Quicksand throughout)
-    ────────────────────────────────────────────────────────────────────────── */
+    /* BASE STYLES */
     body {
       font-family: 'Quicksand', sans-serif;
       margin: 0;
-      /* REPLACED gradient with a static background image */
-      background: url('background.png') no-repeat center center;
-      background-size: cover;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98)),
+        url('background.png') no-repeat center center;
+      background-size: contain;
       animation: fadeIn 1.5s ease-in;
       color: #3a3a3a;
       display: flex;
@@ -43,12 +34,13 @@
       align-items: center;
       padding: 30px 20px;
       overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-
     h1 {
       font-weight: 600;
       font-size: 3em;
@@ -57,8 +49,6 @@
       margin-bottom: 0.5em;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
-
-    /* Focus outline for interactive elements */
     [role="button"]:focus,
     button:focus,
     .gallery img:focus,
@@ -68,7 +58,6 @@
       outline: 2px dashed #d14f7b;
       outline-offset: 4px;
     }
-
     .letter {
       max-width: 700px;
       background: #fff0f5;
@@ -80,7 +69,6 @@
       line-height: 1.7;
       color: #6c3a4c;
     }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -94,7 +82,6 @@
       from { transform: translateY(40px); opacity: 0; }
       to   { transform: translateY(0); opacity: 1; }
     }
-
     .gallery img {
       width: 100%;
       border-radius: 18px;
@@ -116,7 +103,6 @@
       font-size: 0.95em;
       color: #3a3a3a;
     }
-
     .music-container {
       display: flex;
       justify-content: center;
@@ -148,7 +134,6 @@
       margin: 10px 0;
       width: 100%;
     }
-
     .gif {
       margin: 40px 0 10px;
       text-align: center;
@@ -157,49 +142,33 @@
       width: 220px;
       border-radius: 12px;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       PAGE CONTENT BLUR (when the card is open)
-    ────────────────────────────────────────────────────────────────────────── */
     #pageContent.blur {
       filter: blur(4px);
       transition: filter 0.3s ease;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       FLOATING CAKES (new implementation, replaces “.heart”)
-    ────────────────────────────────────────────────────────────────────────── */
+    /* FLOATING CAKES */
     @keyframes drop-cake {
       to {
-        transform: translateY(100vh) rotate(0deg);
+        transform: translateY(100vh) rotate(360deg);
         opacity: 0;
       }
     }
     .cake {
       position: absolute;
-      width: 40px;   /* adjust size of cake icon */
+      width: 40px;
       height: 40px;
       background: url('cake.png') no-repeat center/contain;
       opacity: 0.9;
       animation-name: drop-cake;
       animation-timing-function: linear;
-      /* animation-duration will be set dynamically in JS */
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD STYLES (click‐only version with ARIA & focus)
-    ────────────────────────────────────────────────────────────────────────── */
+    /* VALENTINES CARD */
     .valentines-day-card {
       position: relative;
-      z-index: 10; /* stay on top when #pageContent is blurred */
+      z-index: 10;
       width: 400px;
       height: 300px;
-      background: linear-gradient(
-        135deg,
-        #ff8fa3 0%,
-        #ffc1cb 50%,
-        #ffe4eb 100%
-      );
+      background: linear-gradient(135deg, #ff8fa3 0%, #ffc1cb 50%, #ffe4eb 100%);
       overflow: hidden;
       border: 10px solid white;
       border-radius: 10px;
@@ -208,6 +177,7 @@
       transition: box-shadow 0.3s ease, transform 0.3s ease;
       cursor: pointer;
       animation: popIn 0.8s ease-out;
+      user-select: none;
     }
     .valentines-day-card:focus {
       outline: none;
@@ -333,19 +303,11 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-450px); }
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       POP‐IN ANIMATION FOR CARD ON LOAD
-    ────────────────────────────────────────────────────────────────────────── */
     @keyframes popIn {
       0%   { transform: scale(0.8); opacity: 0; }
       60%  { transform: scale(1.05); opacity: 1; }
       100% { transform: scale(1); }
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       SLIDE‐IN ANIMATION FOR HIDDEN TEXT
-    ────────────────────────────────────────────────────────────────────────── */
     @keyframes slideInUp {
       0% {
         opacity: 0;
@@ -356,7 +318,6 @@
         transform: translateY(0);
       }
     }
-
     .text {
       position: absolute;
       color: #800f2f;
@@ -376,10 +337,6 @@
       text-align: center;
       margin-top: 10px;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       REFINED HIDDEN TEXT (on .active), WITH SLIDE‐IN
-    ────────────────────────────────────────────────────────────────────────── */
     .valentines-day-card.active .text::before {
       content: "My dearest Matt,\A\A\
 Happy birthday to the most wonderful person in my life. You make my world brighter with your laughter, your kindness, and the music that flows from your soul. I’m endlessly grateful for every moment we share that says more than words.\A\A\
@@ -403,10 +360,7 @@ Love forever,\A Nook ♡";
     .valentines-day-card.active .text span {
       display: none;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       RESPONSIVE ADJUSTMENTS FOR CARD ON MOBILE SCREENS
-    ────────────────────────────────────────────────────────────────────────── */
+    /* RESPONSIVE ADJUSTMENTS */
     @media (max-width: 768px) {
       h1 {
         font-size: 2.2em;
@@ -437,7 +391,6 @@ Love forever,\A Nook ♡";
       audio {
         width: 100%;
       }
-
       .valentines-day-card,
       .valentines-day-card.active {
         width: 95vw;
@@ -475,7 +428,6 @@ Love forever,\A Nook ♡";
         display: block;
       }
     }
-
     @media (max-width: 480px) {
       h1 {
         font-size: 1.8em;
@@ -489,7 +441,6 @@ Love forever,\A Nook ♡";
       .gallery img {
         max-height: 150px;
       }
-
       .valentines-day-card,
       .valentines-day-card.active {
         width: 98vw;
@@ -503,12 +454,9 @@ Love forever,\A Nook ♡";
         padding: 18px;
       }
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       IMAGE MODAL (Lightbox) STYLES
-    ────────────────────────────────────────────────────────────────────────── */
+    /* IMAGE MODAL (Lightbox) */
     .image-modal {
-      display: none;             /* hidden by default */
+      display: none;
       position: fixed;
       z-index: 1000;
       left: 0;
@@ -536,10 +484,7 @@ Love forever,\A Nook ♡";
       cursor: pointer;
       user-select: none;
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       4. BALLOON CURSOR / INTERACTIVE BALLOONS
-    ────────────────────────────────────────────────────────────────────────── */
+    /* BALLOONS */
     .balloon {
       position: absolute;
       width: 30px;
@@ -552,10 +497,7 @@ Love forever,\A Nook ♡";
       0%   { transform: translateY(0) scale(0.6); opacity: 1; }
       100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       5. HAPPY BIRTHDAY MARQUEE / ANIMATED TEXT BANNER
-    ────────────────────────────────────────────────────────────────────────── */
+    /* MARQUEE */
     .marquee-container {
       overflow: hidden;
       white-space: nowrap;
@@ -577,29 +519,21 @@ Love forever,\A Nook ♡";
       0%   { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       8. THEME SWITCHER (DAY/NIGHT OR COLOR PALETTE)
-    ────────────────────────────────────────────────────────────────────────── */
+    /* THEME SWITCHER */
     body.dark-mode {
-      background: #2c003e; /* deep plum */
+      background: #2c003e;
       color: #f0e6f6;
     }
     body.dark-mode h1 {
       color: #ffd1ff;
     }
     body.dark-mode .valentines-day-card {
-      background: linear-gradient(
-        135deg,
-        #5e0068 0%,
-        #800f9e 50%,
-        #b030e7 100%
-      );
+      background: linear-gradient(135deg, #5e0068 0%, #800f9e 50%, #b030e7 100%);
       border-color: #f0e6f6;
     }
     body.dark-mode .valentines-day-card .text::before {
-      background: #3e0030; /* dark plum behind the message */
-      color: #f0e6f6;      /* near-white text */
+      background: #3e0030;
+      color: #f0e6f6;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
     body.dark-mode .text {
@@ -644,11 +578,7 @@ Love forever,\A Nook ♡";
       background: #5e0068;
       color: #f0e6f6;
     }
-
-
-    /* ──────────────────────────────────────────────────────────────────────────
-       RETURN TO TOP BUTTON STYLES
-    ────────────────────────────────────────────────────────────────────────── */
+    /* RETURN TO TOP BUTTON */
     #toTop {
       position: fixed;
       bottom: 80px;
@@ -662,8 +592,8 @@ Love forever,\A Nook ♡";
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: none;       /* hidden until scroll */
-      z-index: 1000;       /* ensure it sits on top */
+      display: none;
+      z-index: 1000;
       transition: background 0.2s;
     }
     #toTop:hover,
@@ -673,9 +603,7 @@ Love forever,\A Nook ♡";
   </style>
 </head>
 <body>
-  <!-- ──────────────────────────────────────────────────────────────────────────
-       VALENTINE’S‐DAY CARD (with ARIA & tabindex)
-  ────────────────────────────────────────────────────────────────────────── -->
+  <!-- VALENTINE’S‐DAY CARD -->
   <div class="happy-valentines">
     <div
       class="valentines-day-card"
@@ -697,7 +625,7 @@ Love forever,\A Nook ♡";
     </div>
   </div>
 
-  <!-- BIRTHDAY SONG (just below the card) -->
+  <!-- BIRTHDAY SONG -->
   <div class="music-container">
     <div class="music">
       <h2>Your Birthday Song 🎵</h2>
@@ -709,16 +637,15 @@ Love forever,\A Nook ♡";
     </div>
   </div>
 
-  <!-- Theme Toggle Button (fixed at bottom right) -->
+  <!-- Theme Toggle Button -->
   <button id="themeToggle" aria-label="Toggle dark or light mode">🌙 Night Mode</button>
 
-  <!-- Return to Top Button (hidden until scroll) -->
+  <!-- Return to Top Button -->
   <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
 
-  <!-- PAGE CONTENT (gallery + floating cakes)
-       Wrapped in #pageContent so we can blur it when the card opens -->
+  <!-- PAGE CONTENT (gallery + floating cakes) -->
   <div id="pageContent">
-    <!-- GALLERY: Thumbnails that open in a lightbox on click -->
+    <!-- GALLERY -->
     <div class="gallery">
       <figure>
         <img
@@ -786,14 +713,13 @@ Love forever,\A Nook ♡";
     <img id="modalImg" src="" alt="Full-size preview" />
   </div>
 
-  <!-- Load Canvas‐Confetti (for the burst on reveal) -->
+  <!-- Load Canvas‐Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <script>
-    // 1) Toggle active on the Valentine’s card, apply blur to #pageContent, fire confetti, and update ARIA
+    // Toggle card open/close, blur background, and fire confetti
     const card = document.getElementById('valentineCard');
     const pageContent = document.getElementById('pageContent');
-
     function toggleCard() {
       const isActive = card.classList.toggle('active');
       pageContent.classList.toggle('blur');
@@ -806,7 +732,6 @@ Love forever,\A Nook ♡";
         });
       }
     }
-
     card.addEventListener('click', toggleCard);
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -815,32 +740,25 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 2) Floating cakes in the background (random durations)
+    // Floating cakes in background
     function createCake() {
       const cake = document.createElement('div');
       cake.classList.add('cake');
-
-      // Random horizontal position
       cake.style.left = Math.random() * 100 + 'vw';
-      // Start just above the viewport
       cake.style.top = '-50px';
-      // Randomly vary the fall duration (3s–6s)
       const duration = 3 + Math.random() * 3;
       cake.style.animationDuration = duration + 's';
-      // Optional: random slight rotation
       const rotateStart = Math.random() * 30 - 15;
       cake.style.transform = `rotate(${rotateStart}deg)`;
-
       document.getElementById('hearts').appendChild(cake);
       setTimeout(() => cake.remove(), (duration + 0.5) * 1000);
     }
     setInterval(createCake, 300);
 
-    // 3) LIGHTBOX: click a .gallery img (or focus+Enter) to open full-size modal
+    // Lightbox modal for gallery images
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const closeBtn = document.querySelector('.close-btn');
-
     document.querySelectorAll('.gallery img').forEach(img => {
       img.addEventListener('click', () => {
         modalImg.src = img.src;
@@ -856,7 +774,6 @@ Love forever,\A Nook ♡";
         }
       });
     });
-
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
       card.focus();
@@ -868,7 +785,6 @@ Love forever,\A Nook ♡";
         card.focus();
       }
     });
-
     modal.addEventListener('click', e => {
       if (e.target === modal) {
         modal.style.display = 'none';
@@ -876,12 +792,11 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 4) BALLOON CURSOR / INTERACTIVE BALLOONS ON CLICK
+    // Balloon animation on click
     document.addEventListener("click", (e) => {
       if (e.button !== 0) return;
       const targetTag = e.target.tagName.toLowerCase();
       if (["button", "input", "textarea"].includes(targetTag)) return;
-
       const balloon = document.createElement("div");
       balloon.classList.add("balloon");
       balloon.style.left = (e.pageX - 15) + "px";
@@ -890,7 +805,7 @@ Love forever,\A Nook ♡";
       setTimeout(() => balloon.remove(), 2000);
     });
 
-    // 5) THEME SWITCHER TOGGLE
+    // Theme switcher (light/dark)
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
       const isDark = document.body.classList.toggle("dark-mode");
@@ -904,7 +819,7 @@ Love forever,\A Nook ♡";
       }
     });
 
-    // 7) RETURN TO TOP BUTTON LOGIC
+    // Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
       toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
