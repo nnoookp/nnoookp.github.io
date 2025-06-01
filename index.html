@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy 32th Birthday Matt </title>
+  <title>Happy Birthday Matt (with Cake Drop!)</title>
 
   <!-- Meta Description & Open Graph for SEO & Social Sharing -->
   <meta name="description" content="A sweet, interactive birthday card for Matt, featuring confetti, floating cakes, balloons, dark mode, and more!" />
-  <meta property="og:title" content="Happy 32th Birthday Matt!" />
+  <meta property="og:title" content="Happy Birthday Matt!" />
   <meta property="og:description" content="Click to reveal a heartfelt message, watch confetti, and enjoy floating cakes." />
   <meta property="og:image" content="https://example.com/preview-image.png" />
   <meta property="og:url" content="https://example.com/birthday-matt.html" />
@@ -17,6 +17,12 @@
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- A-Frame core (for AR) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.1/aframe.min.js"></script>
+  <!-- AR.js for A-Frame (face-tracking extension) -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/face-tracking/dist/aframe-face-tracking.js"></script>
 
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
@@ -59,8 +65,8 @@
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       SCROLLABLE CONTAINER: remove its own scrollbar (content flows normally)
-       and center everything inside
+       SCROLLABLE CONTAINER: takes full viewport height, scrolls internally
+       (centered, no scrollbar here)
     ────────────────────────────────────────────────────────────────────────── */
     #scrollable {
       position: relative;
@@ -649,6 +655,40 @@ Love forever,\A Nook ♡";
     #toTop:focus {
       background: #e75480;
     }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       AR CONTAINER (hidden by default)
+    ────────────────────────────────────────────────────────────────────────── */
+    #arContainer {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      background: black;
+    }
+    #arContainer a-scene {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #exitArBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2100;
+      background: rgba(255, 111, 165, 0.85);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -754,17 +794,43 @@ Love forever,\A Nook ♡";
       <div id="hearts"></div>
     </div>
 
-    <!-- IMAGE MODAL (hidden by default) -->
-    <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
-      <span class="close-btn" aria-label="Close">×</span>
-      <img id="modalImg" src="" alt="Full-size preview" />
-    </div>
+    <!-- AR Activation Button -->
+    <button id="enterArBtn" style="margin: 20px auto; display: block; padding: 10px 16px; background: #ff6fa5; color: white; border: none; border-radius: 6px; font-family: 'Quicksand', sans-serif; font-weight: 600; cursor: pointer;">
+      🎩 Try AR Birthday Hat
+    </button>
   </div>
 
   <!-- Theme Toggle Button -->
   <button id="themeToggle" aria-label="Toggle dark or light mode">🌙 Night Mode</button>
   <!-- Return to Top Button -->
   <button id="toTop" aria-label="Scroll back to top">↑ Top</button>
+
+  <!-- IMAGE MODAL (hidden by default) -->
+  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Image preview">
+    <span class="close-btn" aria-label="Close">×</span>
+    <img id="modalImg" src="" alt="Full-size preview" />
+  </div>
+
+  <!-- AR Container (hidden by default) -->
+  <div id="arContainer">
+    <!-- Exit button -->
+    <button id="exitArBtn">✕ Exit AR</button>
+
+    <!-- A-Frame scene with AR.js face-tracking -->
+    <a-scene
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="trackingMethod: best; debugUIEnabled: false; sourceType: webcam; facingMode: user;"
+    >
+      <!-- Replace the CesiumMan model with your birthday-hat glTF URL -->
+      <a-entity
+        face-tracking-model="src: url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/CesiumMan/glTF/CesiumMan.gltf);
+                             scale: 0.02 0.02 0.02;
+                             rotation: 0 180 0;
+                             position: 0 0.15 0;"
+      ></a-entity>
+    </a-scene>
+  </div>
 
   <!-- Load Canvas‐Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -887,7 +953,6 @@ Love forever,\A Nook ♡";
     // 6) Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
-      // Now the window itself scrolls
       toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
     });
     toTop.addEventListener('click', () => {
@@ -898,6 +963,32 @@ Love forever,\A Nook ♡";
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+    });
+
+    // 7) AR Mode Toggle
+    const enterArBtn = document.getElementById('enterArBtn');
+    const exitArBtn = document.getElementById('exitArBtn');
+    const arContainer = document.getElementById('arContainer');
+
+    enterArBtn.addEventListener('click', () => {
+      arContainer.style.display = 'block';
+      // AR.js will request camera permission automatically
+    });
+
+    exitArBtn.addEventListener('click', () => {
+      arContainer.style.display = 'none';
+      // Stop camera feed to free up camera
+      const sceneEl = arContainer.querySelector('a-scene');
+      if (
+        sceneEl &&
+        sceneEl.systems["arjs"] &&
+        sceneEl.systems["arjs"].arContext &&
+        sceneEl.systems["arjs"].arContext.source
+      ) {
+        sceneEl.systems["arjs"].arContext.source.stop();
+      }
+      // Optionally fire a confetti burst on exit
+      confetti({ particleCount: 80, spread: 70 });
     });
   </script>
 </body>
