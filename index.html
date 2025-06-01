@@ -964,32 +964,6 @@ Love forever,\A Nook ♡";
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
-
-    // 7) AR Mode Toggle
-    const enterArBtn = document.getElementById('enterArBtn');
-    const exitArBtn = document.getElementById('exitArBtn');
-    const arContainer = document.getElementById('arContainer');
-
-    enterArBtn.addEventListener('click', () => {
-      arContainer.style.display = 'block';
-      // AR.js will request camera permission automatically
-    });
-
-    exitArBtn.addEventListener('click', () => {
-      arContainer.style.display = 'none';
-      // Stop camera feed to free up camera
-      const sceneEl = arContainer.querySelector('a-scene');
-      if (
-        sceneEl &&
-        sceneEl.systems["arjs"] &&
-        sceneEl.systems["arjs"].arContext &&
-        sceneEl.systems["arjs"].arContext.source
-      ) {
-        sceneEl.systems["arjs"].arContext.source.stop();
-      }
-      // Optionally fire a confetti burst on exit
-      confetti({ particleCount: 80, spread: 70 });
-    });
   </script>
 </body>
 </html>
