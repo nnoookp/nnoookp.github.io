@@ -20,39 +20,52 @@
 
   <style>
     /* ──────────────────────────────────────────────────────────────────────────
-       BODY: keep background‐attachment: fixed
+       BODY: allow page‐wide scrolling, pink scrollbar
     ────────────────────────────────────────────────────────────────────────── */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-    }
-    body {
+      /* allow the entire page to scroll */
+      overflow-y: auto;
+      overflow-x: hidden;
       font-family: 'Quicksand', sans-serif;
-      /* we keep background-attachment: fixed; exactly as before */
       background:
         linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)),
         url('background.png') no-repeat center center fixed;
       background-size: contain;
       color: #3a3a3a;
-      /* nothing scrolls on the body itself */
-      overflow: hidden;
-      position: relative;
     }
 
     /* ──────────────────────────────────────────────────────────────────────────
-       SCROLLABLE CONTAINER: takes full viewport height, scrolls internally
-       (added max-width + margin: auto to center it)
+       PINK SCROLLBAR STYLING
+    ────────────────────────────────────────────────────────────────────────── */
+    /* Chrome, Edge, Safari */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffe4ec;  /* light pink track */
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #ff6fa5; /* pink thumb */
+      border-radius: 6px;
+      border: 3px solid #ffe4ec; /* give a little padding */
+    }
+    /* Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #ff6fa5 #ffe4ec;
+    }
+
+    /* ──────────────────────────────────────────────────────────────────────────
+       SCROLLABLE CONTAINER: remove its own scrollbar (content flows normally)
+       and center everything inside
     ────────────────────────────────────────────────────────────────────────── */
     #scrollable {
       position: relative;
-      height: 100vh;            /* fill the viewport height */
-      overflow-y: auto;         /* scroll inside here */
-      overflow-x: hidden;
-      padding: 0 20px 30px;
       box-sizing: border-box;
-
-      /* NEW: constrain to a max‐width and center */
+      padding: 0 20px 30px;
       max-width: 1000px;
       margin: 0 auto;
       display: flex;
@@ -874,17 +887,16 @@ Love forever,\A Nook ♡";
     // 6) Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
-      // But note: the actual scrolling is happening inside #scrollable
-      const scrollable = document.getElementById('scrollable');
-      toTop.style.display = scrollable.scrollTop > 200 ? 'block' : 'none';
+      // Now the window itself scrolls
+      toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
     });
     toTop.addEventListener('click', () => {
-      document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     toTop.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   </script>
