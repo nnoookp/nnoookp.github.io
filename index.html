@@ -884,15 +884,17 @@ Love forever,\A Nook ♡";
     // 6) Return to top button logic
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
-      toTop.style.display = window.scrollY > 200 ? 'block' : 'none';
+      // But note: the actual scrolling is happening inside #scrollable
+      const scrollable = document.getElementById('scrollable');
+      toTop.style.display = scrollable.scrollTop > 200 ? 'block' : 'none';
     });
     toTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
     });
     toTop.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('scrollable').scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   </script>
